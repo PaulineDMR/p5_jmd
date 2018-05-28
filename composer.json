@@ -1,0 +1,15 @@
+{
+    "name": "pauline/jmd",
+    "description": "P5 forma DWJ OC - Blog JMD",
+    "type": "project",
+    "require": {
+        "twig/twig": "^2.4"
+    },
+    "authors": [
+        {
+            "name": "PaulineDMR",
+            "email": "pauline.desmares@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
