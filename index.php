@@ -1,11 +1,6 @@
 <?php 
 
-require 'models/Artist.php';
+require "vendor/autoload.php";
 
-$artist = new Artist();
+$var = "Test";
 
-$artist->setId(2);
-echo $artist->getId();
-echo "</br>";
-
-var_dump($artist);
