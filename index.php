@@ -1,11 +1,16 @@
 <?php 
 
-require 'models/Artist.php';
+session_start();
 
-$artist = new Artist();
+require_once('models/class/Routeur.php');
 
-$artist->setId(2);
-echo $artist->getId();
-echo "</br>";
+	if (isset($_GET["action"])) { 
 
-var_dump($artist);
+		$request = $_GET["action"];
+
+	} else {
+		$request = "";
+	}
+
+$routeur = new Routeur($request);
+$routeur->renderController();
