@@ -1,6 +1,6 @@
 <?php 
 
-require_once('');
+require_once('controllers/HomeController.php');
  //namespace pour l'autoload
 
 class Routeur {
@@ -16,7 +16,7 @@ class Routeur {
 		$request = $this->request;
  
 		//... Création de tous les objets nécessaires
-		//$homeController = new HomeController();
+		$homeController = new HomeController();
 
 		//Est-il possible de créer une fonction qui instancie tous les objets automatiquement?
 		
@@ -25,7 +25,7 @@ class Routeur {
 
 			// Display the list of posts on the frontend view 
 			if ($request == "home") {
-				//$homeController-> ... ();
+				$homeController->carousselImg();
 			}
 
 			// Display one post with his comments on the frontend post view
@@ -41,7 +41,7 @@ class Routeur {
 			// ...
 
 			else { // si aucune "action" dans l'url -> que dois afficher la page d'accueil?
-				//$homeController-> ... (); // - Exemple -
+				$homeController->carousselImg();
 			}
 		}
 		catch(Exception $e) {

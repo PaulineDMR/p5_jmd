@@ -2,9 +2,9 @@
 
 session_start();
 
-//autoload à configurer
+require 'vendor/autoload.php'; //autoload à configurer
 
-require_once('models/class/Routeur.php');
+require_once('controllers/Routeur.php');
 
 	if (isset($_GET["action"])) { 
 
