@@ -30,8 +30,11 @@ class Painting extends Model {
      *
      * @return self
      */
-    public function setId($id)
-    {
+    public function setId($id) {
+        if (!is_int($id) || $id < 0) {
+            throw new Exception("L'id n'est pas valide", 1);    
+        }
+
         $this->id = $id;
 
         return $this;
@@ -50,8 +53,8 @@ class Painting extends Model {
      *
      * @return self
      */
-    public function setUrl($url)
-    {
+    public function setUrl($url) {
+        
         $this->url = $url;
 
         return $this;
