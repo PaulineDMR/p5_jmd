@@ -1,9 +1,9 @@
 <?php 
 
-require ('models/class/PaintingManager.php'); // A modifier : Autoloader
+require_once ('Controller.php'); // A modifier : Autoloader
 
 
-class HomeController {
+class HomeController extends Controller {
 
 	/*public function __construct() {
 		$this->carousselImg();
