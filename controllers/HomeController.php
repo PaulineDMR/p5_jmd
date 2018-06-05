@@ -14,10 +14,34 @@ class HomeController {
 		$paintingManager = new PaintingManager();
 		$resp = $paintingManager->getLastTenPaintingImg();
 
-		//return $resp;
+		return $resp;
+
+		
+	}
+
+	public function footerLastPosts () {
+		$postManager = new PostManager();
+		$posts = $postManager->getLastTwoPosts();
+
+		return $posts;
+
+
+	}
+
+	public function displayHome() {
+
 		$loader = new Twig_Loader_Filesystem('views');
 		$twig = new Twig_Environment($loader);
+		$twig->addExtension(new Twig_Extensions_Extension_Text());
+
+		$resp = $this->carousselImg();
+		
+		$posts = $this->footerLastPosts();
+		
 		echo $twig->render('home.twig', ['paintings' => $resp]);
+
+		echo $twig->render('footerContent.twig', ['posts' => $posts]);
+	
 
 	}
 

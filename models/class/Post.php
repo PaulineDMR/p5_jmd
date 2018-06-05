@@ -1,34 +1,51 @@
 <?php 
 
-require ('Model.php');
+require_once ('Model.php');
 
 
 class Post extends Model {
 
-	private $post_id;
-	private $post_title;
-	private $post_content;
-	private $post_creation;
-	private $post_publication;
-	private $post_published;
+	private $id;
+    private $user_id;
+	private $title;
+	private $content;
+	private $creation;
+	private $publication;
+	private $published;
 
 
     /**
      * @return int
      */
-    public function getPostId()
-    {
-        return $this->post_id;
+    public function getId() {
+        return $this->id;
     }
 
     /**
-     * @param int $post_id
+     * @param int $id
      *
      * @return self
      */
-    public function setPostId($post_id)
-    {
-        $this->post_id = $post_id;
+    public function setId($id) {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId() {
+        return $this->user_id;
+    }
+
+    /**
+     * @param int $user_id
+     *
+     * @return self
+     */
+    public function setUser_id($user_id) {
+        $this->user_id = $user_id;
 
         return $this;
     }
@@ -36,19 +53,19 @@ class Post extends Model {
     /**
      * @return str
      */
-    public function getPostTitle()
+    public function getTitle()
     {
-        return $this->post_title;
+        return $this->title;
     }
 
     /**
-     * @param str $post_title
+     * @param str $title
      *
      * @return self
      */
-    public function setPostTitle($post_title)
+    public function setTitle($title)
     {
-        $this->post_title = $post_title;
+        $this->title = $title;
 
         return $this;
     }
@@ -56,19 +73,19 @@ class Post extends Model {
     /**
      * @return str
      */
-    public function getPostContent()
+    public function getContent()
     {
-        return $this->post_content;
+        return $this->content;
     }
 
     /**
-     * @param str $post_content
+     * @param str $content
      *
      * @return self
      */
-    public function setPostContent($post_content)
+    public function setContent($content)
     {
-        $this->post_content = $post_content;
+        $this->content = $content;
 
         return $this;
     }
@@ -76,19 +93,19 @@ class Post extends Model {
     /**
      * @return mixed
      */
-    public function getPostCreation()
+    public function getCreation()
     {
-        return $this->post_creation;
+        return $this->creation;
     }
 
     /**
-     * @param mixed $post_creation
+     * @param mixed $creation
      *
      * @return self
      */
-    public function setPostCreation($post_creation)
+    public function setCreation($creation)
     {
-        $this->post_creation = $post_creation;
+        $this->creation = $creation;
 
         return $this;
     }
@@ -96,19 +113,19 @@ class Post extends Model {
     /**
      * @return mixed
      */
-    public function getPostPublication()
+    public function getPublication()
     {
-        return $this->post_publication;
+        return $this->publication;
     }
 
     /**
-     * @param mixed $post_publication
+     * @param mixed $publication
      *
      * @return self
      */
-    public function setPostPublication($post_publication)
+    public function setPublication($publication)
     {
-        $this->post_publication = $post_publication;
+        $this->publication = $publication;
 
         return $this;
     }
@@ -116,20 +133,21 @@ class Post extends Model {
     /**
      * @return mixed
      */
-    public function getPostPublished()
+    public function getPublished()
     {
-        return $this->post_published;
+        return $this->published;
     }
 
     /**
-     * @param mixed $post_published
+     * @param mixed $published
      *
      * @return self
      */
-    public function setPostPublished($post_published)
+    public function setPublished($published)
     {
-        $this->post_published = $post_published;
+        $this->published = $published;
 
         return $this;
     }
+
 }

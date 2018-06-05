@@ -11,8 +11,8 @@ class PostManager extends Manager {
 	
 	public function getLastTwoPosts() {
 		$db = $this->dbConnect();
-		$req = $db->query("SELECT post_title, post_content, post_publication FROM posts WHERE post_published = TRUE ORDER BY post_publication DESC LIMIT 2");
-
+		$req = $db->query('SELECT title, content, publication FROM jmd_posts WHERE published = TRUE AND user_id = 1 ORDER BY publication DESC LIMIT 2');
+		
 		$posts = array();
 
 		while ($data = $req->fetch()) {
@@ -20,7 +20,7 @@ class PostManager extends Manager {
 			$post->hydrate($data);
 			$posts[] = $post;
 		}
-
+		
 		$req->closeCursor();
 
 		return $posts;
