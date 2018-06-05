@@ -3,7 +3,8 @@
     "description": "P5 forma DWJ OC - Blog JMD",
     "type": "project",
     "require": {
-        "twig/twig": "^2.4"
+        "twig/twig": "^2.4",
+        "twig/extensions": "^1.5"
     },
     "authors": [
         {
