@@ -25,7 +25,7 @@ class Routeur {
 
 			// Display the list of posts on the frontend view 
 			if ($request == "home") {
-				$homeController->carousselImg();
+				$homeController->displayHome();
 			}
 
 			// Display one post with his comments on the frontend post view
@@ -41,7 +41,7 @@ class Routeur {
 			// ...
 
 			else { // si aucune "action" dans l'url -> que dois afficher la page d'accueil?
-				$homeController->carousselImg();
+				$homeController->displayHome();
 			}
 		}
 		catch(Exception $e) {
