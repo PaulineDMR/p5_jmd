@@ -1,3 +1,4 @@
+ 
 
 	<div id="footer">
 		<div class="container">
@@ -16,9 +17,9 @@
 						<h3>Recent News</h3>
 					</header>
 					<ul class="updates">
-						{% block footerContent %}
-						    
-						{% endblock %}						
+
+						<?php include 'footerContent.php' ?>
+											
 					</ul>
 				</section>
 				<section class="4u$ 6u$(medium) 12u$(small)">
@@ -54,5 +55,3 @@
 			&copy; Untitled. All rights reserved.
 		</div>
 	</div>
-
-    

@@ -1,0 +1,206 @@
+{% extends 'frontendLayout.twig' %}
+
+
+{% block title %}
+
+	{{ parent() }} Accueil
+    
+{% endblock title%}
+
+
+{% block main %}
+    
+
+	<div id="header" class="alt">
+		<h1 id="logo"><a href="index.php">Jeanne-Marie Desmares</a></h1>
+		<p>Artiste Peintre</p>
+		<nav id="nav">
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li>
+					<a href="#">Les Oeuvres</a>
+					<!-- PAS UTILE POUR LE MOMENT
+					<ul>
+						<li><a href="left-sidebar.html">Left Sidebar</a></li>
+						<li><a href="right-sidebar.html">Right Sidebar</a></li>
+						<li><a href="no-sidebar.html">No Sidebar</a></li>
+						<li>
+							<a href="#">Submenu</a>
+							<ul>
+								<li><a href="#">Option 1</a></li>
+								<li><a href="#">Option 2</a></li>
+								<li><a href="#">Option 3</a></li>
+								<li><a href="#">Option 4</a></li>
+							</ul>
+						</li>
+					</ul> -->
+				</li>
+				<li><a href="#">L'Artiste</a></li>
+				<li><a href="#">Blog</a></li>
+				<li><a href="#">Contact</a></li>
+				<!-- PAS UTILE POUR LE MOMENT
+				<li><a href="#" class="button alt">Contact</a></li> -->
+			</ul>
+		</nav>
+	</div>
+
+<!-- Banner -->
+	<section id="banner">
+		<h2>La peinture est la matière <br> La Corse l'inspiration</h2>
+		<!-- <p>Bienvenue dans l'univers envoutant<br />
+		d'une peintre passionnée.</p>
+		<ul class="actions"> A VOIR --> 
+			<li><a href="#" class="button special">En savoir plus...</a></li>
+		</ul>
+	</section>
+
+<!-- One -->
+	<section id="one" class="wrapper style1">
+		<div class="container">
+			<section class="feature">
+				<div class="row 200%">
+					<div class="8u 12u$(medium)">
+						<header class="major">
+							<h2>L'Artiste</h2>
+							<p>"La peinture est un exutoire, une passion"</p>
+						</header>
+						<p class="texte-noir">Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quisgravida id, est. Sed lectuisto. Praesent lorem ipsum dolor sit amet blandit elementum hendrerit dolor sit amet feugiat. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing.</p>
+						<ul class="actions">
+							<li><a href="#" class="button alt">Lire</a></li>
+						</ul>
+					</div>
+					<div class="4u$ 12u$(medium) important(medium)">
+						<span class="image fit rounded">
+							<img src="assets/img/paint-brushes-2.jpg" alt="" />
+						</span>
+					</div>
+				</div>
+			</section>
+			<section class="feature">
+				<div class="row 200%">
+					<div class="4u 12u$(medium)">
+						<span class="image fit rounded">
+							<img src="assets/img/corse-1.jpg" alt="" class="rounded" />
+						</span>
+					</div>
+					<div class="8u$ 12u$(medium)">
+						<header class="major">
+							<h2>Où la trouver</h2>
+							<p>Saint Florent / Haute-Corse</p>
+						</header>
+						<p class="texte-noir">Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quisgravida id, est. Sed lectuisto. Praesent lorem ipsum dolor sit amet blandit elementum hendrerit dolor sit amet feugiat. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero faucibus.</p>
+						<ul class="actions">
+							<li><a href="#" class="button alt">Plus d'infos</a></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+	</section>
+
+<!-- Two -->
+	<section id="two" class="wrapper style1 special">
+		<div class="container">
+			<header class="major">
+				<h2>Les Créations récentes</h2>
+				<!-- <p>Découvrez les oeuvres de Jeanne-Marie Desmares</p> -->
+			</header>
+		</div>
+		<section class="carousel">
+
+			{% block caroussel %}
+
+			{% endblock caroussel%} 
+			    
+			<!-- REMPLACER PAR LE BLOC TWIG
+			<article>
+				<a href="images/fulls/01.jpg" class="image"><img src="images/thumbs/01.jpg" alt="" title="Lorem ipsum dolor sit amet" /></a>
+			</article>
+			<article>
+				<a href="images/fulls/02.jpg" class="image"><img src="images/thumbs/02.jpg" alt="" title="Lorem ipsum dolor sit amet" /></a>
+			</article>
+			<article>
+				<a href="images/fulls/03.jpg" class="image"><img src="images/thumbs/03.jpg" alt="" title="Lorem ipsum dolor sit amet" /></a>
+			</article>
+			<article>
+				<a href="images/fulls/04.jpg" class="image"><img src="images/thumbs/04.jpg" alt="" title="Lorem ipsum dolor sit amet" /></a>
+			</article>
+			<article>
+				<a href="images/fulls/05.jpg" class="image"><img src="images/thumbs/05.jpg" alt="" title="Lorem ipsum dolor sit amet" /></a>
+			</article>
+			<article>
+				<a href="images/fulls/01.jpg" class="image"><img src="images/thumbs/01.jpg" alt="" title="Lorem ipsum dolor sit amet" /></a>
+			</article>
+			<article>
+				<a href="images/fulls/02.jpg" class="image"><img src="images/thumbs/02.jpg" alt="" title="Lorem ipsum dolor sit amet" /></a>
+			</article>
+			<article>
+				<a href="images/fulls/03.jpg" class="image"><img src="images/thumbs/03.jpg" alt="" title="Lorem ipsum dolor sit amet" /></a>
+			</article>
+			<article>
+				<a href="images/fulls/04.jpg" class="image"><img src="images/thumbs/04.jpg" alt="" title="Lorem ipsum dolor sit amet" /></a>
+			</article>
+			<article>
+				<a href="images/fulls/05.jpg" class="image"><img src="images/thumbs/05.jpg" alt="" title="Lorem ipsum dolor sit amet" /></a>
+			</article> -->
+		</section>
+		<div class="container">
+			<ul class="actions align-center">
+				<li><a href="#" class="button alt">En voir plus...</a></li>
+			</ul>
+		</div>
+	</section>
+
+<!-- Three -->
+	<section id="three" class="wrapper style1 special">
+		<div class="container">
+			<header class="major">
+				<h2>Accès rapide</h2>
+				<!-- <p>Convallis amet volutpat et aliquam</p> -->
+			</header>
+			<div class="icon-grid">
+				<div class="row uniform 150%">
+					<section class="3u 6u(large) 12u$(small)">
+						<i class="icon fa-university"></i>
+						<h3>Gallerie</h3>
+						<p>Découvrez en images les huiles et aquarelles réalisées par Jeanne-Marie Desmares.</p>
+					</section>
+					<section class="3u 6u$(large) 12u$(small)">
+						<i class="icon fa-anchor"></i>
+						<h3>L'atelier de Jeanne-Marie Desmares</h3>
+						<p>Trouver et rencontrer l'artiste grâce au 
+						plan du village de Saint Florent (Haute-Corse).</p>
+					</section>
+					<section class="3u 6u(large) 12u$(small)">
+						<i class="icon fa-bullhorn"></i>
+						<h3>Blog</h3>
+						<p>A travers ce blog, le peintre nous raconte ses ballades, son histoire et sa peinture.</p>
+					</section>
+					<section class="3u$ 6u$(large) 12u$(small)">
+						<i class="icon fa-envelope"></i>
+						<h3>Envoyer un mail</h3>
+						<p>Contacter l'artiste, poser vos questions, prendre rendez-vous, n'hésitez pas à envoyer un mail.</p>
+					</section>
+				</div>
+			</div>
+		</div>
+	</section>
+
+<!-- Four -->
+	<!-- PAS UTILE POUR LE MOMENT
+	<section id="four" class="wrapper style1 special">
+		<div class="container">
+			<header class="major">
+				<h2>Vitae sed luctus magna</h2>
+				<p>Metus ante semper lorem ipsum dolor</p>
+			</header>
+			<ul class="actions">
+				<li><a href="#" class="button special">Amet magna</a></li>
+				<li><a href="#" class="button alt">Learn more</a></li>
+			</ul>
+		</div>
+	</section> -->
+
+{% endblock main%}
+	
+  

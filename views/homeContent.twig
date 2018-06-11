@@ -1,4 +1,5 @@
-{% extends 'homeLayout.twig' %}
+{% extends 'homeTemplate.twig' %}
+
 
 {% block caroussel %}				
 					
@@ -8,8 +9,6 @@
 				<img src=" {{img.url}} " alt="Peinture de Jeanne-Marie Desmares" title=" {% if img.title == null %} {{img.technic}} {% else %} {{img.title}} {% endif %} "/>
 			</a>
 		</article>
-
 	{% endfor %}
+
 {% endblock %}
-	
-  

@@ -19,29 +19,22 @@ class HomeController extends Controller {
 		
 	}
 
-	public function footerLastPosts () {
-		$postManager = new PostManager();
-		$posts = $postManager->getLastTwoPosts();
-
-		return $posts;
+	
 
 
-	}
 
 	public function displayHome() {
+
+		$resp = $this->carousselImg();
 
 		$loader = new Twig_Loader_Filesystem('views');
 		$twig = new Twig_Environment($loader);
 		$twig->addExtension(new Twig_Extensions_Extension_Text());
 
-		$resp = $this->carousselImg();
+		return $twig->render('homeContent.twig', ['paintings' => $resp]);
+		//echo $twig->render('footerContent.twig', ['posts' => $posts]);
+		//
 		
-		$posts = $this->footerLastPosts();
-		
-		echo $twig->render('home.twig', ['paintings' => $resp]);
-
-		echo $twig->render('footerContent.twig', ['posts' => $posts]);
-	
 
 	}
 
