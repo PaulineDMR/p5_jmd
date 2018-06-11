@@ -31,7 +31,7 @@ class HomeController extends Controller {
 		$twig = new Twig_Environment($loader);
 		$twig->addExtension(new Twig_Extensions_Extension_Text());
 
-		return $twig->render('homeContent.twig', ['paintings' => $resp]);
+		echo $twig->render('homeContent.twig', ['paintings' => $resp]);
 		//echo $twig->render('footerContent.twig', ['posts' => $posts]);
 		//
 		
