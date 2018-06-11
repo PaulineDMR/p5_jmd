@@ -9,9 +9,12 @@ class PostManager extends Manager {
 	
 	// READ
 	
-	public function getLastTwoPosts() {
+	public function getRecentPosts($max) {
 		$db = $this->dbConnect();
-		$req = $db->query('SELECT title, content, publication FROM jmd_posts WHERE published = TRUE AND user_id = 1 ORDER BY publication DESC LIMIT 2');
+		$req = $db->prepare('SELECT title, content, publication FROM jmd_posts WHERE published = TRUE AND user_id = 1 ORDER BY publication DESC LIMIT :max');
+
+		$req->bindValue('max', $max, PDO::PARAM_INT);
+		$req->execute();
 		
 		$posts = array();
 
