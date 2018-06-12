@@ -5,4 +5,5 @@ assets/img
 /DIVERS
 vendor
 */Icon
-.DS-store
+.DS_Store
+Icon
