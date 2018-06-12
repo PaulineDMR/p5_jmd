@@ -2,9 +2,10 @@
 
 session_start();
 
-require 'vendor/autoload.php'; //autoload à configurer
+require 'vendor/autoload.php';
 
-require_once('controllers/Routeur.php');
+use jmd\controllers\Routeur;
+
 
 	if (isset($_GET["action"])) { 
 
