@@ -4,6 +4,7 @@ assets/img
 /vendor
 /DIVERS
 vendor
-*/Icon
+*/Icon?
 .DS_Store
-Icon
+.Icon?
+Icon?
