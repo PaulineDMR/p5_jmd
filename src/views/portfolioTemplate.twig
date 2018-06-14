@@ -1,0 +1,81 @@
+{% extends 'frontendLayout.Twig' %}
+
+{% block title %}
+
+	Gallerie - {{ parent() }}
+    
+{% endblock title %}
+
+{% block head %}
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="assets/css/portfolio.css">
+    
+{% endblock head %}
+
+
+
+{% block main %}
+
+	<section id="main">
+		<div class="container">
+			<header class="major">
+				<h2>Gallerie</h2>
+				<p>Lorem ipsum dolor sit amet nullam id egestas urna aliquam</p>
+			</header>
+
+			<!-- Content -->
+			<section id="content">
+				<div id="galery-categories">
+					<ul>
+						<li>Voir Tout</li>
+						<li>Huiles</li>
+						<li>Aquarelles</li>
+						<li>Paysages</li>
+						<li>Natures Mortes</li>
+						<li>Abstrait</li>
+						<li id="last">Les + récentes</li>
+					</ul>
+				</div>
+				
+
+				<div class="w3-content" style="max-width:100%">
+
+				<!-- Header -->
+					<div class="w3-opacity">
+					    
+					    <div class="w3-clear"></div>
+					        
+					    </div>
+
+					<!-- Photo Grid -->
+					    <div class="w3-row-padding" id="myGrid" style="margin-bottom:128px">
+					        <div class="w3-third">
+
+			            		{% block col1 %} {% endblock %}
+					        
+					        </div>
+
+					        <div class="w3-third">
+
+					            {% block col2 %} {% endblock %}
+					        
+					        </div>
+
+					        <div class="w3-third">
+
+					            {% block col3 %} {% endblock %}
+					        
+					        </div>
+					    </div>
+
+				<!-- End Page Content -->
+				</div>
+			</section>
+		</div>
+	</section>
+    
+{% endblock main %}
+
+
+

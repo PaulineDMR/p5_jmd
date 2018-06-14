@@ -1,0 +1,108 @@
+{% extends 'portfolioTemplate.twig' %}
+
+{% block col1 %}
+
+	{% for painting in col1 %}
+		
+		<div class="photo">
+			<img src="{{ painting.url }}" alt="Peinture de Jeanne-Marie Desmares" title=" {% if painting.title == null %} {{painting.technic}} {% else %} {{painting.title}} {% endif %}" style="width:100%">
+			<div class="descriptif-portfolio">
+	            {% if painting.title != null %}
+	            	<p>{{painting.title}}</p>
+	            {% endif %}
+
+	            {% if painting.technic != null %}
+	            	<p>Technique : {{painting.technic}}</p>
+				{% endif %}
+
+				{% if painting.width != null %}
+	            	<p>Dim : h {{painting.height}} x l {{painting.width}} cm</p>
+				{% endif %}
+				
+				{% if painting.creation != null %}
+	            	<p>Réalisé en {{painting.creation}}</p>
+				{% endif %}
+				
+				{% if painting.sold == true %}
+	            	<p>Vendu</p>
+	            {% elseif painting.price != null %}
+	                <p>Prix : {{painting.price}}</p>
+		    	{% endif %}
+		    </div>
+		</div>	
+	{% endfor %}
+    
+{% endblock %}
+
+
+{% block col2 %}
+
+	{% for painting in col2 %}
+
+		<div class="photo">
+			<img src="{{ painting.url }}" alt="Peinture de Jeanne-Marie Desmares" title=" {% if painting.title == null %} {{painting.technic}} {% else %} {{painting.title}} {% endif %}" style="width:100%">
+			<div class="descriptif-portfolio">
+	            {% if painting.title != null %}
+	            	<p>{{painting.title}}</p>
+	            {% endif %}
+
+	            {% if painting.technic != null %}
+	            	<p>Technique : {{painting.technic}}</p>
+				{% endif %}
+
+				{% if painting.width != null %}
+	            	<p>Dim : h {{painting.height}} x l {{painting.width}} cm</p>
+				{% endif %}
+				
+				{% if painting.creation != null %}
+	            	<p>Réalisé en {{painting.creation}}</p>
+				{% endif %}
+				
+				{% if painting.sold == true %}
+	            	<p>Vendu</p>
+	            {% elseif painting.price != null %}
+	                <p>Prix : {{painting.price}}</p>
+		    	{% endif %}
+		    </div>
+		</div>	
+	    
+	{% endfor %}
+
+{% endblock %}
+
+
+{% block col3 %}
+
+	{% for painting in col3 %}
+
+		<div class="photo">
+			<img src="{{ painting.url }}" alt="Peinture de Jeanne-Marie Desmares" title=" {% if painting.title == null %} {{painting.technic}} {% else %} {{painting.title}} {% endif %}" style="width:100%">
+			<div class="descriptif-portfolio">
+	            {% if painting.title != null %}
+	            	<p>{{painting.title}}</p>
+	            {% endif %}
+
+	            {% if painting.technic != null %}
+	            	<p>Technique : {{painting.technic}}</p>
+				{% endif %}
+
+				{% if painting.width != null %}
+	            	<p>Dim : h {{painting.height}} x l {{painting.width}} cm</p>
+				{% endif %}
+				
+				{% if painting.creation != null %}
+	            	<p>Réalisé en {{painting.creation}}</p>
+				{% endif %}
+				
+				{% if painting.sold == true %}
+	            	<p>Vendu</p>
+	            {% elseif painting.price != null %}
+	                <p>Prix : {{painting.price}}</p>
+		    	{% endif %}
+		    </div>
+		</div>	
+	    
+	{% endfor %}
+    
+{% endblock %}
+
