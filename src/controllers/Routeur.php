@@ -21,6 +21,7 @@ class Routeur {
 		//... Création de tous les objets nécessaires
 		$homeController = new HomeController(); // 2
 		$portfolioController = new PortfolioController(); //1
+		$aboutController = new AboutController(); //1
 
 		//Est-il possible de créer une fonction qui instancie tous les objets automatiquement?
 		
@@ -35,17 +36,27 @@ class Routeur {
 			// Portfolio page
 			elseif ($request == "portfolio") {
 
-				/* EXEMPLE 
+				$portfolioController->render();
+			}
+
+			// About page 
+			if ($request == "about") {
+				$aboutController->render();
+			}
+
+			// EXEMPLE
+			/*elseif ($request == "portfolio") {
+
+				$portfolioController->render();
+			}*/
+
+			/* EXEMPLE 
 				if (isset($_GET["id"]) && $_GET["id"] > 0) {
 				$postCommentsController->postComments();
 				}
 				else {
 					throw new Exception('Aucun identifiant de billet envoyé');
 				}*/
-
-				$portfolioController->render();
-
-			}
 
 			// ...
 

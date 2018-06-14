@@ -1,0 +1,110 @@
+{% extends 'frontendLayout.Twig' %}
+
+{% block title %}
+
+	A propos
+    
+{% endblock title %}
+
+{% block head %}
+
+	{# RIEN POUR LE MOMENT #}
+    
+{% endblock head %}
+
+
+
+{% block main %}
+
+	<section id="main">
+		<div class="container">
+			<header class="major">
+				<h2>l'Artiste</h2>
+				<p>Biographie, environnement, inspiration, son atelier</p>
+			</header>
+
+			<!-- Content -->
+			<section>
+				
+				<h3>Bio</h3>
+				<p><span class="image left"><img src="assets/img/paint-brushes-2.jpg" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus.</p>
+				<h3>L'inspiration - La Corse</h3>
+				<p><span class="image right"><img src="assets/img/corse-1.jpg" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus.</p>
+				<h3>L'Atelier</h3>
+
+				<p><span class="image left map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1935.1415011293943!2d9.300907532398458!3d42.67988180973625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d72e8ab4943943%3A0xfd41c3b272b61c87!2sPlace+Doria%2C+20217+Saint-Florent!5e0!3m2!1sfr!2sfr!4v1528976715846" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus.</p>
+			</section>
+
+			<section id="contact">
+				<h3>Form</h3>
+				<form method="post" action="#">
+					<div class="row uniform 50%">
+						<div class="6u 12u$(small)">
+							<input type="text" name="name" id="name" value="" placeholder="Name" />
+						</div>
+						<div class="6u$ 12u$(small)">
+							<input type="email" name="email" id="email" value="" placeholder="Email" />
+						</div>
+						<div class="12u$">
+							<div class="select-wrapper">
+								<select name="category" id="category">
+									<option value="">- Category -</option>
+									<option value="1">Manufacturing</option>
+									<option value="1">Shipping</option>
+									<option value="1">Administration</option>
+									<option value="1">Human Resources</option>
+								</select>
+							</div>
+						</div>
+						<div class="4u 12u$(medium)">
+							<input type="radio" id="priority-low" name="priority" checked>
+							<label for="priority-low">Low Priority</label>
+						</div>
+						<div class="4u 12u$(medium)">
+							<input type="radio" id="priority-normal" name="priority">
+							<label for="priority-normal">Normal Priority</label>
+						</div>
+						<div class="4u$ 12u$(medium)">
+							<input type="radio" id="priority-high" name="priority">
+							<label for="priority-high">High Priority</label>
+						</div>
+						<div class="6u 12u$(medium)">
+							<input type="checkbox" id="copy" name="copy">
+							<label for="copy">Email me a copy of this message</label>
+						</div>
+						<div class="6u$ 12u$(medium)">
+							<input type="checkbox" id="human" name="human" checked>
+							<label for="human">I am a human and not a robot</label>
+						</div>
+						<div class="12u$">
+							<textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
+						</div>
+						<div class="12u$">
+							<ul class="actions">
+								<li><input type="submit" value="Send Message" class="special" /></li>
+								<li><input type="reset" value="Reset" /></li>
+							</ul>
+						</div>
+					</div>
+				</form>
+			</section>
+
+
+			<h3>Image</h3>
+				<h4>Fit</h4>
+				<div class="box alt">
+					<div class="row 50% uniform">
+						<div class="12u$"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+						<div class="4u"><span class="image fit"><img src="images/thumbs/01.jpg" alt="" /></span></div>
+						<div class="4u"><span class="image fit"><img src="images/thumbs/02.jpg" alt="" /></span></div>
+						<div class="4u$"><span class="image fit"><img src="images/thumbs/03.jpg" alt="" /></span></div>
+						<div class="4u"><span class="image fit"><img src="images/thumbs/04.jpg" alt="" /></span></div>
+						<div class="4u"><span class="image fit"><img src="images/thumbs/05.jpg" alt="" /></span></div>
+						<div class="4u$"><span class="image fit"><img src="images/thumbs/01.jpg" alt="" /></span></div>
+					</div>
+				</div>
+
+		</div>
+	</section>
+    
+{% endblock main %}
