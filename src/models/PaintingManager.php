@@ -8,9 +8,12 @@ class PaintingManager extends Manager {
 	
 	// READ
 	
-	public function getLastTenPaintingImg() {
+	public function getRecentPaintings($max) {
 		$db = $this->dbConnect();
-		$req = $db->query("SELECT title, technic, url FROM paintings p JOIN img i ON i.id = p.img_id ORDER BY creation DESC LIMIT 10");
+		$req = $db->prepare("SELECT title, technic, url FROM paintings p JOIN img i ON i.id = p.img_id ORDER BY creation DESC LIMIT :max");
+
+		$req->bindValue("max", $max, \PDO::PARAM_INT);
+		$req->execute();
 
 		$paintings = array();
 

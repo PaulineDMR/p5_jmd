@@ -10,31 +10,17 @@ class HomeController extends Controller {
 
 	public function carousselImg() {
 
-		$paintingManager = new \jmd\models\PaintingManager();
-		$resp = $paintingManager->getLastTenPaintingImg();
+		$resp = $this->paintingManager->getRecentPaintings($max = 10);
 
-		return $resp;
-
-		
+		return $resp;	
 	}
-
-	
-
-
 
 	public function displayHome() {
 
-		$resp = $this->carousselImg();
+		$resp = $this->paintingManager->getRecentPaintings($max = 10);
 
-		$loader = new \Twig_Loader_Filesystem('src/views');
-		$twig = new \Twig_Environment($loader);
-		$twig->addExtension(new \Twig_Extensions_Extension_Text());
+		$twig = \jmd\models\Twig::initTwig();
 
-		echo $twig->render('homeContent.twig', ['paintings' => $resp]);
-		//echo $twig->render('footerContent.twig', ['posts' => $posts]);
-		//
-		
-
+		echo $twig->render('homeContent.twig', ['paintings' => $resp]);		
 	}
-
 } 
