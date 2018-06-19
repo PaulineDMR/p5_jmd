@@ -46,6 +46,11 @@ class Routeur {
 				}
 			}
 
+			elseif ($request == "contactMe") {
+				$sendMailController = new SendMailController();
+				$sendMailController->contactMe();
+			}
+
 			
 			/* EXEMPLE 
 				if (isset($_GET["id"]) && $_GET["id"] > 0) {
@@ -58,6 +63,7 @@ class Routeur {
 			// ...
 
 			else { // si aucune "action" dans l'url -> que dois afficher la page d'accueil?
+				$homeController = new HomeController();
 				$homeController->displayHome();
 			}
 		}

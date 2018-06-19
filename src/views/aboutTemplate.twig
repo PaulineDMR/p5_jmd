@@ -35,54 +35,33 @@
 				<p><span class="image left map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1935.1415011293943!2d9.300907532398458!3d42.67988180973625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d72e8ab4943943%3A0xfd41c3b272b61c87!2sPlace+Doria%2C+20217+Saint-Florent!5e0!3m2!1sfr!2sfr!4v1528976715846" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus.</p>
 			</section>
 
-			<section id="contact">
-				<h3>Form</h3>
-				<form method="post" action="#">
+			<hr id="contact" />
+
+			<section>
+				<p style="font-weight: bold; color: orange">Décaler le titre vers le bas pour éviter qu'il ne soit cacher lorsque l'on clique sur contact dans le menu</p>
+				<h3>Formulaire de contact</h3>
+				<form method="post" action="index.php?action=contactMe" class="8u 12u$(medium)">
 					<div class="row uniform 50%">
 						<div class="6u 12u$(small)">
-							<input type="text" name="name" id="name" value="" placeholder="Name" />
+							<input type="text" name="name" id="name" value="" placeholder="Votre prénom" required />
 						</div>
 						<div class="6u$ 12u$(small)">
-							<input type="email" name="email" id="email" value="" placeholder="Email" />
+							<input type="email" name="email" id="email" value="" placeholder="mail@example.com" required/>
 						</div>
 						<div class="12u$">
-							<div class="select-wrapper">
-								<select name="category" id="category">
-									<option value="">- Category -</option>
-									<option value="1">Manufacturing</option>
-									<option value="1">Shipping</option>
-									<option value="1">Administration</option>
-									<option value="1">Human Resources</option>
-								</select>
-							</div>
+							<input type="text" name="subject" id="subject" value="" placeholder="Objet" />
 						</div>
-						<div class="4u 12u$(medium)">
-							<input type="radio" id="priority-low" name="priority" checked>
-							<label for="priority-low">Low Priority</label>
-						</div>
-						<div class="4u 12u$(medium)">
-							<input type="radio" id="priority-normal" name="priority">
-							<label for="priority-normal">Normal Priority</label>
-						</div>
-						<div class="4u$ 12u$(medium)">
-							<input type="radio" id="priority-high" name="priority">
-							<label for="priority-high">High Priority</label>
-						</div>
-						<div class="6u 12u$(medium)">
-							<input type="checkbox" id="copy" name="copy">
-							<label for="copy">Email me a copy of this message</label>
+						<div class="12u$">
+							<textarea name="message" id="message" placeholder="Message" rows="6" required></textarea>
 						</div>
 						<div class="6u$ 12u$(medium)">
-							<input type="checkbox" id="human" name="human" checked>
-							<label for="human">I am a human and not a robot</label>
-						</div>
-						<div class="12u$">
-							<textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
+							<input type="checkbox" id="human" name="human" required>
+							<label for="human">Je ne suis pas un robot</label>
 						</div>
 						<div class="12u$">
 							<ul class="actions">
-								<li><input type="submit" value="Send Message" class="special" /></li>
-								<li><input type="reset" value="Reset" /></li>
+								<li><input type="submit" value="Envoyer" class="special" /></li>
+								<li><input type="reset" value="Effacer" /></li>
 							</ul>
 						</div>
 					</div>
@@ -91,6 +70,8 @@
 
 
 			<h3>Image</h3>
+
+			<p style="font-weight: bold; color: orange">Pourquoi pas ajouter quelques Photo de Corse qui pouraient plaire ... ou alors en diaporama en entête de page ...</p> 
 				<h4>Fit</h4>
 				<div class="box alt">
 					<div class="row 50% uniform">

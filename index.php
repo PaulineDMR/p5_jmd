@@ -2,9 +2,12 @@
 
 session_start();
 
-require 'vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 use jmd\controllers\Routeur;
+
+require 'vendor/autoload.php';
 
 
 	if (isset($_GET["action"])) { 
