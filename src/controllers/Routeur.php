@@ -2,9 +2,6 @@
 
 namespace jmd\controllers;
 
-use jmd\controllers\HomeController;
-use jmd\controllers\PortfolioController;
-
 
 class Routeur {
 
@@ -17,39 +14,39 @@ class Routeur {
 	public function renderController() {
 
 		$request = $this->request;
- 
-		//... Création de tous les objets nécessaires
-		$homeController = new HomeController(); // 2
-		$portfolioController = new PortfolioController(); //1
-		$aboutController = new AboutController(); //1
-
-		//Est-il possible de créer une fonction qui instancie tous les objets automatiquement?
 		
-
 		try {
 
 			// Home page 
 			if ($request == "home") {
+				$homeController = new HomeController();
 				$homeController->displayHome();
 			}
 
 			// Portfolio page
 			elseif ($request == "portfolio") {
-
-				$portfolioController->render();
+				$portfolioController = new PortfolioController();
+		 		$portfolioController->render();
 			}
 
 			// About page 
-			if ($request == "about") {
+			elseif ($request == "about") {
+				$aboutController = new AboutController();
 				$aboutController->render();
 			}
 
-			// EXEMPLE
-			/*elseif ($request == "portfolio") {
+			elseif ($request == "blog") {
+				$blogController = new BlogController();
 
-				$portfolioController->render();
-			}*/
+				if (isset($_GET["postId"]) && is_numeric($_GET["postId"])) {
+					$blogController->renderOnePost();
 
+				} else {
+					$blogController->renderHomeBlog();
+				}
+			}
+
+			
 			/* EXEMPLE 
 				if (isset($_GET["id"]) && $_GET["id"] > 0) {
 				$postCommentsController->postComments();
