@@ -51,6 +51,16 @@ class Routeur {
 				$sendMailController->contactMe();
 			}
 
+			elseif ($request == "login") {
+				$loginController = new LoginController();
+				$loginController->login();
+			}
+
+			elseif ($request == "auth") {
+				$loginController = new LoginController();
+				$loginController->authentification();
+			}
+
 			
 			/* EXEMPLE 
 				if (isset($_GET["id"]) && $_GET["id"] > 0) {
