@@ -12,6 +12,7 @@ class Post extends Model {
 	private $creation;
 	private $publication;
 	private $published;
+    private $countComments;
 
 
     /**
@@ -150,4 +151,23 @@ class Post extends Model {
         return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getCountComments()
+    {
+        return $this->countComments;
+    }
+
+    /**
+     * @param int $countComments
+     *
+     * @return self
+     */
+    public function setCountComments($countComments)
+    {
+        $this->countComments = $countComments;
+
+        return $this;
+    }
 }
