@@ -1,0 +1,109 @@
+{% extends 'blogTemplate.twig' %}
+
+
+{% block articles %}
+
+			
+			
+	<div class="8u 12u$(medium)">
+
+	<!-- Content -->
+		<section id="content">
+
+			{% for post in posts %}
+			
+			<h3> {{ post.title }} </h3>
+
+				{% for img in imgs %}
+					
+					{% if img.post_id == post.id %}
+
+					<a href="#" class="image fit"><img src=" {{ img.url }}" alt="photo" /></a>
+
+					{% endif %}
+				    
+				{% endfor %}
+			
+			
+			<p>{{ post.content }}</p>
+
+			<p>Publié le {{ post.publication }}</p>
+
+			<p>{{ post.countComments }} Commentaire(s)</p>
+
+			<p style="color: orange; font-weight: bold">AJOUTER UN BOUTON "READ MORE OU LIRE L'ARTICLE" AINSI QUE LE LOGO P DE PINTEREST;
+			Faire une mise en forme avec miniture de l'article, extrait de contenu.</p>
+
+			<footer>
+				<ul class="actions">
+					<li><a href="index.php?action=blog&amp;postId={{ post.id }}" class="button small alt">Lire la suite ...</a></li>
+				</ul>
+			</footer>
+
+			<hr>
+ 
+			{% endfor %}
+
+		</section>
+	</div>
+    
+{% endblock articles %}
+
+
+{% block portfolio %}
+
+		{% for painting in paintings %}
+
+			
+				<img src=" {{ painting.url }} " alt="Peinture de Jeanne-Marie Desmares" style="width : 30%">
+			
+		    
+		{% endfor %}
+	
+		<p style="color: orange; font-weight: bold">Redimensionner les photos pour obtenir 2 lignes de 3 tableaux (responsive)</p>
+    
+{% endblock %}
+
+
+{% block categories %}
+
+	<ul class="alt category">
+
+		{% for category in categories %}
+		 
+		<li>
+			<a href="index.php?action=blog&amp;category={{ category.name | lower }}">
+				<p> {{ category.name }} </p>
+				<span> {{ category.post_id }} </span>
+			</a>
+		</li>
+
+		{% endfor %}
+		
+	</ul>
+
+
+    
+{% endblock %}
+
+
+{% block recentPosts %}
+
+	<ul>
+
+		{% for post in posts %}
+
+		<li>
+			<h6> {{ post.title }} </h6>
+			<p> {{ post.publication }} </p>
+		</li>
+		    
+		{% endfor %}
+
+	</ul>
+
+	<p style="color: orange; font-weight: bold">Les 5 derniers posts, du plus récents, titre, date de publication, et c'est tout.
+	A revoir car pour le moment les posts sont les 5 de la page 1 etc. Il faut une autres méthodes pour ceux-la (getRecentPosts(5) ). </p>
+    
+{% endblock %}
+

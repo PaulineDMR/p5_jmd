@@ -1,0 +1,120 @@
+{% extends 'frontendLayout.twig' %}
+
+
+{% block title %}
+
+Blog - {{ parent() }}
+
+{% endblock title%}
+
+
+{% block head %} 
+	
+	<link rel="stylesheet" href="assets/css/blog.css" />
+
+{% endblock head %}
+
+
+{% block main %}
+
+	<section id="main">
+		<div class="container">
+			<header class="major">
+				<h2>BLOG</h2>
+				<p>SUIVEZ LES BALLADES, TRAVAUX DE L'ARTISTE ET PLONGEZ DANS SON UNIVERS DE LUMIÈRES ET PAYSAGES CORSES</p>
+			</header>
+
+			<div class="row 200%">
+
+				{% block articles %}
+				    
+				{% endblock articles %}
+
+				
+
+				<div class="4u$ 12u$(medium)">
+
+				<!-- Sidebar -->
+					<section id="sidebar">
+						<section>
+							<h4>A propos</h4>
+							<a href="#" class="image fit"><img src="http://localhost:8888/jmd/assets/img/atelier_02.jpg" alt="Photo de Jeanne-Marie Desmares" /></a>
+							<p style="color: orange; font-weight: bold">Extrait de la bio de Jeanne-Marie, ou petit texte de présentation dui qui de quoi etc... De quoi parle ce blog ...<br/>
+							Et important !! il faudrait une petite photo aussi ...<br/>
+							Et enfin, changer la couleur des titre de section de la sidebar (un genre de kaki doré ferait l'affaire) et également le trait qui entoure les boutons de la même couleur et plus fin.</p>
+							<footer>
+								<ul class="actions">
+									<li><a href="index.php?action=about" class="button small alt">Découvrir l'Artiste</a></li>
+								</ul>
+							</footer>
+						</section>
+
+						<hr />
+						<section>
+							<p>Block de recherche dans les articles du blog, à voir pour la mise en oeuvre.</p>
+							<footer>
+								<ul class="actions">
+									<li><a href="#" class="button small alt">Rechercher</a></li>
+								</ul>
+							</footer>
+						</section>
+
+						<hr />
+						<section>
+							<h4>Les oeuvres récentes</h4>
+
+							{% block portfolio %}
+							    
+							{% endblock %}
+
+							<footer>
+								<ul class="actions">
+									<li><a href="index.php?action=portfolio" class="button small alt">Portfolio</a></li>
+								</ul>
+							</footer>
+						</section>
+
+						<hr />
+						<section>
+							<h4>Catégories</h4>
+
+							{% block categories %}
+							    
+							{% endblock %}
+
+						</section>
+
+						<hr />
+						<section>
+							<h4>Articles récents</h4>
+
+							{% block recentPosts %}
+							    
+							{% endblock %}
+
+						</section>
+
+						<hr />
+						<section>
+							<h4>ENVOYER UN MAIL</h4>
+							<footer>
+								<ul class="actions">
+									<li><a href="#">Mail</a></li>
+								</ul>
+							</footer>
+						</section>	
+					</section>
+				</div>
+			</div>
+		</div>
+	</section>
+
+			    
+{% endblock main%}
+
+
+{% block script %}
+
+			    
+{% endblock script %}
+

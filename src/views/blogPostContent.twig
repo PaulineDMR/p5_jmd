@@ -1,0 +1,146 @@
+{% extends 'blogTemplate.twig' %}
+
+
+{% block articles %}
+
+			
+			
+	<div class="8u 12u$(medium)">
+
+	<!-- Content -->
+		<section id="content">
+
+			{% for post in post %}
+			
+			<h3> {{ post.title }} </h3>
+
+				{% for img in imgs %}
+					
+					{% if img.post_id == post.id %}
+
+					<a href="#" class="image fit"><img src=" {{ img.url }}" alt="photo" /></a>
+
+					{% endif %}
+				    
+				{% endfor %}
+			
+			
+			<p>{{ post.content }}</p>
+
+			<p>Publié le {{ post.publication }}</p>
+
+			<p>{{ post.countComments }} Commentaire(s)</p>
+
+			<p style="color: orange; font-weight: bold">AJOUTER LE LOGO P DE FBK, Twitter, g+, PINTEREST;
+				Nbre de commentaires
+			COMMENTAIRES et ajout + signalement</p>
+
+			<hr>
+ 
+			{% endfor %}
+
+			<div id="add-comment">
+				<img src="assets/img/chat.svg" alt="chat icon">
+				<h3>Laissez un commentaire</h3>
+
+				<form method="post" action="index.php?action=comment&amp;id={{ post.id }}">
+					<label for="name">Votre prénom : <input class="comment-form" type="text" name="name" id="name" placeholder="Mon Prénom" required></label><br>
+					<br>
+					<label for="comment">Votre commentaire :</label><br>
+					<textarea class="comment-form" name="comment" id="comment" required></textarea><br>
+					<input type="submit" value="Valider">
+				</form>
+			
+			</div>
+
+
+
+			<h3>Commentaires précédents</h3>
+
+			<p style="color: orange; font-weight: bold">Coder le CommentManager pour récupérer les commentaires en fonction de l'id du post. Rappel, si le commentaire est signalé, NE PAS l'afficher. !!! Faire la mise en page !!!</p>
+
+		{% for comment in comments %}
+		    {% if comment.reported == false %}
+
+			<div id="comment-container">
+				<h4>Le {{ comment.date }} <span>{{ comment.prenom }}</span> a écrit
+				</h4>
+
+				<p>{{ comment.content }}</p>
+
+				{% if comment.validated %}
+
+					<form method="POST" action="index.php?action=warning&amp;id={{ post.id }}&amp;commentId={{ comment.id }}">
+						<input type="submit" value="Signaler">
+					</form>	
+
+				{% endif %}
+
+			</div>			    	
+
+		    {% endif %}
+		{% endfor %}
+
+		</section>
+	</div>
+    
+{% endblock articles %}
+
+
+{% block portfolio %}
+
+		{% for painting in paintings %}
+
+			
+				<img src=" {{ painting.url }} " alt="Peinture de Jeanne-Marie Desmares" style="width : 30%">
+			
+		    
+		{% endfor %}
+	
+		<p style="color: orange; font-weight: bold">Redimensionner les photos pour obtenir 2 lignes de 3 tableaux (responsive)</p>
+    
+{% endblock %}
+
+
+{% block categories %}
+
+	<ul class="alt category">
+
+		{% for category in categories %}
+		 
+		<li>
+			<a href="index.php?action=blog&amp;category={{ category.name | lower }}">
+				<p> {{ category.name }} </p>
+				<span> {{ category.post_id }} </span>
+			</a>
+		</li>
+
+		{% endfor %}
+		
+	</ul>
+
+
+    
+{% endblock %}
+
+
+{% block recentPosts %}
+
+	<ul>
+
+		{% for post in posts %}
+
+		<li>
+			<h6> {{ post.title }} </h6>
+			<p> {{ post.publication }} </p>
+		</li>
+		    
+		{% endfor %}
+
+	</ul>
+
+	<p style="color: orange; font-weight: bold">Les 5 derniers posts, du plus récents, titre, date de publication, et c'est tout.
+	A revoir car pour le moment les posts sont les 5 de la page 1 etc. Il faut une autres méthodes pour ceux-la (getRecentPosts(5) ). </p>
+    
+{% endblock %}
+
