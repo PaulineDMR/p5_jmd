@@ -1,6 +1,6 @@
 <?php 
 
-namespace jmd\models;
+namespace jmd\models\managers;
 
 class PaintingManager extends Manager {
 
@@ -18,7 +18,7 @@ class PaintingManager extends Manager {
 		$paintings = array();
 
 		while ($data = $req->fetch()) {
-			$painting = new Painting();
+			$painting = new \jmd\models\entities\Painting();
 			$painting->hydrate($data);
 			$paintings[] = $painting;
 		}

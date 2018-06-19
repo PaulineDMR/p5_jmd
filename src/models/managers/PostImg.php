@@ -1,6 +1,6 @@
 <?php 
 
-namespace jmd\models;
+namespace jmd\models\managers;
 
 class PostImg extends Model {
 
