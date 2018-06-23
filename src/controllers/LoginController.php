@@ -57,16 +57,4 @@ class LoginController extends Controller {
 		}
 	
 	}
-	/*public function LoginPage() {
-
-		$msg = "";
-		$twig = \jmd\models\Twig::initTwig();
-
-		//var_dump($postImgs);
-		echo $twig->render('blogContent.twig', [
-			"imgs" => $postImgs,
-			"posts" => $posts,
-			"paintings" => $paintings,
-			"categories" => $categories]);# code...
-	}*/
 }
