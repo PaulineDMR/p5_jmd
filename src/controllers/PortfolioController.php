@@ -24,7 +24,7 @@ class PortfolioController extends Controller {
 		$group2 = $this->groupPaintings($paintings, $group = 2);
 		$group3 = $this->groupPaintings($paintings, $group = 3);
 
-		$twig = \jmd\models\Twig::initTwig();
+		$twig = \jmd\models\Twig::initTwig("src/views/");
 
 		echo $twig->render("portfolioContent.twig",
 			[

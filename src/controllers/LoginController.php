@@ -22,7 +22,7 @@ class LoginController extends Controller {
 	public function login() {
 		$msg = $this->errorLoginMsg;
 		
-		$twig = \jmd\models\Twig::initTwig();
+		$twig = \jmd\models\Twig::initTwig("src/views/");
 
 		echo $twig->render('loginTemplate.twig', [
 			"msg" => $msg]);	

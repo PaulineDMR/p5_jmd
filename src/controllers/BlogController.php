@@ -61,7 +61,7 @@ class BlogController extends Controller {
 		
 		$postImgs = $this->postImgManager->getPostImg(2);
 
-		$twig = \jmd\models\Twig::initTwig();
+		$twig = \jmd\models\Twig::initTwig("src/views/");
 
 		//var_dump($postImgs);
 		echo $twig->render('blogContent.twig', [
@@ -82,7 +82,7 @@ class BlogController extends Controller {
 		
 		$postImgs = $this->postImgManager->getPostImg();
 
-		$twig = \jmd\models\Twig::initTwig();
+		$twig = \jmd\models\Twig::initTwig("src/views/");
 
 		//var_dump($postImgs);
 		echo $twig->render('blogPostContent.twig', [

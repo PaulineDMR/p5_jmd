@@ -19,7 +19,7 @@ class HomeController extends Controller {
 
 		$resp = $this->paintingManager->getRecentPaintings($max = 10);
 
-		$twig = \jmd\models\Twig::initTwig();
+		$twig = \jmd\models\Twig::initTwig("src/views/");
 
 		echo $twig->render('homeContent.twig', ['paintings' => $resp]);		
 	}
