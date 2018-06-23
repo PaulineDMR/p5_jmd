@@ -19,7 +19,7 @@ class CategoryManager extends Manager {
 		$categories = array();
 
 		while ($data = $req->fetch()) {
-			$category = new Category();
+			$category = new \jmd\models\entities\Category();
 			$category->hydrate($data);
 			$categories[] = $category;
 
@@ -38,7 +38,7 @@ class CategoryManager extends Manager {
 		$categories = array();
 
 		while ($data = $req->fetch()) {
-			$category = new Category();
+			$category = new \jmd\models\entities\Category();
 			$category->hydrate($data);
 			$categories[] = $category;
 		}

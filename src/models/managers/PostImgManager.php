@@ -17,7 +17,7 @@ class PostImgManager extends Manager {
 		$postImgs = array();
 
 		while ($data = $req->fetch()) {
-			$postImg = new PostImg();
+			$postImg = new \jmd\models\entities\PostImg();
 			$postImg->hydrate($data);
 			$postImgs[] = $postImg;
 		}

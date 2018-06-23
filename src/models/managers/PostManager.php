@@ -10,15 +10,15 @@ class PostManager extends Manager {
 	
 	public function getRecentPosts($max) {
 		$db = $this->dbConnect();
-		$req = $db->prepare('SELECT title, content, publication FROM jmd_posts WHERE published = TRUE AND user_id = 1 ORDER BY publication DESC LIMIT :max');
+		$req = $db->prepare('SELECT title, content, publication FROM posts WHERE published = TRUE ORDER BY publication DESC LIMIT :max');
 
-		$req->bindValue('max', $max, PDO::PARAM_INT);
+		$req->bindValue('max', $max, \PDO::PARAM_INT);
 		$req->execute();
 		
 		$posts = array();
 
 		while ($data = $req->fetch()) {
-			$post = new Post();
+			$post = new \jmd\models\entities\Post();
 			$post->hydrate($data);
 			$posts[] = $post;
 		}
@@ -56,7 +56,7 @@ class PostManager extends Manager {
 		$posts = array();
 
 		while ($data = $resp->fetch()) {
-			$post = new Post;
+			$post = new \jmd\models\entities\Post;
 			$post->hydrate($data);
 			$posts[] = $post;
 		}
@@ -87,7 +87,7 @@ class PostManager extends Manager {
 		$posts = array();
 
 		while ($data = $resp->fetch()) {
-			$post = new Post;
+			$post = new \jmd\models\entities\Post;
 			$post->hydrate($data);
 			$posts[] = $post;
 		}
@@ -110,7 +110,7 @@ class PostManager extends Manager {
 		$postX = array();
 
 		$data = $req->fetch();
-		$post = new Post;
+		$post = new \jmd\models\entities\Post;
 		$post->hydrate($data);
 		$postX[] = $post;
 
