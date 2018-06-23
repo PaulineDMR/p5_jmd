@@ -41,7 +41,7 @@ class LoginController extends Controller {
 					
 					$_SESSION["authentification"] = TRUE;
 
-					header("Location: index.php?action=homeAdmin");
+					header("Location: index.php?action=mainAdmin");
 
 				} else {
 					$_SESSION["authentification"] = false;
