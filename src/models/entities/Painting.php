@@ -15,7 +15,8 @@ class Painting extends Model {
 	private $theme;
 	private $technic;
 	private $creation;
-
+    private $published;
+    private $count;
 
 
     /**
@@ -217,6 +218,47 @@ class Painting extends Model {
     public function setDate($creatione)
     {
         $this->creation = $creation;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * @param bool $published
+     *
+     * @return self
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param int $count
+     *
+     * @return self
+     */
+    public function setCount($count)
+    {
+        $this->count = $count;
 
         return $this;
     }
