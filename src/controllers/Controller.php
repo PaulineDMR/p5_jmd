@@ -9,8 +9,8 @@ class Controller {
 	protected $postImgManager;
 	protected $categoryManager;
 	protected $adminManager;
-	
-	//protected $adminManager;
+	protected $commentManager;
+
 
 	public function __construct() {
 		$this->postManager = new \jmd\models\managers\PostManager();
@@ -18,6 +18,7 @@ class Controller {
 		$this->postImgManager = new \jmd\models\managers\PostImgManager();
 		$this->categoryManager = new \jmd\models\managers\CategoryManager();
 		$this->adminManager = new \jmd\models\managers\AdminManager();
+		$this->commentManager = new \jmd\models\managers\CommentManager();
 
 	}
 }
