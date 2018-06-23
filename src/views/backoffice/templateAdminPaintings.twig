@@ -1,0 +1,37 @@
+{% extends 'layoutBackoffice.twig' %}
+
+
+{% block main %}
+
+
+
+		{% if action == "addPainting" %}
+
+		<h3 class="content-header">Ajouter un tableau</h3>
+
+		<div class="content-link">
+			<a href="index.php?action=adminPaintings"><i class="fa fa-pencil-square-o"></i>Gerer mes tableaux</a>
+		</div>
+
+		{% elseif action == "adminPaintings"%}
+		
+		<h3 class="content-header">Mes Oeuvres</h3>
+		
+		<div class="content-link">
+			<a href="index.php?action=addPainting"><i class="fa fa-plus-square-o"></i>Ajouter un tableau</a>
+		</div>
+		 
+		{% endif %}
+		
+
+{% block content %}
+    
+{% endblock content%}
+
+
+{% block pagination %}
+    
+{% endblock pagination %}
+
+    
+{% endblock %}

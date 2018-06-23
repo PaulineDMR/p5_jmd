@@ -1,0 +1,54 @@
+{% extends 'layoutBackoffice.twig' %}
+
+{% block title %}
+
+	Espace administration
+    
+{% endblock title %}
+
+
+{% block main %}
+
+	<div style="background-color: white">
+		<h4>Bienvenue Jeanne-Marie</h4>
+		<h5>Que souhaitez-vous faire ?</h5>
+
+		<ul>
+			<li><a href="#">modifier les informmations d'un tableau</a></li>
+			<li><a href="#">Ajouter un tableau</a></li>
+			<li><a href="#">Gérer vos commentaires</a></li>
+			<li><a href="#">Ecrire un article</a></li>
+			<li><a href="#">Répondre à un commentaire</a></li>
+			<li><a href="#">Publier un article en attente</a></li>
+		</ul>
+	</div>
+
+	<div>
+		<h5>Dernier article publié</h5>
+
+		{% block lastPost %}
+		    
+		{% endblock %}
+
+	</div>
+
+	<div>
+		<h5>Dernier commentaire reçu</h5>
+
+		{% block lastComment %}
+		    
+		{% endblock %}
+
+	</div>
+		
+	<div>
+		<h5>Dernier Like (Facultatif)</h5>
+
+		{% block lastLike %}
+		    
+		{% endblock %}
+
+	</div>
+    
+{% endblock main %}
+	

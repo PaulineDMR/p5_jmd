@@ -1,0 +1,32 @@
+{% extends 'templateBackHome.twig' %}
+
+
+{% block lastPost %}
+
+	{% for post in posts %}
+
+		<p>{{ post.title }}</p>
+		<p>{{ post.publication }}</p> 
+
+	{% endfor %}
+
+{% endblock %}
+
+
+{% block lastComment %}
+
+		{% for comment in comments %}
+
+		<p>Le {{ comment.creation }}</p>
+		<p>{{ comment.prenom }} a écrit</p>
+		<p>{{ comment.content }}</p>
+		<p>au sujet de l'article {{ comment.post_title }}</p>
+		 
+		{% endfor %}
+	
+{% endblock %}  
+
+
+{% block lastLike %}
+		    
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'templateAdminPaintings.twig' %}
+
+
+{% block content %}
+
+	<div class="box alt">
+		<div class="row paintings-card">
+    
+			{% for painting in paintings %}
+			    {% if loop.index % 4 == 0 %}
+				
+				<div class="3u$ 12u$(small) paintings last-card">
+
+				{% else %}
+				
+				<div class="3u 12u(small) paintings">   
+
+			    {% endif %}
+				
+					<span class="image fit">
+						<img src="{{ painting.url }}" alt="Peinture de Jeanne-Marie Desmares" />
+					</span>
+					<div class="text">
+						<p><span class="champs">Titre :</span> {{ painting.title }}</p>
+						<p><span class="champs">Dim :</span>
+
+							{% if painting.width is not null %}
+ 								larg. {{ painting.width }} cm x haut. {{ painting.height }} cm
+							{% endif %}
+
+						</p>
+						<p><span class="champs">Date de réalisation :</span> {{ painting.creation }}</p>
+						<p><span class="champs">Technique :</span> {{ painting.technic }}</p>
+						<p><span class="champs">Prix :</span> {{ painting.price }} €</p>
+						<p><span class="champs">Vendu : </span>
+
+							{% if not painting.sold %}
+								Non
+							{% else %}
+							    Oui
+							{% endif %}
+
+						</p>
+						<p><span class="champs">Publié : </span>
+
+							{% if not painting.published %}
+								Non
+							{% else %}
+							    Oui
+							{% endif %}
+
+						</p>
+					</div>
+
+					<div id="actions">	
+						<button>Modifier</button>
+						<button>Publier</button>
+						<button>Supprimer</button>
+					</div>	
+				</div>			
+
+			{% endfor %}
+
+		</div>
+	</div>
+
+{% endblock %}
+
+
+{% block pagination %}
+
+	<section>
+		<div id="pagination">
+			<div>
+				<a href="index.php?action=adminPaintings&amp;page=1"><i class="fa fa-angle-double-left">
+				</i></a>
+			</div>
+				
+			<div>
+				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == 1 %} {{pageNumber}} {% else %}  {{pageNumber - 1}} {% endif %}"><i class="fa fa-angle-left">
+				</i></a>
+			</div>
+
+			<div>
+				<p> {{ pageNumber }}/{{ numberOfPages }} </p>
+			</div>
+			
+			<div>
+				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == numberOfPages %} {{pageNumber}} {% else %}  {{pageNumber + 1}} {% endif %}"><i class="fa fa-angle-right">
+				</i></a>
+			</div>
+
+			<div>
+				<a href="index.php?action=adminPaintings&amp;page={{ numberOfPages }}"><i class="fa fa-angle-double-right"></i></a>
+				</i>
+			</div>
+
+		</div>
+	</section>
+
+    
+{% endblock %}
+
+
+
+
+

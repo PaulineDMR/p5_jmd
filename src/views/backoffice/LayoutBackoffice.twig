@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block title %} Espace administration {% endblock title%}</title>
+		<meta charset="utf-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/admin.css">
+
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+
+		{% block head %} {% endblock head %}
+
+		<!-- AJOUTER UNE META "DESCRIPTION" -->
+	</head>
+
+	<body>
+
+		<!-- Header -->
+
+		<div id="header">
+			<h1 id="logo"><a href="index.php">JMD</a></h1>
+			<nav id="nav">
+				<ul>
+					<li><a href="index.php">Home</a></li>
+					
+					<li><a href="index.php?action=logout" class="button alt">Quitter</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<!-- Main Content -->
+		<section id="main">
+			<div class="container">
+				<header class="major">
+					<h2>Espace Administrateur</h2>
+					<p style="color: orange; font-weight: bold">mettre une image en fond ou dessous</p>
+				</header>
+
+				<div class="row 200% main-content">
+
+					<!-- Sidebar -->
+					<div class="3u 12u$(medium)">		
+						<section id="sidebar">
+							<section>
+								<h3>MENU</h3>
+								<p style="color: orange; font-weight: bold">Faire une feuille de style et enlever les points de la liste (list-style: none et text decoration : none pour les liens.). Idéalement ajouter un id #menu-sidebar à la section et lui attribuer le style</p>
+								<nav id="nav">
+									<ul>
+										<li><a href="index.php?action=mainAdmin" class="icon fa-home">Accueil</a></li>
+										<li><a href="index.php?action=adminPaintings">Mes Oeuvres</a></li>
+										<li><a href="index.php?action=adminPosts">Mes Articles</a></li>
+										<li><a href="index.php?action=adminComments">Les Commentaires</a></li>
+										<hr>
+										<li><a href="index.php?action=addPainting">Ajouter un Tableau</a></li>
+										<li><a href="index.php?action=writePost">Ecrire un article</a></li>
+										<hr>
+										<li><a href="index.php?action=myAccount" class="icon fa-user">Mon Compte</a></li>
+									</ul>
+								</nav>
+								<footer>
+									<ul class="actions">
+										<li><a href="index.php?action=logout" class="button alt icon fa-sign-out">Me deconnecter</a></li>
+									</ul>
+								</footer>
+							</section>	
+						</section>
+					</div>
+
+					<!-- MAIN Content -->
+					<div class="9u 12u$(medium)">
+
+						<section id="content">
+									
+							{% block main %}
+						    
+							{% endblock main %}
+
+						</section>
+
+					</div>
+				</div>
+			</div>
+		</section>
+	
+		
+		<!-- Footer -->
+		<div id="footer">
+			<div class="copyright">
+				&copy; Untitled. All rights reserved.
+			</div>
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.onvisible.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+			{% block script %}
+			    
+			{% endblock script %}
+
+	</body>
+</html>

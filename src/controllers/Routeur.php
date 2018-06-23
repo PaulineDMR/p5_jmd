@@ -61,6 +61,32 @@ class Routeur {
 				$loginController->authentification();
 			}
 
+			elseif ($request == "mainAdmin") {
+				$adminController = new AdminController();
+				$adminController->renderMainAdmin();
+			}
+
+
+			elseif ($request == "adminPaintings") {
+				$paintingsAdminController = new AdminPaintingsController();
+				$paintingsAdminController->renderPaintingsAdmin();
+			}
+
+			elseif ($request == "addPainting") { //Mettre l'ajout dans la même page que Paintings Admin, genre en dessous de la liste des tableaux
+				$paintingsAdminController = new AdminPaintingsController();
+				if (isset($_GET["img"]) && $_GET["img"] == "check") {
+					$paintingsAdminController->upload();
+				} elseif (isset($_GET["img"]) && $_GET["img"] == "delete") {
+					$paintingsAdminController->delete();
+				} elseif (isset($_GET["img"]) && $_GET["img"] == "record") {
+					$paintingsAdminController->newPainting();	
+				} else {
+					$paintingsAdminController->renderAddPainting();
+				}
+
+			}
+
+			
 			
 			/* EXEMPLE 
 				if (isset($_GET["id"]) && $_GET["id"] > 0) {
