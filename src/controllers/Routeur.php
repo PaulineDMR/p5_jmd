@@ -86,7 +86,21 @@ class Routeur {
 
 			}
 
-			
+			elseif ($request == "modifyPainting") {
+				if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+					$paintingsAdminController = new AdminPaintingsController();
+					$paintingsAdminController->displayModify($_GET["id"]);
+
+				}
+			}
+
+			elseif ($request == "updatePainting") {
+				if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+					$paintingsAdminController = new AdminPaintingsController();
+					$paintingsAdminController->updatePainting();
+
+				}
+			}
 			
 			/* EXEMPLE 
 				if (isset($_GET["id"]) && $_GET["id"] > 0) {

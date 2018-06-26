@@ -135,16 +135,6 @@ class AdminPaintingsController {
 		return $id;		
 	}
 
-
-	public function addPaintings() {
-	
-		//récupérer le titre, dim, prix etc
-		//Verifier la validité des données
-		//ajouter le tout en base de donner
-		//
-		
-	}
-
 	public function newPainting() {
 
 		$img_id = $this->addImg();

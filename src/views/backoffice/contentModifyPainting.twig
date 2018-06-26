@@ -1,0 +1,76 @@
+{% extends 'templateAdminPaintings.twig' %}
+
+
+{% block title %}
+
+	JMD - Espace administration
+    
+{% endblock %}
+
+
+{% block content %}
+
+	<div id="painting-form">
+		<div class="form-section">
+			<div style="width: 15em; overflow: hidden" >
+				<img src="{{ painting.url }}" style="width: 100%" alt="Peinture de Jeanne-Marie Desmares">
+			</div>
+		</div>
+		<form action="index.php?action=updatePainting&amp;id={{ painting.id }}" method="POST" class="form-section">
+			<h4>Informations du tableau</h4>
+
+			<label for="title">Titre de l'oeuvre :<input type="text" name="title" value="{{ painting.title }}" class="painting-fields"></label>
+
+			<label for="width">Largeur :<input type="text" name="width" value="{{ painting.width }}" class="painting-fields"></label>
+			<label for="height">Hauteur :<input type="text" name="height" value="{{ painting.height }}" class="painting-fields"></label>
+			
+
+			<label for="creation">Date de réalisation :<input type="text" name="creation" value="{{ painting.creation }}" class="painting-fields"></label>
+			<label for="technic">Technique :<input type="text" name="technic" value="{{ painting.technic }}"></label>
+			<label for="price">Prix :<input type="text" name="price" value="{{ painting.price }}" class="painting-fields"></label>
+			<label for="theme">Thème :<input type="text" name="theme" value="{{ painting.theme }}" class="painting-fields"></label>
+
+			<label for="category">Choisir une categorie :
+
+			{% if painting.category is not null %}
+				
+			<input type="text" name="category" value="{{ painting.category }}" class="painting-fields">
+
+			{% else %}
+			    
+			<select name="category" class="painting-fields">
+					<option value="paysage">Paysage</option>
+					<option value="scene">Scene</option>
+					<option value="abstrait">Abstrait</option>
+			</select>	
+			
+			{% endif %}
+
+			</label>
+
+			<div>
+				<label for="sold">Le tableau est-il vendu ?
+			
+					<input type="radio" name="sold" value="true" id="sold-true" {% if painting.sold %} checked {% endif %}>
+					<label for="sold-true">OUI</label>
+
+					<input type="radio" name="sold" value="false" id="sold-false" {% if painting.sold == false %} checked {% endif %}>
+					<label for="sold-false">NON</label>
+				</label>
+
+			<div>
+				<label for="published">Voulez le rendre public ?
+					<input type="radio" name="published" value="true" id="published-true" {% if painting.published %} checked {% endif %}>
+					<label for="published-true">OUI</label>
+
+					<input type="radio" name="published" value="false" id="published-false" {% if painting.published == false %} checked {% endif %}>
+					<label for="published-false">NON</label>	
+				</label>
+			</div>
+
+			
+			<button type="submit" name="submit" class="button special icon fa-checked">Enregister</button>
+		</form>		
+	</div>
+    
+{% endblock %}
