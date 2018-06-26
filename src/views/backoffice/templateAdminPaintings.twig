@@ -20,6 +20,16 @@
 		<div class="content-link">
 			<a href="index.php?action=addPainting"><i class="fa fa-plus-square-o"></i>Ajouter un tableau</a>
 		</div>
+
+		{% elseif action == "modifyPainting"%}
+		
+		<h3 class="content-header">Modifier une fiche tableau</h3>
+		<div class="content-link">
+			<a href="index.php?action=adminPaintings"><i class="fa fa-pencil-square-o"></i>Gerer mes tableaux</a>
+		</div>
+		<div class="content-link">
+			<a href="index.php?action=addPainting"><i class="fa fa-plus-square-o"></i>Ajouter un tableau</a>
+		</div>
 		 
 		{% endif %}
 		

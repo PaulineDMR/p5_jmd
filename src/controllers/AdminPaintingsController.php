@@ -153,7 +153,101 @@ class AdminPaintingsController {
 		$resp = $paintingManager->addPainting($title, $width, $height, $img_id, $creation, $technic, $price, $theme, $category, $sold, $published);
 
 		header("location:index.php?action=adminPaintings");
-	}	
+	}
+
+	public function displayModify($id) {
+		$paintingManager = new \jmd\models\managers\PaintingManager();
+		$painting = $paintingManager->getOnePainting($id);
+
+		$action = $_GET["action"];
+
+		$twig = \jmd\models\Twig::initTwig("src/views/backoffice/");
+		
+		echo $twig->render('contentModifyPainting.twig', [
+			"painting" => $painting,
+			"action" => $action]);
+	}
+
+	public function updatePainting() {
+
+		$id = $_GET["id"];
+
+		$title;
+		$width;
+		$height;
+		$creation;
+		$technic;
+		$price;
+		$theme;
+		$category;
+		$sold;
+		$published;
+
+		if (empty($_POST["title"])) {
+			$title = null;
+		} else {
+			$title = $_POST["title"];
+		}
+
+		if (empty($_POST["width"])) {
+			$width = 0;
+		} else {
+			$width = $_POST["width"];
+		}
+
+		if (empty($_POST["height"])) {
+			$height = 0;
+		} else {
+			$height = $_POST["height"];
+		}
+
+		if (empty($_POST["creation"])) {
+			$creation = null;
+		} else {
+			$creation = $_POST["creation"];
+		}
+
+		if (empty($_POST["technic"])) {
+			$technic = null;
+		} else {
+			$technic = $_POST["technic"];
+		}
+
+		if (empty($_POST["price"])) {
+			$price = null;
+		} else {
+			$price = $_POST["price"];
+		}
+
+		if (empty($_POST["theme"])) {
+			$theme = null;
+		} else {
+			$theme = $_POST["theme"];
+		}
+
+		if (empty($_POST["category"])) {
+			$category = null;
+		} else {
+			$category = $_POST["category"];
+		}
+
+		if (empty($_POST["sold"])) {
+			$sold = null;
+		} else {
+			$sold = $_POST["sold"];
+		}
+
+		if (empty($_POST["published"])) {
+			$published = null;
+		} else {
+			$published = $_POST["published"];
+		}
+
+		$paintingManager = new \jmd\models\managers\PaintingManager();
+		$painting = $paintingManager->updateOnePainting($id, $title, $width, $height, $creation, $technic, $price, $theme, $category, $sold, $published);
+
+		header("location:index.php?action=adminPaintings");
+		}	
 }
 
 		
