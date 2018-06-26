@@ -24,7 +24,7 @@ class PaintingManager extends Manager {
 		$resp = $req->execute();
 
 		if ($resp === false) {
-			throw new \Exception("Impossible d'ajouter le tableau à la base de donnée", 1);
+			throw new \Exception("Impossible d'ajouter le tableau à la base de données", 1);
 		} else {
 			return $resp;
 		}
