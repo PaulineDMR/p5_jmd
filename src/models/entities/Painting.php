@@ -33,8 +33,8 @@ class Painting extends Model {
      * @return self
      */
     public function setId($id) {
-        if (!is_int($id) || $id < 0) {
-            throw new Exception("L'id n'est pas valide", 1);    
+        if (!is_numeric($id) || $id < 0) {
+            throw new \Exception("L'id n'est pas valide", 1);    
         }
 
         $this->id = $id;
