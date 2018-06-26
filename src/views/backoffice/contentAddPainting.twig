@@ -14,12 +14,12 @@
 	
 		{% if img is not null %}
 
-		<form action="index.php?action=addPainting&amp;img=delete&amp;name={{ name }}" method="POST" enctype="multipart/form-data">
+		<form action="index.php?action=addPainting&amp;img=delete&amp;name={{ name }}" method="POST" enctype="multipart/form-data" class="form-section">
 			<div style="width: 15em; overflow: hidden"><img src="{{ url }}" style="width: 100%" alt="Peinture de Jeanne-Marie Desmares"></div>
 			<button  type="submit" name="submit" class="button alt icon fa-trash">Supprimer</button>
 		</form>	
 
-		<form action="index.php?action=addPainting&amp;img=record&amp;name={{ name }}" method="POST">
+		<form action="index.php?action=addPainting&amp;img=record&amp;name={{ name }}" method="POST" class="form-section">
 			<h4>2 - Entrer les informations du tableau</h4>
 
 			<label for="title">Titre de l'oeuvre :<input type="text" name="title" placeholder="Titre" class="painting-fields"></label>
