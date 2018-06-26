@@ -18,8 +18,8 @@ class PaintingManager extends Manager {
 		$req->bindValue("price", $price, \PDO::PARAM_INT);
 		$req->bindValue("theme", $theme, \PDO::PARAM_STR);
 		$req->bindValue("category", $category, \PDO::PARAM_STR);
-		$req->bindValue("sold", $sold, \PDO::PARAM_INT);
-		$req->bindValue("published", $published, \PDO::PARAM_INT);
+		$req->bindValue("sold", $sold, \PDO::PARAM_STR);
+		$req->bindValue("published", $published, \PDO::PARAM_STR);
 
 		$resp = $req->execute();
 
@@ -104,7 +104,7 @@ class PaintingManager extends Manager {
 
 	public function getOnePainting($id) {
 		$db = $this->dbConnect();
-		$req = $db->prepare("SELECT p.id as id, title, width, height, technic, creation, price, theme, category, sold, published, url FROM paintings p JOIN img i ON p.img_id = i.id WHERE p.id = :id");
+		$req = $db->prepare("SELECT p.id as id, title, width, height, technic, creation, price, theme, category, sold, published, url, img_id FROM paintings p JOIN img i ON p.img_id = i.id WHERE p.id = :id");
 
 		$req->bindValue("id", $id, \PDO::PARAM_INT);
 		$req->execute();
@@ -142,12 +142,41 @@ class PaintingManager extends Manager {
 		} else {
 			return $req;
 		}
+	}
+
+
+	public function publish($id)
+	{
+		$db = $this->dbConnect();
+		$req = $db->prepare("UPDATE paintings SET published = TRUE WHERE id = :id");
+
+		$req->bindValue("id", $id, \PDO::PARAM_INT);
+		$req->execute();
+
+		if ($req === false) {
+			throw new \Exception("Impossible de mettre à jour les informations dans la base de données", 1);
+		} else {
+			return $req;
+		}
+	}
 
 		
-	}
-	
-
 	// DELETE
+	
+	public function delete($id) {
+		$db = $this->dbConnect();
+		$req = $db->prepare("DELETE FROM paintings  WHERE id = :id");
+
+		$req->bindValue("id", $id, \PDO::PARAM_INT);
+		$req->execute();
+
+		if ($req === false) {
+			throw new \Exception("Impossible de supprimer cette fiche de la base de données", 1);
+		} else {
+			return $req;
+		}
+	}
+	 
 	 
 	
 	 

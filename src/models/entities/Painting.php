@@ -7,6 +7,7 @@ class Painting extends Model {
 
 	private $id;
 	private $url;
+    private $img_id;
 	private $title;
 	private $width;
 	private $height;
@@ -58,6 +59,26 @@ class Painting extends Model {
     public function setUrl($url) {
         
         $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getImg_id()
+    {
+        return $this->img_id;
+    }
+
+    /**
+     * @param int $img_id
+     *
+     * @return self
+     */
+    public function setImg_id($img_id)
+    {
+        $this->img_id = $img_id;
 
         return $this;
     }
@@ -262,4 +283,6 @@ class Painting extends Model {
 
         return $this;
     }
+
+
 }

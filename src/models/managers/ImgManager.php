@@ -40,5 +40,25 @@ class ImgManager extends Manager {
 
 
 	//UPDATE
+	
+	
 	//DELETE
+	
+	public function delete($id) {
+		$db = $this->dbConnect();
+		$req = $db->prepare("DELETE FROM img  WHERE id = :id");
+
+		$req->bindValue("id", $id, \PDO::PARAM_INT);
+		$req->execute();
+
+		if ($req === false) {
+			throw new \Exception("Impossible de supprimer cette photo de la base de données", 1);
+		} else {
+			return $req;
+		}
+	}
+	
 }
+
+
+

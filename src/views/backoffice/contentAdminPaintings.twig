@@ -81,9 +81,21 @@
 					</div>
 
 					<div id="actions">	
-						<a href="index.php?action=modifyPainting&amp;id={{ painting.id }}"><button>Modifier</button></a>
-						<button>Publier</button>
-						<button>Supprimer</button>
+						<a href="index.php?action=modifyPainting&amp;id={{ painting.id }}">
+							<button>Modifier</button>
+						</a>
+
+						{% if painting.published == false %}
+
+						<a href="index.php?action=publishPainting&amp;id={{ painting.id }}">
+							<button>Publier</button>
+						</a>
+						
+						{% endif %}
+
+						<a href="index.php?action=deletePainting&amp;id={{ painting.id }}">
+							<button>Supprimer</button>
+						</a>
 					</div>	
 				</div>			
 

@@ -87,21 +87,40 @@ class Routeur {
 			}
 
 			elseif ($request == "modifyPainting") {
+				$paintingsAdminController = new AdminPaintingsController();
 				if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
-					$paintingsAdminController = new AdminPaintingsController();
 					$paintingsAdminController->displayModify($_GET["id"]);
-
+				} else {
+					$paintingsAdminController->renderPaintingsAdmin();
 				}
 			}
 
 			elseif ($request == "updatePainting") {
-				if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
-					$paintingsAdminController = new AdminPaintingsController();
+				$paintingsAdminController = new AdminPaintingsController();
+				if (isset($_GET["id"]) && is_numeric($_GET["id"])) {	
 					$paintingsAdminController->updatePainting();
-
+				} else {
+					$paintingsAdminController->renderPaintingsAdmin();
 				}
 			}
 			
+			elseif ($request == "publishPainting") {
+				$paintingsAdminController = new AdminPaintingsController();
+				if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+					$paintingsAdminController->updatePublicationStatus($_GET["id"]);
+				} else {
+					$paintingsAdminController->renderPaintingsAdmin();
+				}
+			}
+
+			elseif ($request == "deletePainting") {
+				$paintingsAdminController = new AdminPaintingsController();
+				if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+					$paintingsAdminController->deletePainting($_GET["id"]);
+				} else {
+					$paintingsAdminController->renderPaintingsAdmin();
+				}
+			}
 			/* EXEMPLE 
 				if (isset($_GET["id"]) && $_GET["id"] > 0) {
 				$postCommentsController->postComments();

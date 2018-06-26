@@ -135,20 +135,86 @@ class AdminPaintingsController {
 		return $id;		
 	}
 
+	public function checkInput()
+	{
+		# code...
+	}
+
 	public function newPainting() {
 
 		$img_id = $this->addImg();
-		$title = $_POST["title"];
-		$width = $_POST["width"];
-		$height = $_POST["height"];
-		$creation = $_POST["creation"];
-		$technic = $_POST["technic"];
-		$price = $_POST["price"];
-		$sold = $_POST["sold"];
-		$published = $_POST["published"];
-		$theme = $_POST["theme"];
-		$category = ($_POST["category"]);
 
+		$title;
+		$width;
+		$height;
+		$creation;
+		$technic;
+		$price;
+		$theme;
+		$category;
+		$sold;
+		$published;
+
+		if (empty($_POST["title"])) {
+			$title = null;
+		} else {
+			$title = $_POST["title"];
+		}
+
+		if (empty($_POST["width"])) {
+			$width = 0;
+		} else {
+			$width = $_POST["width"];
+		}
+
+		if (empty($_POST["height"])) {
+			$height = 0;
+		} else {
+			$height = $_POST["height"];
+		}
+
+		if (empty($_POST["creation"])) {
+			$creation = null;
+		} else {
+			$creation = $_POST["creation"];
+		}
+
+		if (empty($_POST["technic"])) {
+			$technic = null;
+		} else {
+			$technic = $_POST["technic"];
+		}
+
+		if (empty($_POST["price"])) {
+			$price = null;
+		} else {
+			$price = $_POST["price"];
+		}
+
+		if (empty($_POST["theme"])) {
+			$theme = null;
+		} else {
+			$theme = $_POST["theme"];
+		}
+
+		if (empty($_POST["category"])) {
+			$category = null;
+		} else {
+			$category = $_POST["category"];
+		}
+
+		if (empty($_POST["sold"])) {
+			$sold = null;
+		} else {
+			$sold = $_POST["sold"];
+		}
+
+		if (empty($_POST["published"])) {
+			$published = null;
+		} else {
+			$published = $_POST["published"];
+		}
+		
 		$paintingManager = new \jmd\models\managers\PaintingManager();
 		$resp = $paintingManager->addPainting($title, $width, $height, $img_id, $creation, $technic, $price, $theme, $category, $sold, $published);
 
@@ -247,7 +313,30 @@ class AdminPaintingsController {
 		$painting = $paintingManager->updateOnePainting($id, $title, $width, $height, $creation, $technic, $price, $theme, $category, $sold, $published);
 
 		header("location:index.php?action=adminPaintings");
-		}	
+	}
+
+	public function updatePublicationStatus($id) {
+		$paintingManager = new \jmd\models\managers\PaintingManager();
+		$resp = $paintingManager->publish($id);
+
+		header("location:index.php?action=adminPaintings");
+	}
+
+	public function deletePainting($p_id) {
+		$paintingManager = new \jmd\models\managers\PaintingManager();
+		$imgManager = new \jmd\models\managers\ImgManager();
+
+		$painting = $paintingManager->getOnePainting($p_id);
+
+		$img_id = $painting->getImg_id();
+
+		$paintingManager->delete($p_id);
+		$imgManager->delete($img_id);
+
+		header("location:index.php?action=adminPaintings");
+	}
+
+
 }
 
 		
