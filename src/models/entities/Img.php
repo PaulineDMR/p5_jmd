@@ -10,6 +10,7 @@ class Img extends Model {
 	
 	private $id;
 	private $url;
+    private $fileName;
 
 
 
@@ -49,6 +50,28 @@ class Img extends Model {
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+
+
+    /**
+     * @return str
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
+
+    /**
+     * @param str $fileName
+     *
+     * @return self
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
 
         return $this;
     }

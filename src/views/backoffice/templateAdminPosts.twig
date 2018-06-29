@@ -1,0 +1,48 @@
+{% extends 'layoutBackoffice.twig' %}
+
+
+{% block main %}
+	
+	{% if action == "adminPosts" %}
+
+		{% if choice == "write" %}
+
+		<h3 class="content-header">Nouvel Article</h3>
+		
+		<div class="content-link">
+			<a href="index.php?action=adminPosts"><i class="fa fa-list"></i>Gérer mes articles</a>
+		</div>
+
+		{% elseif choice == "modify" %}
+
+		<h3 class="content-header">Modifier un article</h3>
+		<div class="content-link">
+			<a href="index.php?action=adminPosts"><i class="fa fa-list"></i>Gerer mes articles</a>
+		</div>
+		<div class="content-link">
+			<a href="index.php?action=adminPosts&amp;choice=write"><i class="fa fa-pencil"></i>Ecrire un article</a>
+		</div>
+
+		{% elseif choice == null %}
+		
+		<h3 class="content-header">Mes Articles</h3>
+
+		<div class="content-link">
+			<a href="index.php?action=adminPosts&amp;choice=write"><i class="fa fa-pencil"></i>Ecrire un article</a>
+		</div>          
+
+		{% endif %}
+	{% endif %}
+
+
+	{% block content %}
+	    
+	{% endblock %}
+
+
+	{% block pagination %}
+    
+	{% endblock pagination %}
+
+    
+{% endblock %}

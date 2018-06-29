@@ -8,6 +8,32 @@ class PostManager extends Manager {
 	
 	// READ
 	
+	public function getPosts($firstIndex, $postsPerPage) {
+		$db = $this->dbConnect();
+		$resp = $db->prepare('
+			SELECT p.id AS id, title, p.content AS content, DATE_FORMAT(publication, "%d-%m-%Y") AS publication, published, DATE_FORMAT(p.creation, "%d-%m-%Y") AS creation, COUNT(ct.id) AS countComments
+				FROM posts p
+				LEFT JOIN comments ct ON p.id = ct.post_id
+				GROUP BY p.id
+				ORDER BY p.creation
+				DESC LIMIT :firstIndex, :postsPerPage');
+		
+		$resp->bindValue('firstIndex', $firstIndex, \PDO::PARAM_INT);
+		$resp->bindValue('postsPerPage', $postsPerPage, \PDO::PARAM_INT);
+		$resp->execute();
+
+		$posts = array();
+
+		while ($data = $resp->fetch()) {
+			$post = new \jmd\models\entities\Post;
+			$post->hydrate($data);
+			$posts[] = $post;
+		}
+		
+		$resp->closeCursor();
+		return $posts;
+	}
+	
 	public function getRecentPosts($max) {
 		$db = $this->dbConnect();
 		$req = $db->prepare('SELECT title, content, publication FROM posts WHERE published = TRUE ORDER BY publication DESC LIMIT :max');
@@ -38,7 +64,7 @@ class PostManager extends Manager {
 		return $numberOfPages;
 	}
 
-	public function getPosts($firstIndex, $postsPerPage) {
+	public function getPublishedPosts($firstIndex, $postsPerPage) {
 		$db = $this->dbConnect();
 		$resp = $db->prepare('
 			SELECT p.id AS id, title, p.content AS content, publication, COUNT(ct.id) AS countComments
@@ -100,28 +126,92 @@ class PostManager extends Manager {
 	public function getOnePost($post_id) {
 		$db = $this->dbConnect();
 		$req = $db->prepare("
-			SELECT p.id AS id, title, p.content AS content, publication
-				FROM posts p
-				WHERE p.id = :post_id");
+			SELECT id, title, content, DATE_FORMAT(publication, '%d-%m-%Y')AS publication, published, DATE_FORMAT(creation, '%d-%m-%Y') AS creation
+				FROM posts
+				WHERE id = :post_id");
 
 		$req->bindValue('post_id', $post_id, \PDO::PARAM_INT);
 		$req->execute();
 
-		$postX = array();
-
 		$data = $req->fetch();
 		$post = new \jmd\models\entities\Post;
 		$post->hydrate($data);
-		$postX[] = $post;
 
 		$req->closeCursor();
-
-		return $postX;
+		return $post;
 	}
 	
 	// UPDATE
 	
+	public function updatePost($id, $title, $content) {
+		$db = $this->dbConnect();
+		$req = $db->prepare("UPDATE posts SET title = :title, content = :content WHERE id = :id");
+
+		$req->bindValue("id", $id, \PDO::PARAM_INT);
+		$req->bindValue("title", $title, \PDO::PARAM_STR);
+		$req->bindValue("content", $content, \PDO::PARAM_STR);
+		
+		
+		$resp = $req->execute();
+
+		if ($resp === false) {
+			throw new \Exception("Impossible de mettre à jour les informations dans la base de données", 1);
+		} else {
+			$req->closeCursor();
+			return $resp;
+		}
+	}
+
+	public function updatePublished($id, $status) {
+		$db = $this->dbConnect();
+		$req = $db->prepare("UPDATE posts SET published = :status publication = NOW() WHERE id = :id");
+
+		$req->bindValue("id", $id, \PDO::PARAM_INT);
+		$req->bindValue("status", $status, \PDO::PARAM_STR);
+		
+		$resp = $req->execute();
+
+		if ($resp === false) {
+			throw new \Exception("Impossible de mettre à jour les informations dans la base de données", 1);
+		} else {
+			$req->closeCursor();
+			return $resp;
+		}
+	}
+
+	public function publishedToNo($id, $status) {
+		$db = $this->dbConnect();
+		$req = $db->prepare("UPDATE posts SET published = :status WHERE id = :id");
+
+		$req->bindValue("id", $id, \PDO::PARAM_INT);
+		$req->bindValue("status", $status, \PDO::PARAM_STR);
+		
+		$resp = $req->execute();
+
+		if ($resp === false) {
+			throw new \Exception("Impossible de mettre à jour les informations dans la base de données", 1);
+		} else {
+			$req->closeCursor();
+			return $resp;
+		}
+	}
+	
 	// DELETE
+	
+	public function deletePost($id) {
+		$db = $this->dbConnect();
+		$req = $db->prepare("DELETE FROM posts  WHERE id = :id");
+
+		$req->bindValue("id", $id, \PDO::PARAM_INT);
+		$resp = $req->execute();
+
+		if ($resp === false) {
+			throw new \Exception("Impossible de supprimer cet article de la base de données", 1);
+		} else {
+			$req->closeCursor();
+			return $resp;
+		}
+	}
 }
 
 

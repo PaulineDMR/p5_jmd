@@ -45,7 +45,7 @@ class BlogController extends Controller {
 			}
 		}
 
-		$resp = $this->postManager->getPosts($this->firstIndex, $this->postsPerPage);
+		$resp = $this->postManager->getPublishedPosts($this->firstIndex, $this->postsPerPage);
 
 		return $resp;		
 	}

@@ -55,8 +55,22 @@ class CommentManager extends Manager {
 	} 
 	
 	// UPDATE
-	
+	 
+
 	// DELETE
+	
+	public function deletePostComments($id) {
+		$db = $this->dbConnect();
+		$req = $db->prepare("DELETE FROM comments  WHERE post_id = :id");
 
+		$req->bindValue("id", $id, \PDO::PARAM_INT);
+		$resp = $req->execute();
 
+		if ($resp === false) {
+			throw new \Exception("Impossible de supprimer les commentaires de la base de données", 1);
+		} else {
+			$req->closeCursor();
+			return $resp;
+		}
+	}
 }

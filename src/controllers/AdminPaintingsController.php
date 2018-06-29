@@ -83,7 +83,7 @@ class AdminPaintingsController {
 		 				$fileDestination = 'assets/img/paintings/' .$fileNameNew;
 		 				move_uploaded_file($fileTmpName, $fileDestination);
 
-		 				$url = "http://localhost:8888/jmd/assets/img/paintings/" .$fileNameNew;
+		 				$url = "http://localhost:8888/jmd/assets/img/paintings/" .$fileNameNew; // OU http://jmd.pdmrweb/assets/img/paintings/
 
 		 				$action = $_GET["action"];
 		 				
@@ -119,6 +119,10 @@ class AdminPaintingsController {
 
 		$open = opendir("assets/img/paintings/");
 
+		unlink($path);
+
+		closedir($open);
+
 		header("location:index.php?action=addPainting");	
 	}
 		
@@ -127,7 +131,7 @@ class AdminPaintingsController {
 		$url = "http://localhost:8888/jmd/assets/img/paintings/" .$_GET["name"];
 
 		$imgManager = new \jmd\models\managers\ImgManager();
-		$imgManager->insertImg($url);
+		$imgManager->newImg($url);
 
 		$img = $imgManager->getPaintingId($url);
 		$id = $img->getId();
@@ -135,10 +139,6 @@ class AdminPaintingsController {
 		return $id;		
 	}
 
-	public function checkInput()
-	{
-		# code...
-	}
 
 	public function newPainting() {
 
@@ -298,13 +298,13 @@ class AdminPaintingsController {
 		}
 
 		if (empty($_POST["sold"])) {
-			$sold = null;
+			$sold = 0;
 		} else {
 			$sold = $_POST["sold"];
 		}
 
 		if (empty($_POST["published"])) {
-			$published = null;
+			$published = 0;
 		} else {
 			$published = $_POST["published"];
 		}

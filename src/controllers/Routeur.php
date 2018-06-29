@@ -121,6 +121,57 @@ class Routeur {
 					$paintingsAdminController->renderPaintingsAdmin();
 				}
 			}
+
+			elseif ($request == "adminPosts") {
+				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+					$adminPostsController = new \jmd\controllers\AdminPostsController();
+
+					if (isset($_GET["choice"]) && $_GET["choice"] == "write") {
+						//
+					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "modify") {
+						$adminPostsController->renderModifyPost($_GET["id"]);
+					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "publish") {
+						$adminPostsController->publish($_GET["id"], $_GET["publish"]);
+					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "noPublish") {
+						$adminPostsController->NonPublish($_GET["id"], $_GET["publish"]);
+					} else {
+						$adminPostsController->renderPostsAdmin();
+					}
+
+				} else {
+						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
+				}
+				
+			}
+
+			elseif ($request == "updatePost") {
+				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+					$adminPostsController = new \jmd\controllers\AdminPostsController();
+
+					if (isset($_GET["choice"]) && $_GET["choice"] == "deleteCat") {
+						$adminPostsController->deleteCat($_GET["id"], $_GET["cat"]);
+
+					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "addCat") {
+						$adminPostsController->addCat($_GET["id"]);
+
+					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "addImg") {
+						$adminPostsController->addImg($_GET["id"]);
+
+					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "deleteImg") {
+						$adminPostsController->deleteImg($_GET["file"], $_GET["id"]);
+
+					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "deletePost") {
+						$adminPostsController->delete($_GET["id"]);
+
+					} else {
+						$adminPostsController->modifyPost($_GET["id"], $_POST["title"], $_POST["content"]);
+					}
+
+				} else {
+						throw new Exception("Vous n'avez pas l'autorisation d'accès");
+				}
+				
+			}
 			/* EXEMPLE 
 				if (isset($_GET["id"]) && $_GET["id"] > 0) {
 				$postCommentsController->postComments();

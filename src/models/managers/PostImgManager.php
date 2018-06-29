@@ -10,7 +10,7 @@ class PostImgManager extends Manager {
 	public function getPostImg() {
 		$db = $this->dbConnect();
 		$req = $db->query('
-			SELECT img_id, post_id, url
+			SELECT img_id, post_id, url, fileName
 				FROM posts_img p
 				JOIN img i ON p.img_id = i.id');
 

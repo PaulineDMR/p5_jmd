@@ -1,0 +1,112 @@
+{% extends 'templateAdminPosts.twig' %}
+
+
+{% block content %}
+
+	<div class="table-wrapper">
+		<table>
+			<col class="col-one"></col>
+			<col class="col-two"></col>
+			<col class="col-three"></col>
+			<col class="col-four"></col>
+
+			<thead>
+				<tr>
+					<th>Titre de l'article - Categories</th>
+					<th class="published">Publié le :</th>
+					<th></th>
+					<th>Créé le :</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for post in posts %}
+
+				<tr class="{% if loop.index % 2 == 0 %}paire{% else %}impaire{% endif %}">
+
+					<td>{{ post.title }} - 
+						<div class="cat-name">
+							{% for cat in categories %}
+								{% if cat.post_id == post.id%}
+
+								{{cat.name}},
+
+								{% endif %}
+							{% endfor %}
+						</div>
+						<div class="post-action">
+							<a href="index.php?action=adminPosts&amp;choice=modify&amp;id={{ post.id }}" class="first">Modifier</a>
+							
+							{% if post.published == false %}
+
+							<a href="index.php?action=adminPosts&amp;choice=publish&amp;id={{ post.id }}&amp;publish=1">Publier</a>
+
+							{% else %}
+
+							<a href="index.php?action=adminPosts&amp;choice=noPublish&amp;id={{ post.id }}&amp;publish=0">Dé-Publier</a>
+
+							{% endif %}
+
+							<a href="index.php?action=blog&amp;postId={{ post.id }}" target="blank">Aperçu</a>
+							<a href="index.php?action=updatePost&amp;choice=deletePost&amp;id={{ post.id }}" class="last">Supprimer</a>
+						</div>	
+					</td>
+
+					{% if post.published == false %}
+
+					<td class=" published brouillon">
+						Brouillon</td>
+
+					{% else %}
+
+					<td class="published publication">
+						{{ post.publication }}</td>
+
+					{% endif %}
+					
+					<td class="comments">{{ post.countComments }}<i class="icon fa-comment"> </i></td>
+					<td class="creation">{{ post.creation }}</td>
+				</tr>
+						    
+				{% endfor %}
+    
+										
+			</tbody>
+		</table>
+	</div>
+    
+{% endblock content%}
+
+
+{% block pagination %}
+
+	<section>
+		<div id="pagination">
+			<div>
+				<a href="index.php?action=adminPaintings&amp;page=1"><i class="fa fa-angle-double-left">
+				</i></a>
+			</div>
+				
+			<div>
+				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == 1 %} {{pageNumber}} {% else %}  {{pageNumber - 1}} {% endif %}"><i class="fa fa-angle-left">
+				</i></a>
+			</div>
+
+			<div>
+				<p> {{ pageNumber }}/{{ numberOfPages }} </p>
+			</div>
+			
+			<div>
+				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == numberOfPages %} {{pageNumber}} {% else %}  {{pageNumber + 1}} {% endif %}"><i class="fa fa-angle-right">
+				</i></a>
+			</div>
+
+			<div>
+				<a href="index.php?action=adminPaintings&amp;page={{ numberOfPages }}"><i class="fa fa-angle-double-right"></i></a>
+				</i>
+			</div>
+
+		</div>
+	</section>
+    
+{% endblock pagination %}
