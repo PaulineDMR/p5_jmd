@@ -5,12 +5,15 @@
 		<meta charset="utf-8">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-			<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 
 		<link rel="stylesheet" href="assets/css/main.css" />
-			<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->	
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->	
 
-			<!-- AJOUTER UNE META "DESCRIPTION" -->
+		{% block head %}
+		    
+		{% endblock %}
+
 	</head>
 
 	<body>
@@ -27,57 +30,47 @@
 				<div class="row 200% uniform">
 					<section class="4u 12u$(medium) 12u$(small)">
 						<header class="major">
-							<h3>MENU</h3>
+							<h4>Menu</h4>
 						</header>
-						<p>Adipiscing orci felis. Blandit metus morbi. Adipiscing amet vis blandit. Vestibulum id ac enim nascetur ante adipiscing. Col vestibulum ac fusce lacinia nisi ante adipiscing amet ante tempus at faucibus. Adipiscing ante arcu nullam amet ante ac semper accumsan. Lacinia non integer ac praesent mi porttitor adipiscing vitae id praesent.</p>
-						<ul class="actions">
-							<li><a href="#" class="button alt">Learn more</a></li>
+						
+						<ul class="alt">
+							<li><a href="index.php">Home</a></li>
+							<li><a href="index.php?action=portfolio">Les Oeuvres</a></li>
+							<li><a href="index.php?action=about">L'Artiste</a></li>
+							<li><a href="index.php?action=blog">Le Blog</a></li>
 						</ul>
 					</section>
 
 					<section class="4u 6u(medium) 12u$(small)">
 						
-						<!-- Pas dynamique pour le moment
-						<header class="major">
-							<h3>Recent News</h3>
-						</header>
-						<ul class="updates">
-
-							<?php include 'footerContent.php' ?>
-												
-						</ul> -->
 					</section>  
 					<section class="4u$ 6u$(medium) 12u$(small)">
 						<header class="major">
-							<h3>Contact</h3>
+							<h4>Contact</h4>
 						</header>
 						<ul class="labeled-icons">
 							<li>
-								<h4 class="icon fa-envelope"><span class="label">Email</span></h4>
-								<a href="#">someone@untitled.tld</a>
+								<h4 class="icon fa-envelope"><span class="label">Phone</span></h4>
+								<a href="index.php?action=about#contact">Mail</a>
 							</li>
 							<li>
 								<h4 class="icon fa-phone"><span class="label">Phone</span></h4>
-								(000) 000-0000 x12345
+								<a href="tel:0033614088609">+33 (0) 614 08 86 09</a>
 							</li>
 							<li>
 								<h4 class="icon fa-home"><span class="label">Address</span></h4>
-								1234 Somewhere Road, Suite #543<br>Nashville, TN 00000
+								<a href="index.php?action=about#atelier">Place Doria<br>20217 Saint Florent / France</a>
 							</li>
 							<li>
-								<h4 class="icon fa-twitter"><span class="label">Twitter</span></h4>
-								<a href="#">twitter.com/untitled</a>
-							</li>
-							<li>
-								<h4 class="icon fa-facebook"><span class="label">Facebook</span></h4>
-								<a href="#">facebook.com/untitled</a>
+								<a href="index.php?action=login"><i class="icon fa-user-circle-o"><span class="label">Address</span></i>Espace administrateur</a>
 							</li>
 						</ul>
 					</section>
 				</div>
 			</div>
 			<div class="copyright">
-				&copy; Untitled. All rights reserved.
+				&copy; JMD. All rights reserved.
+				<a href="mentions.html"> / Mentions légales</a>
 			</div>
 		</div>
 

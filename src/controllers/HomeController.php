@@ -2,22 +2,11 @@
 
 namespace jmd\controllers;
 
-class HomeController extends Controller {
-
-	/*public function __construct() {
-		$this->carousselImg();
-	}*/
-
-	public function carousselImg() {
-
-		$resp = $this->paintingManager->getRecentPaintings($max = 10);
-
-		return $resp;	
-	}
+class HomeController{
 
 	public function displayHome() {
-
-		$resp = $this->paintingManager->getRecentPaintings($max = 10);
+		$paintingManager = new \jmd\models\managers\PaintingManager();
+		$resp = $paintingManager->getRecentPaintings($max = 10);
 
 		$twig = \jmd\models\Twig::initTwig("src/views/");
 
