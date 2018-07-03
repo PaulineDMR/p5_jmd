@@ -46,6 +46,18 @@ class Routeur {
 				}
 			}
 
+			elseif ($request == "addComment") {
+				$blogController = new BlogController();
+
+				if (isset($_GET["id"]) && is_numeric($_GET["id"]) && $_GET["id"] > 0) {
+					$blogController->newComment($_GET["id"]);
+
+				} else {
+					throw new \Exception("L'id de l'article est incorrect", 1);
+					
+				}
+			}
+
 			elseif ($request == "contactMe") {
 				$sendMailController = new SendMailController();
 				$sendMailController->contactMe();

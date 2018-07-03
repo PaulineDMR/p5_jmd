@@ -3,63 +3,84 @@
 namespace jmd\controllers;
 
 
-class BlogController extends Controller {
+class BlogController {
 
 	private $postsPerPage = 5;
+	private $commentsPerPage = 10;
 	private $pageNumber;
-	private $firstIndex;
 
 
 	public function __construct() {
-		parent::__construct();
 		if (!empty($_GET["page"]) && is_numeric($_GET["page"])) {
 			$this->pageNumber = $_GET["page"];
 		} else {
 			$this->pageNumber = 1;
 		}
 
-		$this->firstIndex = ($this->pageNumber - 1) * $this->postsPerPage;
 	}
 
 
 	public function postsList() {
-		$pagesCount = $this->postManager->countPages($this->postsPerPage);
+		$postManager = new \jmd\models\managers\PostManager();
+		$pagesCount = $postManager->countPages($this->postsPerPage);
 
 		if ($this->pageNumber > $pagesCount) {
 			$this->pageNumber = $pagesCount;
 		}
 
+		$firstIndex = ($this->pageNumber - 1) * $this->postsPerPage;
+
 		$resp;
 
 		if (isset($_GET["category"])) {
-
-			$categoryList = $this->categoryManager->getCategoryList();
+			$categoryManager = new \jmd\models\managers\CategoryManager();
+			$categoryList = $categoryManager->getCategoryList();
 
 			foreach ($categoryList as $value) {
 				
 				if ($_GET["category"] == $value->getName()) {
-					$resp = $this->postManager->getPostsPerCat($this->firstIndex, $this->postsPerPage, $_GET["category"]);
+					$resp = $postManager->getPostsPerCat($firstIndex, $this->postsPerPage, $_GET["category"]);
 
 					return $resp;
 				}
 			}
 		}
 
-		$resp = $this->postManager->getPublishedPosts($this->firstIndex, $this->postsPerPage);
+		$resp = $postManager->getPublishedPosts($firstIndex, $this->postsPerPage);
 
 		return $resp;		
 	}
 
+	public function postCommentsList($postId) {
+		$commentManager = new \jmd\models\managers\CommentManager();
+		$pagesCount = $commentManager->countPages($this->commentsPerPage);
+
+		if ($this->pageNumber > $pagesCount) {
+			$this->pageNumber = $pagesCount;
+		}
+
+		$firstIndex = ($this->pageNumber - 1) * $this->commentsPerPage;
+
+		$comments = $commentManager->getPostComments($firstIndex, $this->commentsPerPage, $postId);
+
+		return $comments;		
+	}
+
 
 	public function renderHomeBlog() {
-
-		$categories = $this->categoryManager->getCountPostByCat();
+		$categoryManager = new \jmd\models\managers\CategoryManager();
+		$categories = $categoryManager->getCountPostByCat();
 
 		$posts = $this->postsList();
 
-		$paintings = $this->paintingManager->getRecentPaintings($max = 6);
+		$postManager = new \jmd\models\managers\PostManager(); 
+		$recentPosts = $postManager->getRecentPosts(5);
+
+		$paintingManager = new \jmd\models\managers\PaintingManager();
+		$paintings = $paintingManager->getRecentPaintings($max = 6);
 		
-		$postImgs = $this->postImgManager->getPostImg(2);
+		$postImgManager = new \jmd\models\managers\PostImgManager();
+		$postImgs = $postImgManager->getPostImg();
 
 		$twig = \jmd\models\Twig::initTwig("src/views/");
 
@@ -67,20 +88,33 @@ class BlogController extends Controller {
 		echo $twig->render('blogContent.twig', [
 			"imgs" => $postImgs,
 			"posts" => $posts,
+			"recentPosts" => $recentPosts,
 			"paintings" => $paintings,
 			"categories" => $categories]);
 	}
 
 
 	public function renderOnePost() {
+		$categoryManager = new \jmd\models\managers\CategoryManager();
+		$categories = $categoryManager->getCountPostByCat();
 
-		$categories = $this->categoryManager->getCountPostByCat();
+		$postManager = new \jmd\models\managers\PostManager();
+		$post = $postManager->getOnePost($_GET["postId"]);
+		$recentPosts = $postManager->getRecentPosts(5);
 
-		$post = $this->postManager->getOnePost($_GET["postId"]);
-
-		$paintings = $this->paintingManager->getRecentPaintings($max = 6);
+		$paintingManager = new \jmd\models\managers\PaintingManager();
+		$paintings = $paintingManager->getRecentPaintings($max = 6);
 		
-		$postImgs = $this->postImgManager->getPostImg();
+		$imgManager = new \jmd\models\managers\ImgManager();
+		$postImgs = $imgManager->getPostImgs($_GET["postId"]);
+
+		$commentManager = new \jmd\models\managers\CommentManager();
+		$pagesCount = $commentManager->countPages($this->commentsPerPage);
+
+		$comments = $this->postCommentsList($_GET["postId"]);
+
+		$pageNumber = $this->pageNumber;
+
 
 		$twig = \jmd\models\Twig::initTwig("src/views/");
 
@@ -88,8 +122,19 @@ class BlogController extends Controller {
 		echo $twig->render('blogPostContent.twig', [
 			"imgs" => $postImgs,
 			"post" => $post,
+			"recentPosts" => $recentPosts,
 			"paintings" => $paintings,
-			"categories" => $categories]);
+			"categories" => $categories,
+			"comments" => $comments,
+			"numberOfPages" => $pagesCount,
+			"pageNumber" => $pageNumber]);
+	}
+
+	public function newComment($post_id) {
+		$commentManager = new \jmd\models\managers\CommentManager();
+		$commentManager->addComment($_POST["name"], $_POST["comment"], $post_id);
+
+		header("location:index.php?action=blog&postId=$post_id");
 	}
 
 }

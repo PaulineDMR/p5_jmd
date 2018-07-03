@@ -3,117 +3,122 @@
 
 {% block articles %}
 
-			
-			
-	<div class="8u 12u$(medium)">
+            
+            
+    <div class="8u 12u$(medium)">
 
-	<!-- Content -->
-		<section id="content">	
-			<h3> {{ post.title }} </h3>
+    <!-- Content -->
+        <section id="content" class="post-main-content">    
+            <div id="post">
+                <h3> {{ post.title }} </h3>
+                <p>Le {{ post.publication }}</p>
 
-				{% for img in imgs %}
-					
-					{% if img.post_id == post.id %}
+                {% for img in imgs %}
+                    
+                {% if img.post_id == post.id %}
 
-					<a href="#" class="image fit"><img src=" {{ img.url }}" alt="photo" /></a>
+                <img src=" {{ img.url }}" alt="photo" />
 
-					{% endif %}
-				    
-				{% endfor %}
-			
-			
-			<p>{{ post.content }}</p>
+                {% endif %}
+                    
+                {% endfor %}
+            
+                <p>{{ post.content|raw }}</p>
+                <p id="signature">JMD</p class="signature">
+            </div>
+            
 
-			<p>Publié le {{ post.publication }}</p>
+            <hr>
 
-			<p>{{ post.countComments }} Commentaire(s)</p>
+            <h3><i class="icon fa-comment"></i>COMMENTAIRES</h3>
 
-			<p style="color: orange; font-weight: bold">AJOUTER LE LOGO P DE FBK, Twitter, g+, PINTEREST;
-				Nbre de commentaires
-			COMMENTAIRES et ajout + signalement</p>
+            {% for comment in comments %}
 
-			<hr>
+            {% if comment.reported == false %}
 
-			<div id="add-comment">
-				<img src="assets/img/chat.svg" alt="chat icon">
-				<h3>Laissez un commentaire</h3>
+            <div id="comment-container">
 
-				<form method="post" action="index.php?action=comment&amp;id={{ post.id }}">
-					<label for="name">Votre prénom : <input class="comment-form" type="text" name="name" id="name" placeholder="Mon Prénom" required></label><br>
-					<br>
-					<label for="comment">Votre commentaire :</label><br>
-					<textarea class="comment-form" name="comment" id="comment" required></textarea><br>
-					<input type="submit" value="Valider">
-				</form>
-			
-			</div>
+                <div class="comment-info"><p>Le {{ comment.creation }} <span class="comment-name">{{ comment.prenom }}</span> a écrit :</p></div>
 
+                <div class="comment-content"><p class="comment-content">{{ comment.content }}</p></div>
 
+                {% if comment.validated == false %}
 
-			<h3>Commentaires précédents</h3>
+                <button class="button smal alt warning">Signaler</button>        
+                {% endif %}
 
-			<p style="color: orange; font-weight: bold">Coder le CommentManager pour récupérer les commentaires en fonction de l'id du post. Rappel, si le commentaire est signalé, NE PAS l'afficher. !!! Faire la mise en page !!!</p>
+            </div>                    
 
-		{% for comment in comments %}
-		    {% if comment.reported == false %}
+            {% endif %}
+            {% endfor %}
 
-			<div id="comment-container">
-				<h4>Le {{ comment.date }} <span>{{ comment.prenom }}</span> a écrit
-				</h4>
+            <div id="pagination">
+                <div>
+                    <a href="index.php?action=blog&amp;postId={{ post.id }}&amp;page=1"><i class="fa fa-angle-double-left">
+                    </i></a>
+                </div>
+                    
+                <div>
+                    <a href="index.php?action=blog&amp;postId={{ post.id }}&amp;page={% if pageNumber == 1 %}{{ pageNumber }}{% else %}{{ pageNumber - 1 }}{% endif %}"><i class="fa fa-angle-left">
+                    </i></a>
+                </div>
 
-				<p>{{ comment.content }}</p>
+                <div>
+                    <p> {{ pageNumber }}/{{ numberOfPages }} </p>
+                </div>
+                
+                <div>
+                    <a href="index.php?action=blog&amp;postId={{ post.id }}&amp;page={% if pageNumber == numberOfPages %}{{ pageNumber }}{% else %}{{pageNumber + 1}} {% endif %}"><i class="fa fa-angle-right">
+                    </i></a>
+                </div>
 
-				{% if comment.validated %}
+                <div>
+                    <a href="index.php?action=blog&amp;postId={{ post.id }}&amp;page={{numberOfPages}}"><i class="fa fa-angle-double-right"></i></a>
+                    </i>
+                </div>
+            </div>
 
-					<form method="POST" action="index.php?action=warning&amp;id={{ post.id }}&amp;commentId={{ comment.id }}">
-						<input type="submit" value="Signaler">
-					</form>	
+            <div id="add-comment">
+                <h3>Laissez un commentaire</h3>
 
-				{% endif %}
+                <form method="post" action="index.php?action=addComment&amp;id={{ post.id }}">
+                    <label for="name">Votre prénom : <input class="comment-form" type="text" name="name" id="name" placeholder="Mon Prénom" required></label>
+                    <label for="comment">Votre commentaire :
+                    <textarea class="comment-form" name="comment" id="comment" required></textarea></label>
+                    <input type="submit" value="Valider" class="button alt">
+                </form>
+            
+            </div>
 
-			</div>			    	
+            
 
-		    {% endif %}
-		{% endfor %}
-
-		</section>
-	</div>
+        </section>
+    </div>
     
 {% endblock articles %}
 
 
 {% block portfolio %}
 
-		{% for painting in paintings %}
-
-			
-				<img src=" {{ painting.url }} " alt="Peinture de Jeanne-Marie Desmares" style="width : 30%">
-			
-		    
-		{% endfor %}
-	
-		<p style="color: orange; font-weight: bold">Redimensionner les photos pour obtenir 2 lignes de 3 tableaux (responsive)</p>
+    {% for painting in paintings %}
+    
+    <img src=" {{ painting.url }} " alt="Peinture de Jeanne-Marie Desmares">
+                    
+    {% endfor %}
     
 {% endblock %}
 
 
 {% block categories %}
 
-	<ul class="alt category">
 
-		{% for category in categories %}
-		 
-		<li>
-			<a href="index.php?action=blog&amp;category={{ category.name | lower }}">
-				<p> {{ category.name }} </p>
-				<span> {{ category.post_id }} </span>
-			</a>
-		</li>
+    {% for category in categories %}
 
-		{% endfor %}
-		
-	</ul>
+    <a href="index.php?action=blog&amp;category={{ category.name | lower }}" class="categories">
+        <p >{{ category.name }} - {{ category.post_id }}</p>
+    </a>
 
+    {% endfor %}
 
     
 {% endblock %}
@@ -121,21 +126,11 @@
 
 {% block recentPosts %}
 
-	<ul>
+    {% for recentPost in recentPosts %}
 
-		{% for post in posts %}
-
-		<li>
-			<h6> {{ post.title }} </h6>
-			<p> {{ post.publication }} </p>
-		</li>
-		    
-		{% endfor %}
-
-	</ul>
-
-	<p style="color: orange; font-weight: bold">Les 5 derniers posts, du plus récents, titre, date de publication, et c'est tout.
-	A revoir car pour le moment les posts sont les 5 de la page 1 etc. Il faut une autres méthodes pour ceux-la (getRecentPosts(5) ). </p>
+    <h5> {{ recentPost.title }} <span id="recentPost-date"> - {{ recentPost.publication }}</span></h5>
+            
+    {% endfor %}
     
 {% endblock %}
 

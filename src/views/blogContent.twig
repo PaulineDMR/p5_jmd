@@ -11,39 +11,38 @@
 		<section id="content">
 
 			{% for post in posts %}
-			
-			<h3> {{ post.title }} </h3>
 
-				{% for img in imgs %}
-					
-					{% if img.post_id == post.id %}
+			<div>
+				<div class="small-posts">
+					<div class="img-posts">
 
-					<a href="#" class="image fit"><img src=" {{ img.url }}" alt="photo" /></a>
+						post.images|first
+						{% for img in imgs %}
+						
+							{% if img.post_id == post.id %} 
 
-					{% endif %}
-				    
-				{% endfor %}
-			
-			
-			<p>{{ post.content }}</p>
+							<img src="{{ img.url }}" alt="photo" />
 
-			<p>Publié le {{ post.publication }}</p>
+							{% endif %}
+					    
+						{% endfor %}
+					</div>
+					<div class="content-posts">
+						<h3> {{ post.title }} </h3>
+						<p>{{ post.content|truncate(230, true)|raw}}</p>
+						
+					</div>	
+				</div>	
 
-			<p>{{ post.countComments }} Commentaire(s)</p>
+				<p class="post-info">Publié le {{ post.publication }} - {{ post.countComments }} Commentaire(s)</p>
 
-			<p style="color: orange; font-weight: bold">AJOUTER UN BOUTON "READ MORE OU LIRE L'ARTICLE" AINSI QUE LE LOGO P DE PINTEREST;
-			Faire une mise en forme avec miniture de l'article, extrait de contenu.</p>
-
-			<footer>
-				<ul class="actions">
-					<li><a href="index.php?action=blog&amp;postId={{ post.id }}" class="button small alt">Lire la suite ...</a></li>
-				</ul>
-			</footer>
-
+				<footer>
+					<a href="index.php?action=blog&amp;postId={{ post.id }}" class="button small alt">Lire la suite ...</a>
+				</footer>
+			</div>
 			<hr>
- 
-			{% endfor %}
 
+			{% endfor %}
 		</section>
 	</div>
     
@@ -52,58 +51,34 @@
 
 {% block portfolio %}
 
-		{% for painting in paintings %}
-
-			
-				<img src=" {{ painting.url }} " alt="Peinture de Jeanne-Marie Desmares" style="width : 30%">
-			
-		    
-		{% endfor %}
+	{% for painting in paintings %}
 	
-		<p style="color: orange; font-weight: bold">Redimensionner les photos pour obtenir 2 lignes de 3 tableaux (responsive)</p>
+	<img src=" {{ painting.url }} " alt="Peinture de Jeanne-Marie Desmares">				    
+	{% endfor %}
     
 {% endblock %}
 
 
 {% block categories %}
 
-	<ul class="alt category">
+	{% for category in categories %}
 
-		{% for category in categories %}
-		 
-		<li>
-			<a href="index.php?action=blog&amp;category={{ category.name | lower }}">
-				<p> {{ category.name }} </p>
-				<span> {{ category.post_id }} </span>
-			</a>
-		</li>
+	<a href="index.php?action=blog&amp;category={{ category.name | lower }}" class="categories">
+		<p >{{ category.name }} - {{ category.post_id }}</p>
+	</a>
 
-		{% endfor %}
-		
-	</ul>
-
-
+	{% endfor %}
     
 {% endblock %}
 
 
 {% block recentPosts %}
 
-	<ul>
+	{% for recentPost in recentPosts %}
 
-		{% for post in posts %}
-
-		<li>
-			<h6> {{ post.title }} </h6>
-			<p> {{ post.publication }} </p>
-		</li>
+	<h5> {{ recentPost.title }} <span id="recentPost-date"> - {{ recentPost.publication }}</span></h5>
 		    
-		{% endfor %}
+	{% endfor %}
 
-	</ul>
-
-	<p style="color: orange; font-weight: bold">Les 5 derniers posts, du plus récents, titre, date de publication, et c'est tout.
-	A revoir car pour le moment les posts sont les 5 de la page 1 etc. Il faut une autres méthodes pour ceux-la (getRecentPosts(5) ). </p>
-    
 {% endblock %}
 

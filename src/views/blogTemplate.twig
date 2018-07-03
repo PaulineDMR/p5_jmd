@@ -37,37 +37,40 @@ Blog - {{ parent() }}
 				<!-- Sidebar -->
 					<section id="sidebar">
 						<section>
-							<h4>A propos</h4>
-							<a href="#" class="image fit"><img src="http://localhost:8888/jmd/assets/img/atelier_02.jpg" alt="Photo de Jeanne-Marie Desmares" /></a>
-							<p style="color: orange; font-weight: bold">Extrait de la bio de Jeanne-Marie, ou petit texte de présentation dui qui de quoi etc... De quoi parle ce blog ...<br/>
-							Et important !! il faudrait une petite photo aussi ...<br/>
-							Et enfin, changer la couleur des titre de section de la sidebar (un genre de kaki doré ferait l'affaire) et également le trait qui entoure les boutons de la même couleur et plus fin.</p>
+							<h4>Le temps à Saint Florent</h4>
+							<div id="meteo">
+								<div id="meteo1">
+									<img src="" alt="icone météo" id="icon-cond">
+								</div>
+								<div id="meteo2">
+									<p id="temp"></p>
+									<p id="tmp-min-max"></p>
+									<p id="cond"></p>
+									<p id="wind">Vent: <span id="wind-span"></span></p>
+									<p id="press">Pression: <span id="pressure-span"></span></p>
+								</div>
+							</div>
+						</section>
+						<hr />
+						<section>
+							<h4>Le Blog</h4>
+							<p>Je raconte ici mes ballades, mes escapades, ma Corse et un peu de mon quotidien.<br>
+							J'espère vous inspirer à mon tour, vous donner l'envie de découvrir cette île aux milles facettes ou vous faire voyager à travers mes récits.</p>
 							<footer>
 								<ul class="actions">
 									<li><a href="index.php?action=about" class="button small alt">Découvrir l'Artiste</a></li>
 								</ul>
 							</footer>
 						</section>
-
 						<hr />
-						<section>
-							<p>Block de recherche dans les articles du blog, à voir pour la mise en oeuvre.</p>
-							<footer>
-								<ul class="actions">
-									<li><a href="#" class="button small alt">Rechercher</a></li>
-								</ul>
-							</footer>
-						</section>
-
-						<hr />
-						<section>
+						<section id="small-portfolio">
 							<h4>Les oeuvres récentes</h4>
 
 							{% block portfolio %}
 							    
 							{% endblock %}
 
-							<footer>
+							<footer id="paintings-button">
 								<ul class="actions">
 									<li><a href="index.php?action=portfolio" class="button small alt">Portfolio</a></li>
 								</ul>
@@ -97,11 +100,7 @@ Blog - {{ parent() }}
 						<hr />
 						<section>
 							<h4>ENVOYER UN MAIL</h4>
-							<footer>
-								<ul class="actions">
-									<li><a href="#">Mail</a></li>
-								</ul>
-							</footer>
+							<a href="index.php?action=about#contact"><span class="mail icon fa-envelope-o"></span></a>
 						</section>	
 					</section>
 				</div>
@@ -114,6 +113,16 @@ Blog - {{ parent() }}
 
 
 {% block script %}
+
+	<script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>
+
+
+	<!-- scrpipts personnalisés "Objets" -->
+    <script type="text/javascript" src="assets/js/meteo.js"></script>
+    <script type="text/javascript" src="assets/js/alert.js"></script>
+	<!-- Scripts pésonnalisés "lancement" -->
+
+	<script type="text/javascript" src="assets/js/jmd.js"></script>
 
 			    
 {% endblock script %}

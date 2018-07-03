@@ -18,12 +18,18 @@ class CommentManager extends Manager {
 	 */
 	public function addComment($author, $comment, $post_id) {
 		$db = $this->dbConnect();
-		$new_comment = $db->prepare("INSERT INTO comments(prenom, content, post_id, creation) VALUES (?, ?, ?, NOW())");
-		$new_entry = $new_comment->execute(array($author, $comment, $post_id));
+		$req = $db->prepare("INSERT INTO comments(prenom, content, post_id, creation) VALUES (:author, :content, :id, NOW())");
+		$req->bindValue("author", $author, \PDO::PARAM_STR);
+		$req->bindValue("content", $comment, \PDO::PARAM_STR);
+		$req->bindValue("id", $post_id, \PDO::PARAM_INT);
+		$resp = $req->execute();
 
-		$new_comment->closeCursor();
-
-	    return $new_entry;
+		if ($resp == false) {
+			throw new \Exception("Impossible d'ajouter le commentaire", 1);
+		} else {	
+			$req->closeCursor();
+			return $resp;
+		}	    
 	}
 
 	// READ
@@ -32,7 +38,7 @@ class CommentManager extends Manager {
 	 	
 	 	$db = $this->dbConnect();
 	 	$req = $db->prepare("
-	 		SELECT c.prenom AS prenom, c.creation AS creation, c.content AS content, p.title AS post_title
+	 		SELECT c.prenom AS prenom, c.creation AS creation, c.content AS content, p.title AS post_title, reported, mail
 	 			FROM comments c
 	 			JOIN posts p ON p.id = c.post_id
 	 			ORDER BY c.creation DESC
@@ -53,6 +59,48 @@ class CommentManager extends Manager {
 
 	 	return $comments;
 	} 
+
+	public function getPostComments($firstIndex, $commentsPerPage, $postId) {
+	 	
+	 	$db = $this->dbConnect();
+	 	$req = $db->prepare("
+	 		SELECT c.prenom AS prenom, DATE_FORMAT(c.creation, '%d-%m-%Y') AS creation, c.content AS content, p.title AS post_title, reported, mail
+	 			FROM comments c
+	 			JOIN posts p ON p.id = c.post_id
+	 			WHERE c.post_id = :post_id
+	 			LIMIT :first, :max");
+
+	 	$req->bindValue("post_id", $postId, \PDO::PARAM_INT);
+	 	$req->bindValue("first", $firstIndex, \PDO::PARAM_INT);
+	 	$req->bindValue("max", $commentsPerPage, \PDO::PARAM_INT);
+	 	$req->execute();
+
+	 	$comments = array();
+
+	 	while ($data = $req->fetch()) {
+	 		$comment = new \jmd\models\entities\Comment;
+	 		$comment->hydrate($data);
+	 		$comments[] = $comment;
+	 	}
+
+	 	$req->closeCursor();
+
+	 	return $comments;
+	} 
+
+	public function countPages($commentsPerPage) {
+		$db = $this->dbConnect();
+		$req = $db->query('SELECT id FROM comments WHERE reported = FALSE');
+		$numberOfComments = $req->rowCount();
+		if (($numberOfComments % $commentsPerPage) == 0) {
+			$pagesCount = $numberOfComments / $commentsPerPage;
+		} else {
+		$pagesCount = ceil($numberOfComments / $commentsPerPage);
+		}
+		
+		$req->closeCursor();
+		return $pagesCount;
+	}
 	
 	// UPDATE
 	 
