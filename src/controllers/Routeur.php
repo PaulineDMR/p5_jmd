@@ -31,7 +31,7 @@ class Routeur {
 
 			// About page 
 			elseif ($request == "about") {
-				$aboutController = new AboutController();
+				$aboutController = new AboutController(null, null, null, null);
 				$aboutController->render();
 			}
 
@@ -54,13 +54,12 @@ class Routeur {
 
 				} else {
 					throw new \Exception("L'id de l'article est incorrect", 1);
-					
 				}
 			}
 
 			elseif ($request == "contactMe") {
-				$sendMailController = new SendMailController();
-				$sendMailController->contactMe();
+				$aboutController = new AboutController("smtp.pdmrweb.com", "pauline@pdmrweb.com", "pauline.desmares@aliceadsl.fr", "6LeCJWIUAAAAAD2ZM5C4Vdht4m6Xo7EGKa754iHX");
+				$aboutController->contactMe($_POST["g-recaptcha-response"]);
 			}
 
 			elseif ($request == "login") {
