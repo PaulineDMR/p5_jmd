@@ -4,17 +4,17 @@ namespace jmd\models\entities;
 
 class Admin extends Model{
 
-	private $id;
-	private $nom;
-	private $prenom;
-	private $street;
-	private $cp;
-	private $town;
-	private $country;
-	private $phone;
-	private $mail;
-	private $login;
-	private $pwd;
+    private $id;
+    private $nom;
+    private $prenom;
+    private $street;
+    private $cp;
+    private $town;
+    private $country;
+    private $phone;
+    private $mail;
+    private $login;
+    private $pwd;
 
 
     /**
@@ -31,7 +31,7 @@ class Admin extends Model{
      */
     public function setId($id) {
         if (!is_numeric($id) || $id < 0) {
-        	throw new \Exception("L'id n'est pas valide", 1);	
+            throw new \Exception("L'id n'est pas valide", 1);    
         }
 
         $this->id = $id;
