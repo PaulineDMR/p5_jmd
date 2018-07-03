@@ -8,6 +8,8 @@
 
 {% block head %}
 
+	<meta name="description" content="Gallerie des peintures de Jeanne-Marie Desmares, huiles sur toiles, paysages, natures-morte, scènes.">
+
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
 	<link rel="stylesheet" href="assets/css/portfolio.css"/>
     
@@ -21,54 +23,51 @@
 		<div class="container">
 			<header class="major">
 				<h2>Gallerie</h2>
-				<p>Lorem ipsum dolor sit amet nullam id egestas urna aliquam</p>
 			</header>
 
 			<!-- Content -->
 			<section id="content">
 				<div id="galery-categories">
 					<ul>
-						<li>Voir Tout</li>
-						<li>Huiles</li>
-						<li>Aquarelles</li>
-						<li>Paysages</li>
-						<li>Natures Mortes</li>
-						<li>Abstrait</li>
-						<li id="last">Les + récentes</li>
+						<a href="index.php?action=portfolio"><li>Voir Tout</li></a>
+						<a href="index.php?action=portfolio&amp;category=paysage"><li>Paysages</li></a>
+						<a href="index.php?action=portfolio&amp;category=nature-morte"><li>Natures Mortes</li></a>
+						<a href="index.php?action=portfolio&amp;category=abstrait"><li>Abstrait</li></a>
+						<a href="index.php?action=portfolio&amp;category=scene"><li id="last">Scènes</li></a>
 					</ul>
 				</div>
 				
-
 				<div class="w3-content" style="max-width:100%">
 
-				<!-- Header -->
-					<div class="w3-opacity">
-					    
-					    <div class="w3-clear"></div>
-					        
-					    </div>
+					<!-- Header -->
+					<div class="w3-opacity">    
+						<div class="w3-clear"></div>	        
+					</div>
 
 					<!-- Photo Grid -->
-					    <div class="w3-row-padding" id="myGrid" style="margin-bottom:128px">
-					        <div class="w3-third">
+					<div class="w3-row-padding" id="myGrid" style="margin-bottom:128px">
+					    <div class="w3-third">
 
 			            		{% block col1 %} {% endblock %}
 					        
-					        </div>
+					    </div>
 
-					        <div class="w3-third">
+					    <div class="w3-third">
 
 					            {% block col2 %} {% endblock %}
 					        
-					        </div>
+					    </div>
 
-					        <div class="w3-third">
+					    <div class="w3-third">
 
 					            {% block col3 %} {% endblock %}
 					        
-					        </div>
 					    </div>
+					</div>
 
+				    <div id="up-arrow">
+				    	<img src="assets/img/up-arrow.png">
+				    </div>
 				<!-- End Page Content -->
 				</div>
 			</section>
@@ -77,5 +76,9 @@
     
 {% endblock main %}
 
+{% block script %}
 
+	<script type="text/javascript" src="assets/js/scrollUp.js"></script>
+    
+{% endblock %}
 

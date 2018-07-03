@@ -1,6 +1,13 @@
 {% extends 'layoutBackoffice.twig' %}
 
 
+{% block head %}
+
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=nkx2kdb057v2l9ww74mit8bczkkrmezsq1xma0sofi9uvoh4"></script>
+<script>tinymce.init({ selector:'textarea' });</script>
+     
+{% endblock %}
+
 {% block main %}
 	
 	{% if action == "adminPosts" %}

@@ -26,6 +26,7 @@ class PaintingManager extends Manager {
 		if ($resp === false) {
 			throw new \Exception("Impossible d'ajouter le tableau à la base de données", 1);
 		} else {
+			$req->closeCursor();
 			return $resp;
 		}
 	}
@@ -49,7 +50,6 @@ class PaintingManager extends Manager {
 		}
 
 		$req->closeCursor();
-
 		return $paintings;
 	}
 
@@ -68,7 +68,7 @@ class PaintingManager extends Manager {
 			$painting->hydrate($data);
 			$paintings[] = $painting;
 		}
-
+		$req->closeCursor();
 		return $paintings;
 	}
 
@@ -85,7 +85,6 @@ class PaintingManager extends Manager {
 		}
 
 		$req->closeCursor();
-
 		return $paintings;
 	}
 
@@ -113,7 +112,27 @@ class PaintingManager extends Manager {
 		$painting = new \jmd\models\entities\Painting();
 		$painting->hydrate($data);
 
+		$req->closeCursor();
 		return $painting;
+	}
+
+	public function getPaintingsBycategory($category) {
+		$db = $this->dbConnect();
+		$req = $db->prepare("SELECT p.id as id, title, width, height, price, sold, theme, technic, creation, url, published FROM paintings p JOIN img i ON i.id = p.img_id WHERE category = :cat ORDER BY creation DESC");
+
+		$req->bindValue("cat", $category, \PDO::PARAM_STR);
+		$req->execute();
+
+		$paintings = array();
+
+		while ($data = $req->fetch()) {
+			$painting = new \jmd\models\entities\Painting();
+			$painting->hydrate($data);
+			$paintings[] = $painting;
+		}
+
+		$req->closeCursor();
+		return $paintings;
 	}
 
 	
@@ -140,6 +159,7 @@ class PaintingManager extends Manager {
 		if ($req === false) {
 			throw new \Exception("Impossible de mettre à jour les informations dans la base de données", 1);
 		} else {
+			$req->closeCursor();
 			return $req;
 		}
 	}
@@ -156,6 +176,7 @@ class PaintingManager extends Manager {
 		if ($req === false) {
 			throw new \Exception("Impossible de mettre à jour les informations dans la base de données", 1);
 		} else {
+			$req->closeCursor();
 			return $req;
 		}
 	}
@@ -173,15 +194,10 @@ class PaintingManager extends Manager {
 		if ($req === false) {
 			throw new \Exception("Impossible de supprimer cette fiche de la base de données", 1);
 		} else {
+			$req->closeCursor();
 			return $req;
 		}
 	}
-	 
-	 
-	
-	 
-	 
+
 }
-
-
 
