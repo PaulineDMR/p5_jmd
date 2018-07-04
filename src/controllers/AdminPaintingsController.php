@@ -41,7 +41,7 @@ class AdminPaintingsController {
 
 		$numberOfPages = $this->getPageCount();
 
-		$twig = \jmd\models\Twig::initTwig("src/views/backoffice/");
+		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
 
 		echo $twig->render('contentAdminPaintings.twig', [
 			"paintings" => $paintings,
@@ -54,7 +54,7 @@ class AdminPaintingsController {
 
 		$action = $_GET["action"];
 
-		$twig = \jmd\models\Twig::initTwig("src/views/backoffice/");
+		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
 
 		echo $twig->render('contentAddPainting.twig', ["action" => $action]);
 	}
@@ -93,7 +93,7 @@ class AdminPaintingsController {
 		 					$img = null;
 		 				}
 
-						$twig = \jmd\models\Twig::initTwig("src/views/backoffice/");
+						$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
 
 						echo $twig->render('contentAddPainting.twig', [
 							"action" => $action,
@@ -227,7 +227,7 @@ class AdminPaintingsController {
 
 		$action = $_GET["action"];
 
-		$twig = \jmd\models\Twig::initTwig("src/views/backoffice/");
+		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
 		
 		echo $twig->render('contentModifyPainting.twig', [
 			"painting" => $painting,
@@ -335,7 +335,6 @@ class AdminPaintingsController {
 
 		header("location:index.php?action=adminPaintings");
 	}
-
 
 }
 

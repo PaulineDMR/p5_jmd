@@ -11,6 +11,12 @@ class CategoryManager extends Manager {
 
     // CREATE
     
+    /**
+     * [newCatPost description]
+     * @param  [type] $post_id [description]
+     * @param  [type] $cat_id  [description]
+     * @return [type]          [description]
+     */
     public function newCatPost($post_id, $cat_id)
     {
         $db = $this->dbConnect();
@@ -30,12 +36,16 @@ class CategoryManager extends Manager {
     
     // READ
     
+    /**
+     * [newCatPost description]
+     * @param  [type] $post_id [description]
+     * @param  [type] $cat_id  [description]
+     * @return [type]          [description]
+     */
     public function getCountPostByCat() {
         
         $db = $this->dbConnect();
         $req = $db->query("SELECT COUNT(post_id) AS post_id, name  FROM cat_post cp JOIN categories c ON cp.cat_id = c.id JOIN posts p ON cp.post_id = p.id WHERE published = TRUE GROUP BY name");
-
-        /*$req = $db->query("SELECT name, COUNT(post_id) FROM categories c JOIN cat_post cp ON cp.cat_id = c.id JOIN posts p ON cp.post_id = p.id GROUP BY name WHERE published = TRUE");*/
 
         $categories = array();
 

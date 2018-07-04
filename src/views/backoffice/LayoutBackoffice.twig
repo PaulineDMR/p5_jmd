@@ -37,7 +37,6 @@
 			<div class="container">
 				<header class="major">
 					<h2>Espace Administrateur</h2>
-					<p style="color: orange; font-weight: bold">mettre une image en fond ou dessous</p>
 				</header>
 
 				<div class="row 200% main-content">
@@ -56,9 +55,8 @@
 										<li><a href="index.php?action=adminComments">Les Commentaires</a></li>
 										<hr>
 										<li><a href="index.php?action=addPainting">Ajouter un Tableau</a></li>
-										<li><a href="index.php?action=writePost">Ecrire un article</a></li>
+										<li><a href="index.php?action=adminPosts&amp;choice=writePost">Ecrire un article</a></li>
 										<hr>
-										<li><a href="index.php?action=myAccount" class="icon fa-user">Mon Compte</a></li>
 									</ul>
 								</nav>
 								<footer>
@@ -95,15 +93,18 @@
 		</div>
 
 		<!-- Scripts -->
-			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.onvisible.min.js"></script>
-			<script src="assets/js/jquery.poptrox.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/skel.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.onvisible.min.js"></script>
+		<script src="assets/js/jquery.poptrox.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+		<script src="assets/js/main.js"></script>
+
+		<script type="text/javascript" src="assets/js/alert.js"></script>
+		<script type="text/javascript" src="assets/js/admin.js"></script>
 
 			{% block script %}
 			    

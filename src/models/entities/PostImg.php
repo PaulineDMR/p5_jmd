@@ -8,6 +8,7 @@ class PostImg extends Model {
 	private $post_id;
 	private $img_id;
     private $url;
+    private $fileName;
 
 
     /**
@@ -86,6 +87,27 @@ class PostImg extends Model {
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
+
+    /**
+     * @param mixed $fileName
+     *
+     * @return self
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
 
         return $this;
     }

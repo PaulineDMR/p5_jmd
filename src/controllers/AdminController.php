@@ -6,7 +6,7 @@ namespace jmd\controllers;
 /**
  * 
  */
-class AdminController extends Controller {
+class AdminController {
 
 	private $pageNumber;
 	private $postsPerPage = 20;
@@ -14,7 +14,6 @@ class AdminController extends Controller {
 
 
 	public function __construct() {
-		parent::__construct();
 		if (!empty($_GET["page"]) && is_numeric($_GET["page"])) {
 			$this->pageNumber = $_GET["page"];
 		} else {
@@ -23,16 +22,26 @@ class AdminController extends Controller {
 	}
 	
 	public function renderMainAdmin() {
+		$postManager = new \jmd\models\managers\PostManager();
+		$posts = $postManager->getRecentPosts($max = 1);
 		
-		$posts = $this->postManager->getRecentPosts($max = 1);
+		$postId;
+		foreach ($posts as $value) {
+			$postId = $value->getId();
+		}
 
-		$comments = $this->commentManager->getRecentComments($max = 1);
+		$postImgManager = new \jmd\models\managers\ImgManager();
+		$postImg = $postImgManager->getPostImg($postId);
 
-		$twig = \jmd\models\Twig::initTwig("src/views/backoffice/");
+		$commentManager = new \jmd\models\managers\CommentManager();
+		$comments = $commentManager->getRecentComments($max = 1);
+
+		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
 
 		echo $twig->render('contentBackHome.twig', [
 			"posts" => $posts,
-			"comments" => $comments]);
+			"comments" => $comments,
+			"img" => $postImg]);
 	}
 
 	

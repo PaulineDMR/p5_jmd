@@ -33,12 +33,49 @@ class CommentManager extends Manager {
 	}
 
 	// READ
+	 
+	/**
+	 * [getComments description]
+	 * @param  [type] $firstIndex      [description]
+	 * @param  [type] $commentsPerPage [description]
+	 * @return [type]                  [description]
+	 */
+	public function getComments($firstIndex, $commentsPerPage) {
+	 	$db = $this->dbConnect();
+	 	$req = $db->prepare("
+	 		SELECT c.id AS id, prenom, DATE_FORMAT(c.creation, '%d-%m-%Y') AS creation, c.content AS content, reported, validated, title AS post_title
+	 			FROM comments c
+	 			JOIN posts p ON c.post_id = p.id
+	 			ORDER BY reported DESC, validated ASC, creation ASC
+	 			LIMIT :firstIx, :commentsNumber");
+
+	 	$req->bindValue("firstIx", $firstIndex, \PDO::PARAM_INT);
+	 	$req->bindValue("commentsNumber", $commentsPerPage, \PDO::PARAM_INT);
+	 	$req->execute();
+
+	 	$comments = array();
+
+	 	while ($data = $req->fetch()) {
+	 		$comment = new \jmd\models\entities\Comment;
+	 		$comment->hydrate($data);
+	 		$comments[] = $comment;
+	 	}
+
+	 	$req->closeCursor();
+	 	return $comments;
+	} 
 	
+	/**
+	 * [getComments description]
+	 * @param  [type] $firstIndex      [description]
+	 * @param  [type] $commentsPerPage [description]
+	 * @return [type]                  [description]
+	 */
 	public function getRecentComments($max) {
 	 	
 	 	$db = $this->dbConnect();
 	 	$req = $db->prepare("
-	 		SELECT c.prenom AS prenom, c.creation AS creation, c.content AS content, p.title AS post_title, reported, mail
+	 		SELECT c.prenom AS prenom, DATE_FORMAT(c.creation, '%d-%m-%Y') AS creation, c.content AS content, p.title AS post_title, reported, mail
 	 			FROM comments c
 	 			JOIN posts p ON p.id = c.post_id
 	 			ORDER BY c.creation DESC
@@ -60,11 +97,17 @@ class CommentManager extends Manager {
 	 	return $comments;
 	} 
 
+	/**
+	 * [getComments description]
+	 * @param  [type] $firstIndex      [description]
+	 * @param  [type] $commentsPerPage [description]
+	 * @return [type]                  [description]
+	 */
 	public function getPostComments($firstIndex, $commentsPerPage, $postId) {
 	 	
 	 	$db = $this->dbConnect();
 	 	$req = $db->prepare("
-	 		SELECT c.id AS id, c.prenom AS prenom, DATE_FORMAT(c.creation, '%d-%m-%Y') AS creation, c.content AS content, p.title AS post_title, reported, mail
+	 		SELECT c.id AS id, c.prenom AS prenom, DATE_FORMAT(c.creation, '%d-%m-%Y') AS creation, c.content AS content, p.title AS post_title, reported, validated
 	 			FROM comments c
 	 			JOIN posts p ON p.id = c.post_id
 	 			WHERE c.post_id = :post_id
@@ -89,11 +132,19 @@ class CommentManager extends Manager {
 	 	return $comments;
 	} 
 
+	/**
+	 * [getComments description]
+	 * @param  [type] $firstIndex      [description]
+	 * @param  [type] $commentsPerPage [description]
+	 * @return [type]                  [description]
+	 */
 	public function countPages($commentsPerPage) {
 		$db = $this->dbConnect();
 		$req = $db->query('SELECT id FROM comments WHERE reported = FALSE');
 		$numberOfComments = $req->rowCount();
-		if (($numberOfComments % $commentsPerPage) == 0) {
+		if ($numberOfComments == 0) {
+			$pagesCount = 1;
+		} elseif ($numberOfComments > 0 && ($numberOfComments % $commentsPerPage) == 0) {
 			$pagesCount = $numberOfComments / $commentsPerPage;
 		} elseif ($numberOfComments / $commentsPerPage < 0) {
 			$pagesCount = 1;
@@ -113,7 +164,9 @@ class CommentManager extends Manager {
 		$req->execute();
 
 		$numberOfComments = $req->rowCount();
-		if (($numberOfComments % $commentsPerPage) == 0) {
+		if ($numberOfComments == 0) {
+			$pagesCount = 1;
+		} elseif ($numberOfComments > 0 && ($numberOfComments % $commentsPerPage) == 0) {
 			$pagesCount = $numberOfComments / $commentsPerPage;
 		} elseif ($numberOfComments / $commentsPerPage < 0) {
 			$pagesCount = 1;

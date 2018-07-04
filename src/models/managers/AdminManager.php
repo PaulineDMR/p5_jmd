@@ -2,12 +2,19 @@
 
 namespace jmd\models\managers;
 
+/**
+ * 
+ */
 class AdminManager extends Manager {
 
 	// CREATE
 	
 	// READ
 	
+	/**
+	 * [getAdmins description]
+	 * @return [type] [description]
+	 */
 	public function getAdmins() {
 	$db = $this->dbConnect();
 	$resp = $db->query("SELECT id, nom, prenom, login, pwd FROM admins");

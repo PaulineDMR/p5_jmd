@@ -47,7 +47,7 @@ class AdminPostsController {
 
 		$categories = $categoryManager->getCatPost();
 	
-		$twig = \jmd\models\Twig::initTwig("src/views/backoffice/");
+		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
 
 		$action = $_GET["action"];
 		$choice = null;
@@ -109,7 +109,7 @@ class AdminPostsController {
 
 		$list = $this->nonPostCatList($id);
 		
-		$twig = \jmd\models\Twig::initTwig("src/views/backoffice/");
+		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
 
 		echo $twig->render('contentModifyPost.twig', [
 			"post" => $post,
@@ -249,6 +249,24 @@ class AdminPostsController {
 		$categoryManager->deletePostCats($post_id);
 
 		header("location:index.php?action=adminPosts");
+	}
+
+	public function createNewPost() {
+		$postManager = new \jmd\models\managers\PostManager();
+		$postManager->newPost();
+
+		$post = $postManager->getLastPost();
+		$id = $post->getId();
+		
+		$categoryManager = new \jmd\models\managers\CategoryManager();
+		$categories = $categoryManager->getCategoryList();
+
+		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
+
+		echo $twig->render('contentWritePost.twig', [
+			"postId" => $id,
+			"categories" => $categories]);
+
 	}
 
 }

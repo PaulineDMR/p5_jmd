@@ -48,7 +48,7 @@
 							{% endif %}
 
 							<a href="index.php?action=blog&amp;postId={{ post.id }}" target="blank">Aperçu</a>
-							<a href="index.php?action=updatePost&amp;choice=deletePost&amp;id={{ post.id }}" class="last">Supprimer</a>
+							<a href="#" class="last" id="delete-post"><button type="submit" formaction="index.php?action=updatePost&amp;choice=deletePost&amp;id={{post.id}}">Supprimer</button></a>
 						</div>	
 					</td>
 

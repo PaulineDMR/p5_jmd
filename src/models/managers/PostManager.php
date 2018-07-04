@@ -34,10 +34,18 @@ class PostManager extends Manager {
 		return $posts;
 	}
 	
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
 	public function getRecentPosts($max) {
 		$db = $this->dbConnect();
 		$req = $db->prepare('
-			SELECT title, content, DATE_FORMAT(publication, "%d-%m-%Y") AS publication FROM posts p WHERE published = TRUE ORDER BY publication LIMIT :max');
+			SELECT p.id AS id, title, p.content AS content, DATE_FORMAT(publication, "%d-%m-%Y") AS publication, COUNT(ct.id) AS countComments
+				FROM posts p
+				LEFT JOIN comments ct ON p.id = ct.post_id
+				WHERE published = TRUE
+				GROUP BY p.id ORDER BY publication LIMIT :max');
 
 		$req->bindValue('max', $max, \PDO::PARAM_INT);
 		$req->execute();

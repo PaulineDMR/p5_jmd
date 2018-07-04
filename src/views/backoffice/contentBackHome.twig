@@ -3,30 +3,42 @@
 
 {% block lastPost %}
 
-	{% for post in posts %}
+	{% for post in posts %}   
+	
+	<div class="small-posts">
+		<div class="img-posts">
+			<img src="{{ img.url }}" alt="photo"/>		
+		</div>
+		<div class="content-posts">
+			<h5> {{ post.title }} </h5>
+			<p>{{ post.content|truncate(230, true)|raw}}</p>	
+		</div>	
+	</div>	
 
-		<p>{{ post.title }}</p>
-		<p>{{ post.publication }}</p> 
+	<p class="post-info">Publié le {{ post.publication }} - {{ post.countComments }} Commentaire(s)</p>
 
 	{% endfor %}
+
+	<hr>
 
 {% endblock %}
 
 
 {% block lastComment %}
-
+	<div id="last-comment">
 		{% for comment in comments %}
-
+		
 		<p>Le {{ comment.creation }}</p>
-		<p>{{ comment.prenom }} a écrit</p>
-		<p>{{ comment.content }}</p>
+		<div class="comment">
+			<p>{{ comment.prenom }} a écrit : </p>
+			<p> "{{ comment.content }}".</p>
+					
+		</div>
 		<p>au sujet de l'article {{ comment.post_title }}</p>
-		 
+
 		{% endfor %}
+
+	</div>
 	
 {% endblock %}  
 
-
-{% block lastLike %}
-		    
-{% endblock %}
