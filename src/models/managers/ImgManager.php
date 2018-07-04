@@ -73,7 +73,7 @@ class ImgManager extends Manager {
 		$imgs = array();
 
 		while ($data = $req->fetch()) {
-			$img = new \jmd\models\entities\Img();
+			$img = new \jmd\models\entities\PostImg();
 			$img->hydrate($data);
 			$imgs[] = $img;
 		}

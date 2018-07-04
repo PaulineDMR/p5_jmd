@@ -23,7 +23,7 @@ class Comment extends Model {
 
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
@@ -31,7 +31,7 @@ class Comment extends Model {
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
      *
      * @return self
      */

@@ -13,6 +13,7 @@ class Post extends Model {
 	private $publication;
 	private $published;
     private $countComments;
+    private $url;
 
 
     /**
@@ -167,6 +168,26 @@ class Post extends Model {
     public function setCountComments($countComments)
     {
         $this->countComments = $countComments;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param mixed $url
+     *
+     * @return self
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
 
         return $this;
     }

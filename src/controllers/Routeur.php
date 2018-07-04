@@ -37,10 +37,15 @@ class Routeur {
 
 			elseif ($request == "blog") {
 				$blogController = new BlogController();
-
-				if (isset($_GET["postId"]) && is_numeric($_GET["postId"])) {
-					$blogController->renderOnePost();
-
+	
+				if (isset($_GET["choice"]) && $_GET["choice"] == "report") {
+					if (isset($_GET["commentId"]) && is_numeric($_GET["commentId"])) {
+						if (isset($_GET["postId"]) && is_numeric($_GET["postId"])) {
+							$blogController->reportComment($_GET["commentId"], $_GET["postId"]);
+						}
+					}
+				} elseif (isset($_GET["postId"]) && is_numeric($_GET["postId"])) {
+					$blogController->renderOnePost($_GET["postId"]);
 				} else {
 					$blogController->renderHomeBlog();
 				}
@@ -50,7 +55,7 @@ class Routeur {
 				$blogController = new BlogController();
 
 				if (isset($_GET["id"]) && is_numeric($_GET["id"]) && $_GET["id"] > 0) {
-					$blogController->newComment($_GET["id"]);
+					$blogController->newComment($_GET["id"], $_POST["name"], $_POST["comment"]);
 
 				} else {
 					throw new \Exception("L'id de l'article est incorrect", 1);

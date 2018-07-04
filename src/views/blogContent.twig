@@ -3,50 +3,62 @@
 
 {% block articles %}
 
+	{% for post in posts %}
+
+	<div class="small-posts">
+		<div class="img-posts">
+			<img src="{{ postsImgs[post.id]|first}}" alt="photo"/>		
+		</div>
+		<div class="content-posts">
+			<h3> {{ post.title }} </h3>
+			<p>{{ post.content|truncate(230, true)|raw}}</p>
 			
-			
-	<div class="8u 12u$(medium)">
+		</div>	
+	</div>	
 
-	<!-- Content -->
-		<section id="content">
+	<p class="post-info">Publié le {{ post.publication }} - {{ post.countComments }} Commentaire(s)</p>
 
-			{% for post in posts %}
+	<footer>
+		<a href="index.php?action=blog&amp;postId={{ post.id }}" class="button small alt">Lire la suite ...</a>
+	</footer>
 
-			<div>
-				<div class="small-posts">
-					<div class="img-posts">
+	{% if loop.last == false %}
+	<hr>
+	{% endif %}
 
-						post.images|first
-						{% for img in imgs %}
-						
-							{% if img.post_id == post.id %} 
-
-							<img src="{{ img.url }}" alt="photo" />
-
-							{% endif %}
-					    
-						{% endfor %}
-					</div>
-					<div class="content-posts">
-						<h3> {{ post.title }} </h3>
-						<p>{{ post.content|truncate(230, true)|raw}}</p>
-						
-					</div>	
-				</div>	
-
-				<p class="post-info">Publié le {{ post.publication }} - {{ post.countComments }} Commentaire(s)</p>
-
-				<footer>
-					<a href="index.php?action=blog&amp;postId={{ post.id }}" class="button small alt">Lire la suite ...</a>
-				</footer>
-			</div>
-			<hr>
-
-			{% endfor %}
-		</section>
-	</div>
-    
+	{% endfor %}
+		
 {% endblock articles %}
+
+{% block pagination %}
+
+	<div id="pagination">
+        <div>
+            <a href="index.php?action=blog&amp;page=1"><i class="fa fa-angle-double-left">
+            </i></a>
+        </div>
+            
+        <div>
+            <a href="index.php?action=blog&amp;page={% if pageNumber == 1 %}{{ pageNumber }}{% else %}{{ pageNumber - 1 }}{% endif %}"><i class="fa fa-angle-left">
+            </i></a>
+        </div>
+
+        <div>
+            <p> {{ pageNumber }}/{{ numberOfPages }} </p>
+        </div>
+        
+        <div>
+            <a href="index.php?action=blog&amp;page={% if pageNumber == numberOfPages %}{{ pageNumber }}{% else %}{{pageNumber + 1}} {% endif %}"><i class="fa fa-angle-right">
+            </i></a>
+        </div>
+
+        <div>
+            <a href="index.php?action=blog&amp;page={{numberOfPages}}"><i class="fa fa-angle-double-right"></i></a>
+            </i>
+        </div>
+    </div>
+    
+{% endblock pagination %}
 
 
 {% block portfolio %}

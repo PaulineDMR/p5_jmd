@@ -25,12 +25,23 @@ Blog - {{ parent() }}
 			</header>
 
 			<div class="row 200%">
+				<div class="8u 12u$(medium)">
 
-				{% block articles %}
+					<!-- Content -->
+					<section id="content">
+
+						{% block articles %}
+			    
+						{% endblock articles %}
+	
+					
+
+					{% block pagination %}
 				    
-				{% endblock articles %}
-
-				
+					{% endblock pagination %}	
+					</section>
+				</div>
+    
 
 				<div class="4u$ 12u$(medium)">
 
@@ -122,7 +133,7 @@ Blog - {{ parent() }}
     <script type="text/javascript" src="assets/js/alert.js"></script>
 	<!-- Scripts pésonnalisés "lancement" -->
 
-	<script type="text/javascript" src="assets/js/jmd.js"></script>
+	<script type="text/javascript" src="assets/js/blog.js"></script>
 
 			    
 {% endblock script %}

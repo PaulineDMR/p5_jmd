@@ -36,7 +36,8 @@ class PostManager extends Manager {
 	
 	public function getRecentPosts($max) {
 		$db = $this->dbConnect();
-		$req = $db->prepare('SELECT title, content, DATE_FORMAT(publication, "%d-%m-%Y") AS publication FROM posts WHERE published = TRUE ORDER BY publication LIMIT :max');
+		$req = $db->prepare('
+			SELECT title, content, DATE_FORMAT(publication, "%d-%m-%Y") AS publication FROM posts p WHERE published = TRUE ORDER BY publication LIMIT :max');
 
 		$req->bindValue('max', $max, \PDO::PARAM_INT);
 		$req->execute();
@@ -58,8 +59,12 @@ class PostManager extends Manager {
 		$db = $this->dbConnect();
 		$resp = $db->query('SELECT id FROM posts WHERE published = TRUE');
 		$numberOfPosts = $resp->rowCount();
-		$numberOfPages = ceil($numberOfPosts / $postsPerPage);
 
+		if ($numberOfPosts % $postsPerPage == 0) {
+			$numberOfPages = $numberOfPosts / $postsPerPage;
+		} else {
+			$numberOfPages = ceil($numberOfPosts / $postsPerPage);
+		}
 		$resp->closeCursor();
 		return $numberOfPages;
 	}

@@ -64,10 +64,11 @@ class CommentManager extends Manager {
 	 	
 	 	$db = $this->dbConnect();
 	 	$req = $db->prepare("
-	 		SELECT c.prenom AS prenom, DATE_FORMAT(c.creation, '%d-%m-%Y') AS creation, c.content AS content, p.title AS post_title, reported, mail
+	 		SELECT c.id AS id, c.prenom AS prenom, DATE_FORMAT(c.creation, '%d-%m-%Y') AS creation, c.content AS content, p.title AS post_title, reported, mail
 	 			FROM comments c
 	 			JOIN posts p ON p.id = c.post_id
 	 			WHERE c.post_id = :post_id
+	 			ORDER BY c.creation DESC
 	 			LIMIT :first, :max");
 
 	 	$req->bindValue("post_id", $postId, \PDO::PARAM_INT);
@@ -94,17 +95,57 @@ class CommentManager extends Manager {
 		$numberOfComments = $req->rowCount();
 		if (($numberOfComments % $commentsPerPage) == 0) {
 			$pagesCount = $numberOfComments / $commentsPerPage;
+		} elseif ($numberOfComments / $commentsPerPage < 0) {
+			$pagesCount = 1;
 		} else {
-		$pagesCount = ceil($numberOfComments / $commentsPerPage);
+			$pagesCount = ceil($numberOfComments / $commentsPerPage);
 		}
 		
 		$req->closeCursor();
 		return $pagesCount;
 	}
+
+	public function countPostCommentsPages($commentsPerPage, $postId) {
+		$db = $this->dbConnect();
+		$req = $db->prepare('SELECT id FROM comments WHERE reported = FALSE AND post_id = :id');
+
+		$req->bindValue("id", $postId, \PDO::PARAM_INT);
+		$req->execute();
+
+		$numberOfComments = $req->rowCount();
+		if (($numberOfComments % $commentsPerPage) == 0) {
+			$pagesCount = $numberOfComments / $commentsPerPage;
+		} elseif ($numberOfComments / $commentsPerPage < 0) {
+			$pagesCount = 1;
+		} else {
+			$pagesCount = ceil($numberOfComments / $commentsPerPage);
+		}
+		
+		$req->closeCursor();
+		return $pagesCount;
+	}
+
+
 	
 	// UPDATE
-	 
+	
+	public function updateReported($id)
+	 {
+	 	$db = $this->dbConnect();
+		$req = $db->prepare("UPDATE comments SET reported = true WHERE id = :commentId");
 
+		$req->bindValue("commentId", $id, \PDO::PARAM_INT);		
+		$resp = $req->execute();
+
+		if ($resp === false) {
+			throw new \Exception("Impossible de mettre à jour les informations dans la base de données", 1);
+		} else {
+			$req->closeCursor();
+			return $resp;
+		}
+	 } 
+	
+	 
 	// DELETE
 	
 	public function deletePostComments($id) {
