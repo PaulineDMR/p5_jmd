@@ -156,6 +156,12 @@ class CommentManager extends Manager {
 		return $pagesCount;
 	}
 
+	/**
+	 * [getComments description]
+	 * @param  [type] $firstIndex      [description]
+	 * @param  [type] $commentsPerPage [description]
+	 * @return [type]                  [description]
+	 */
 	public function countPostCommentsPages($commentsPerPage, $postId) {
 		$db = $this->dbConnect();
 		$req = $db->prepare('SELECT id FROM comments WHERE reported = FALSE AND post_id = :id');
@@ -178,12 +184,16 @@ class CommentManager extends Manager {
 		return $pagesCount;
 	}
 
-
 	
 	// UPDATE
 	
-	public function updateReported($id)
-	 {
+	/**
+	 * [getComments description]
+	 * @param  [type] $firstIndex      [description]
+	 * @param  [type] $commentsPerPage [description]
+	 * @return [type]                  [description]
+	 */
+	public function updateReported($id) {
 	 	$db = $this->dbConnect();
 		$req = $db->prepare("UPDATE comments SET reported = true WHERE id = :commentId");
 
@@ -196,11 +206,60 @@ class CommentManager extends Manager {
 			$req->closeCursor();
 			return $resp;
 		}
-	 } 
+	} 
+
+	/**
+	 * [getComments description]
+	 * @param  [type] $firstIndex      [description]
+	 * @param  [type] $commentsPerPage [description]
+	 * @return [type]                  [description]
+	 */
+	public function updateValidated($commentId) {
+		$db = $this->dbConnect();
+		$req = $db->prepare("UPDATE comments SET reported = false, validated = true WHERE id = :id");
+
+		$req->bindValue("id", $commentId, \PDO::PARAM_INT);		
+		$resp = $req->execute();
+
+		if ($resp === false) {
+			throw new \Exception("Impossible de mettre à jour les informations dans la base de données", 1);
+		} else {
+			$req->closeCursor();
+			return $resp;
+		}
+	}
 	
 	 
 	// DELETE
 	
+	/**
+	 * [getComments description]
+	 * @param  [type] $firstIndex      [description]
+	 * @param  [type] $commentsPerPage [description]
+	 * @return [type]                  [description]
+	 */
+	public function deleteComment($commentId) {
+	 	$db = $this->dbConnect();
+		$req = $db->prepare("DELETE FROM comments  WHERE id = :id");
+
+		$req->bindValue("id", $commentId, \PDO::PARAM_INT);
+		$resp = $req->execute();
+
+		if ($resp === false) {
+			throw new \Exception("Impossible de supprimer le commentaire de la base de données", 1);
+		} else {
+			$req->closeCursor();
+			return $resp;
+		}
+	}
+	
+	
+	/**
+	 * [getComments description]
+	 * @param  [type] $firstIndex      [description]
+	 * @param  [type] $commentsPerPage [description]
+	 * @return [type]                  [description]
+	 */
 	public function deletePostComments($id) {
 		$db = $this->dbConnect();
 		$req = $db->prepare("DELETE FROM comments  WHERE post_id = :id");

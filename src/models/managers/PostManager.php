@@ -6,8 +6,27 @@ class PostManager extends Manager {
 
 	// CREATE
 	
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
+	public function newPost() {
+	 	$db = $this->dbConnect();
+		$req = $db->exec("INSERT INTO posts (creation) VALUES (NOW())");
+
+		if ($req === false) {
+			throw new \Exception("Impossible d'ajouter le tableau à la base de données", 1);
+		} else {
+			return $req;
+		}
+	}
+	
 	// READ
 	
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
 	public function getPosts($firstIndex, $postsPerPage) {
 		$db = $this->dbConnect();
 		$resp = $db->prepare('
@@ -63,6 +82,10 @@ class PostManager extends Manager {
 		return $posts;
 	}
 
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
 	public function countPages($postsPerPage) {
 		$db = $this->dbConnect();
 		$resp = $db->query('SELECT id FROM posts WHERE published = TRUE');
@@ -77,6 +100,10 @@ class PostManager extends Manager {
 		return $numberOfPages;
 	}
 
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
 	public function getPublishedPosts($firstIndex, $postsPerPage) {
 		$db = $this->dbConnect();
 		$resp = $db->prepare('
@@ -104,6 +131,10 @@ class PostManager extends Manager {
 		return $posts;
 	}
 
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
 	public function getPostsPerCat($firstIndex, $postsPerPage, $category) {
 
 		$db = $this->dbConnect();
@@ -136,6 +167,10 @@ class PostManager extends Manager {
 	}
 
 
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
 	public function getOnePost($post_id) {
 		$db = $this->dbConnect();
 		$req = $db->prepare("
@@ -153,9 +188,33 @@ class PostManager extends Manager {
 		$req->closeCursor();
 		return $post;
 	}
+
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
+	public function getLastPost() {
+		$db = $this->dbConnect();
+		$req = $db->query("
+			SELECT id, title, content, DATE_FORMAT(publication, '%d-%m-%Y')AS publication, published, DATE_FORMAT(creation, '%d-%m-%Y') AS creation
+				FROM posts
+				ORDER BY id DESC
+				LIMIT 1");
+
+		$data = $req->fetch();
+		$post = new \jmd\models\entities\Post;
+		$post->hydrate($data);
+
+		$req->closeCursor();
+		return $post;
+	}
 	
 	// UPDATE
 	
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
 	public function updatePost($id, $title, $content) {
 		$db = $this->dbConnect();
 		$req = $db->prepare("UPDATE posts SET title = :title, content = :content WHERE id = :id");
@@ -175,6 +234,10 @@ class PostManager extends Manager {
 		}
 	}
 
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
 	public function updatePublished($id, $status) {
 		$db = $this->dbConnect();
 		$req = $db->prepare("UPDATE posts SET published = :status publication = NOW() WHERE id = :id");
@@ -192,6 +255,10 @@ class PostManager extends Manager {
 		}
 	}
 
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
 	public function publishedToNo($id, $status) {
 		$db = $this->dbConnect();
 		$req = $db->prepare("UPDATE posts SET published = :status WHERE id = :id");
@@ -211,6 +278,10 @@ class PostManager extends Manager {
 	
 	// DELETE
 	
+	/**
+	 * [newPost description]
+	 * @return [type] [description]
+	 */
 	public function deletePost($id) {
 		$db = $this->dbConnect();
 		$req = $db->prepare("DELETE FROM posts  WHERE id = :id");

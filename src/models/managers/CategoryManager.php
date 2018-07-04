@@ -78,6 +78,12 @@ class CategoryManager extends Manager {
         return $categories;
     }
 
+    /**
+     * [newCatPost description]
+     * @param  [type] $post_id [description]
+     * @param  [type] $cat_id  [description]
+     * @return [type]          [description]
+     */
     public function getCatPost() {
         $db = $this->dbConnect();
         $req = $db->query("
@@ -99,8 +105,13 @@ class CategoryManager extends Manager {
         return $categories;
     }
 
-    public function catPerPost($id)
-    {
+    /**
+     * [newCatPost description]
+     * @param  [type] $post_id [description]
+     * @param  [type] $cat_id  [description]
+     * @return [type]          [description]
+     */
+    public function catPerPost($id) {
         $db = $this->dbConnect();
         $req = $db->prepare("
             SELECT name, cp.id
@@ -125,6 +136,12 @@ class CategoryManager extends Manager {
         return $categories;
     }
 
+    /**
+     * [newCatPost description]
+     * @param  [type] $post_id [description]
+     * @param  [type] $cat_id  [description]
+     * @return [type]          [description]
+     */
     public function getOneCat($name) {
         $db = $this->dbConnect();
         $req = $db->prepare(" SELECT id    FROM categories WHERE name = :name");
@@ -145,6 +162,12 @@ class CategoryManager extends Manager {
 
     // DELETE
     
+    /**
+     * [newCatPost description]
+     * @param  [type] $post_id [description]
+     * @param  [type] $cat_id  [description]
+     * @return [type]          [description]
+     */
     public function deleteCatPost($id) {
         $db = $this->dbConnect();
         $req = $db->prepare("DELETE FROM cat_post WHERE id = :id");
@@ -160,6 +183,12 @@ class CategoryManager extends Manager {
         }
     }
 
+    /**
+     * [newCatPost description]
+     * @param  [type] $post_id [description]
+     * @param  [type] $cat_id  [description]
+     * @return [type]          [description]
+     */
     public function deletePostCats($id) {
         $db = $this->dbConnect();
         $req = $db->prepare("DELETE FROM cat_post WHERE post_id = :id");

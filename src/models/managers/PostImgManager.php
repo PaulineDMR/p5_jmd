@@ -7,6 +7,10 @@ namespace jmd\models\managers;
  */
 class PostImgManager extends Manager {
 	
+	/**
+	 * [getPostImg description]
+	 * @return [type] [description]
+	 */
 	public function getPostImg() {
 		$db = $this->dbConnect();
 		$req = $db->query('
