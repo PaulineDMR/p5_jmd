@@ -32,7 +32,7 @@ class PortfolioController {
         $group2 = $this->groupPaintings($paintings, $group = 2);
         $group3 = $this->groupPaintings($paintings, $group = 3);
 
-        $twig = \jmd\models\Twig::initTwig("src/views/");
+        $twig = \jmd\views\Twig::initTwig("src/views/");
 
         echo $twig->render("portfolioContent.twig",
             [

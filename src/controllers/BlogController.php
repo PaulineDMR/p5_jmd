@@ -99,7 +99,7 @@ class BlogController {
 		$pageNumber = $this->pageNumber;
 		$pagesCount = $postManager->countPages($this->postsPerPage);;
 
-		$twig = \jmd\models\Twig::initTwig("src/views/");
+		$twig = \jmd\views\Twig::initTwig("src/views/");
 
 		//var_dump($postImgs);
 		echo $twig->render('blogContent.twig', [
@@ -142,7 +142,7 @@ class BlogController {
 		}
 
 
-		$twig = \jmd\models\Twig::initTwig("src/views/");
+		$twig = \jmd\views\Twig::initTwig("src/views/");
 
 		//var_dump($postImgs);
 		echo $twig->render('blogPostContent.twig', [

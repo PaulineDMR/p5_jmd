@@ -40,7 +40,7 @@ class AboutController {
 			unset($_SESSION["mail-msg"]);
 		}
 		
-		$twig = \jmd\models\Twig::initTwig("src/views/");
+		$twig = \jmd\views\Twig::initTwig("src/views/");
 
 		echo $twig->render('aboutTemplate.twig', ["msg" => $this->msg]);
 	}

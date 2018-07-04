@@ -8,7 +8,7 @@ class HomeController{
 		$paintingManager = new \jmd\models\managers\PaintingManager();
 		$resp = $paintingManager->getRecentPaintings($max = 10);
 
-		$twig = \jmd\models\Twig::initTwig("src/views/");
+		$twig = \jmd\views\Twig::initTwig("src/views/");
 
 		echo $twig->render('homeContent.twig', ['paintings' => $resp]);		
 	}
