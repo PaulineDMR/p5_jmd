@@ -77,7 +77,7 @@ class AboutController {
             $this->subject = ' ';
         }
         
-        if (array_key_exists('message', $_POST)) {
+        if (array_key_exists('message', $_POST) && !empty($_POST['message'])) {
             $this->message = substr(strip_tags($_POST['message']), 0, 16384);
         } else {
             $this->message = '';

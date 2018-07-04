@@ -61,10 +61,16 @@ class CategoryManager extends Manager {
         return $categories;
     }
 
+    /**
+     * [newCatPost description]
+     * @param  [type] $post_id [description]
+     * @param  [type] $cat_id  [description]
+     * @return [type]          [description]
+     */
     public function getCategoryList()
     {
         $db = $this->dbConnect();
-        $req = $db->query("SELECT name FROM categories GROUP BY name");
+        $req = $db->query("SELECT name FROM categories");
 
         $categories = array();
 
