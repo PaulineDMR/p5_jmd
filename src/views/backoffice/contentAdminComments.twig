@@ -1,0 +1,101 @@
+{% extends 'templateAdminComments.twig' %}
+
+
+{% block content %}
+
+	<div class="table-wrapper">
+		<table>
+			<col class="one"></col>
+			<col class="two"></col>
+			<col class="three"></col>
+
+			<thead>
+				<tr>
+					<th></th>
+					<th>Statut</th>
+					<th>Créé le :</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for comment in comments %}
+
+				<tr class="{% if loop.index % 2 == 0 %}paire{% else %}impaire{% endif %}">
+
+					<td>{{ comment.prenom }} - 
+						<div class="comment-content">
+								"{{comment.content}}"
+						</div>
+						- Article : {{comment.post_title}}
+						<div class="post-action">
+
+							{% if comment.reported or comment.validated == false %}
+							 
+							<a href="index.php?action=adminComments&amp;choice=validate&amp;commentId={{comment.id}}" class="first" disabled="disabled">Valider</a>
+							    
+							{% endif %}
+
+							<a href="#" class="last" id="delete-action"><button type="submit" formaction="index.php?action=adminComments&amp;choice=delete&amp;commentId={{comment.id}}">Supprimer</button></a>
+						</div>	
+					</td>
+
+					{% if comment.reported == true %}
+
+					<td class="published brouillon">
+						SIGNALE</td>
+
+					{% elseif comment.validated == false %}
+
+					<td class="to-validate-comment">
+						En attente de validation</td>
+
+					{% elseif comment.reported == false and comment.validated %}
+
+					<td class="validated-comment">
+						<i class="icon fa-smile-o"></i></td>
+
+					{% endif %}
+					
+					<td class="creation">{{ comment.creation }}</td>
+				</tr>
+						    
+				{% endfor %}							
+			</tbody>
+		</table>
+	</div>
+    
+{% endblock content%}
+
+
+{% block pagination %}
+
+	<section>
+		<div id="pagination">
+			<div>
+				<a href="index.php?action=adminComments&amp;page=1"><i class="fa fa-angle-double-left">
+				</i></a>
+			</div>
+				
+			<div>
+				<a href="index.php?action=adminComments&amp;page={% if pageNumber == 1 %} {{pageNumber}} {% else %}  {{pageNumber - 1}} {% endif %}"><i class="fa fa-angle-left">
+				</i></a>
+			</div>
+
+			<div>
+				<p> {{ pageNumber }}/{{ numberOfPages }} </p>
+			</div>
+			
+			<div>
+				<a href="index.php?action=adminComments&amp;page={% if pageNumber == numberOfPages %} {{pageNumber}} {% else %}  {{pageNumber + 1}} {% endif %}"><i class="fa fa-angle-right">
+				</i></a>
+			</div>
+
+			<div>
+				<a href="index.php?action=adminComments&amp;page={{ numberOfPages }}"><i class="fa fa-angle-double-right"></i></a>
+				</i>
+			</div>
+
+		</div>
+	</section>
+    
+{% endblock pagination %}
