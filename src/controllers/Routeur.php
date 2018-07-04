@@ -78,69 +78,96 @@ class Routeur {
 			}
 
 			elseif ($request == "mainAdmin") {
-				$adminController = new AdminController();
-				$adminController->renderMainAdmin();
+				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+					$adminController = new AdminController();
+					$adminController->renderMainAdmin();
+				} else {
+						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
+				}
 			}
 
 
 			elseif ($request == "adminPaintings") {
-				$paintingsAdminController = new AdminPaintingsController();
-				$paintingsAdminController->renderPaintingsAdmin();
+				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+					$paintingsAdminController = new AdminPaintingsController();
+					$paintingsAdminController->renderPaintingsAdmin();
+				} else {
+						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
+				}
 			}
 
-			elseif ($request == "addPainting") { //Mettre l'ajout dans la même page que Paintings Admin, genre en dessous de la liste des tableaux
-				$paintingsAdminController = new AdminPaintingsController();
-				if (isset($_GET["img"]) && $_GET["img"] == "check") {
-					$paintingsAdminController->upload();
-				} elseif (isset($_GET["img"]) && $_GET["img"] == "delete") {
-					$paintingsAdminController->delete();
-				} elseif (isset($_GET["img"]) && $_GET["img"] == "record") {
-					$paintingsAdminController->newPainting();	
+			elseif ($request == "addPainting") { 
+				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+					$paintingsAdminController = new AdminPaintingsController();
+					if (isset($_GET["img"]) && $_GET["img"] == "check") {
+						$paintingsAdminController->upload();
+					} elseif (isset($_GET["img"]) && $_GET["img"] == "delete") {
+						$paintingsAdminController->delete();
+					} elseif (isset($_GET["img"]) && $_GET["img"] == "record") {
+						$paintingsAdminController->newPainting();	
+					} else {
+						$paintingsAdminController->renderAddPainting();
+					}
 				} else {
-					$paintingsAdminController->renderAddPainting();
+						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
-
 			}
 
 			elseif ($request == "modifyPainting") {
-				$paintingsAdminController = new AdminPaintingsController();
-				if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
-					$paintingsAdminController->displayModify($_GET["id"]);
+				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+					$paintingsAdminController = new AdminPaintingsController();
+					if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+						$paintingsAdminController->displayModify($_GET["id"]);
+					} else {
+						$paintingsAdminController->renderPaintingsAdmin();
+					}
 				} else {
-					$paintingsAdminController->renderPaintingsAdmin();
+						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
 			}
 
 			elseif ($request == "updatePainting") {
-				$paintingsAdminController = new AdminPaintingsController();
-				if (isset($_GET["id"]) && is_numeric($_GET["id"])) {	
-					$paintingsAdminController->updatePainting();
+				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+					$paintingsAdminController = new AdminPaintingsController();
+					if (isset($_GET["id"]) && is_numeric($_GET["id"])) {	
+						$paintingsAdminController->updatePainting();
+					} else {
+						$paintingsAdminController->renderPaintingsAdmin();
+					}
 				} else {
-					$paintingsAdminController->renderPaintingsAdmin();
+						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
 			}
 			
 			elseif ($request == "publishPainting") {
-				$paintingsAdminController = new AdminPaintingsController();
-				if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
-					$paintingsAdminController->updatePublicationStatus($_GET["id"]);
-				} else {
+				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+					$paintingsAdminController = new AdminPaintingsController();
+					if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+						$paintingsAdminController->updatePublicationStatus($_GET["id"]);
+					} else {
 					$paintingsAdminController->renderPaintingsAdmin();
+					}
+				} else {
+						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
 			}
 
 			elseif ($request == "deletePainting") {
-				$paintingsAdminController = new AdminPaintingsController();
-				if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
-					$paintingsAdminController->deletePainting($_GET["id"]);
+				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+					$paintingsAdminController = new AdminPaintingsController();
+					if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+						$paintingsAdminController->deletePainting($_GET["id"]);
+					} else {
+						$paintingsAdminController->renderPaintingsAdmin();
+					}
 				} else {
-					$paintingsAdminController->renderPaintingsAdmin();
+						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
 			}
 
 			elseif ($request == "adminPosts") {
 				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
-					$adminPostsController = new \jmd\controllers\AdminPostsController();
+					$adminPostsController = new AdminPostsController();
 
 					if (isset($_GET["choice"]) && $_GET["choice"] == "write") {
 						//
@@ -150,6 +177,8 @@ class Routeur {
 						$adminPostsController->publish($_GET["id"], $_GET["publish"]);
 					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "noPublish") {
 						$adminPostsController->NonPublish($_GET["id"], $_GET["publish"]);
+					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "writePost") {
+						$adminPostsController->createNewPost();
 					} else {
 						$adminPostsController->renderPostsAdmin();
 					}
@@ -162,7 +191,7 @@ class Routeur {
 
 			elseif ($request == "updatePost") {
 				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
-					$adminPostsController = new \jmd\controllers\AdminPostsController();
+					$adminPostsController = new AdminPostsController();
 
 					if (isset($_GET["choice"]) && $_GET["choice"] == "deleteCat") {
 						$adminPostsController->deleteCat($_GET["id"], $_GET["cat"]);
@@ -188,17 +217,36 @@ class Routeur {
 				}
 				
 			}
-			/* EXEMPLE 
-				if (isset($_GET["id"]) && $_GET["id"] > 0) {
-				$postCommentsController->postComments();
+
+			elseif ($request == "adminComments") {
+				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+					$adminCommentsController = new AdminCommentsController();
+
+					if (isset($_GET["choice"]) && $_GET["choice"] == "validate") {
+						if (isset($_GET["commentId"]) && is_numeric($_GET["commentId"])) {
+							$adminCommentsController->commentValidation($_GET["commentId"]);
+						}
+					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "delete") {
+						if (isset($_GET["commentId"]) && is_numeric($_GET["commentId"])) {	
+							$adminCommentsController->commentDeletion($_GET["commentId"]);
+						}
+					} else {
+						$adminCommentsController->renderAdminComments();
+					}
+
+
+				} else {
+						throw new Exception("Vous n'avez pas l'autorisation d'accès");
 				}
-				else {
-					throw new Exception('Aucun identifiant de billet envoyé');
-				}*/
 
-			// ...
+			}
 
-			else { // si aucune "action" dans l'url -> que dois afficher la page d'accueil?
+			elseif ($request == "logout") {
+					session_unset();
+					session_destroy();
+					header('location: index.php');
+
+			} else { // si aucune "action" dans l'url -> que dois afficher la page d'accueil?
 				$homeController = new HomeController();
 				$homeController->displayHome();
 			}
