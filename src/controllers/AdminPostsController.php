@@ -255,7 +255,9 @@ class AdminPostsController {
 		$categoryManager = new \jmd\models\managers\CategoryManager();
 		$categoryManager->deletePostCats($post_id);
 
-		header("location:index.php?action=adminPosts");
+		$page = $this->pageNumber;
+
+		header("location:index.php?action=adminPosts&page=$page");
 	}
 
 	public function createNewPost() {

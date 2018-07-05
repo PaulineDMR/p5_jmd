@@ -10,7 +10,7 @@
 			</div>
 				
 			<div>
-				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == 1 %} {{pageNumber}} {% else %}  {{pageNumber - 1}} {% endif %}"><i class="fa fa-angle-left">
+				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == 1 %}{{pageNumber}}{% else %}{{pageNumber - 1}}{% endif %}"><i class="fa fa-angle-left">
 				</i></a>
 			</div>
 
@@ -19,12 +19,12 @@
 			</div>
 			
 			<div>
-				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == numberOfPages %} {{pageNumber}} {% else %}  {{pageNumber + 1}} {% endif %}"><i class="fa fa-angle-right">
+				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == numberOfPages %}{{pageNumber}}{% else %}{{pageNumber + 1}}{% endif %}"><i class="fa fa-angle-right">
 				</i></a>
 			</div>
 
 			<div>
-				<a href="index.php?action=adminPaintings&amp;page={{ numberOfPages }}"><i class="fa fa-angle-double-right"></i></a>
+				<a href="index.php?action=adminPaintings&amp;page={{numberOfPages}}"><i class="fa fa-angle-double-right"></i></a>
 				</i>
 			</div>
 
@@ -93,9 +93,7 @@
 						
 						{% endif %}
 
-						<a href="#" id="delete-painting">
-							<button type="submit" formaction="index.php?action=deletePainting&amp;id={{painting.id}}">Supprimer</button>
-						</a>
+					    <a href="javascript:alert.deletePaintingAlert({{painting.id}}, {{pageNumber}});" id="delete-painting"><button>Supprimer</button></a>
 					</div>	
 				</div>			
 
@@ -117,7 +115,7 @@
 			</div>
 				
 			<div>
-				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == 1 %} {{pageNumber}} {% else %}  {{pageNumber - 1}} {% endif %}"><i class="fa fa-angle-left">
+				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == 1 %}{{pageNumber}}{% else %}{{pageNumber - 1}}{% endif %}"><i class="fa fa-angle-left">
 				</i></a>
 			</div>
 
@@ -126,7 +124,7 @@
 			</div>
 			
 			<div>
-				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == numberOfPages %} {{pageNumber}} {% else %}  {{pageNumber + 1}} {% endif %}"><i class="fa fa-angle-right">
+				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == numberOfPages %}{{pageNumber}}{% else %}{{pageNumber + 1}}{% endif %}"><i class="fa fa-angle-right">
 				</i></a>
 			</div>
 

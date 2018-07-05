@@ -62,7 +62,9 @@ class AdminCommentsController {
 		$commentManager = new \jmd\models\managers\CommentManager();
 		$resp = $commentManager->deleteComment($id);
 
-		header("location:index.php?action=adminComments");
+		$page = $this->pageNumber;
+
+		header("location:index.php?action=adminComments&page=$page");
 	}
 
 	

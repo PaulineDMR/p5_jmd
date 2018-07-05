@@ -35,7 +35,7 @@
 							    
 							{% endif %}
 
-							<a href="#" class="last" id="delete-action"><button type="submit" formaction="index.php?action=adminComments&amp;choice=delete&amp;commentId={{comment.id}}">Supprimer</button></a>
+							<a href="javascript:alert.deleteCommentAlert({{comment.id}}, {{pageNumber}})" class="last" id="delete-action"><button>Supprimer</button></a>
 						</div>	
 					</td>
 
@@ -77,7 +77,7 @@
 			</div>
 				
 			<div>
-				<a href="index.php?action=adminComments&amp;page={% if pageNumber == 1 %} {{pageNumber}} {% else %}  {{pageNumber - 1}} {% endif %}"><i class="fa fa-angle-left">
+				<a href="index.php?action=adminComments&amp;page={% if pageNumber == 1 %}{{pageNumber}}{% else %}{{pageNumber - 1}}{% endif %}"><i class="fa fa-angle-left">
 				</i></a>
 			</div>
 
@@ -86,7 +86,7 @@
 			</div>
 			
 			<div>
-				<a href="index.php?action=adminComments&amp;page={% if pageNumber == numberOfPages %} {{pageNumber}} {% else %}  {{pageNumber + 1}} {% endif %}"><i class="fa fa-angle-right">
+				<a href="index.php?action=adminComments&amp;page={% if pageNumber == numberOfPages %}{{pageNumber}}{% else %}{{pageNumber + 1}}{% endif %}"><i class="fa fa-angle-right">
 				</i></a>
 			</div>
 

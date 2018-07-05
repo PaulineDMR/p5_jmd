@@ -52,19 +52,19 @@
 			<div>
 				<label for="sold">Le tableau est-il vendu ?
 			
-					<input type="radio" name="sold" value="true" id="sold-true" {% if painting.sold %} checked {% endif %}>
+					<input type="radio" name="sold" value="1" id="sold-true" {% if painting.sold %} checked {% endif %}>
 					<label for="sold-true">OUI</label>
 
-					<input type="radio" name="sold" value="false" id="sold-false" {% if painting.sold == false %} checked {% endif %}>
+					<input type="radio" name="sold" value="0" id="sold-false" {% if painting.sold == false %} checked {% endif %}>
 					<label for="sold-false">NON</label>
 				</label>
 
 			<div>
 				<label for="published">Voulez le rendre public ?
-					<input type="radio" name="published" value="true" id="published-true" {% if painting.published %} checked {% endif %}>
+					<input type="radio" name="published" value="1" id="published-true" {% if painting.published %} checked {% endif %}>
 					<label for="published-true">OUI</label>
 
-					<input type="radio" name="published" value="false" id="published-false" {% if painting.published == false %} checked {% endif %}>
+					<input type="radio" name="published" value="0" id="published-false" {% if painting.published == false %} checked {% endif %}>
 					<label for="published-false">NON</label>	
 				</label>
 			</div>

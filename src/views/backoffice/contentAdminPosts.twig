@@ -48,7 +48,7 @@
 							{% endif %}
 
 							<a href="index.php?action=blog&amp;postId={{ post.id }}" target="blank">Aperçu</a>
-							<a href="#" class="last" id="delete-post"><button type="submit" formaction="index.php?action=updatePost&amp;choice=deletePost&amp;id={{post.id}}">Supprimer</button></a>
+							<a href="javascript:alert.deletePostAlert({{post.id}}, {{pageNumber}});" class="last" id="delete-post"><button>Supprimer</button></a>
 						</div>	
 					</td>
 
@@ -88,7 +88,7 @@
 			</div>
 				
 			<div>
-				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == 1 %} {{pageNumber}} {% else %}  {{pageNumber - 1}} {% endif %}"><i class="fa fa-angle-left">
+				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == 1 %}{{pageNumber}}{% else %}{{pageNumber - 1}}{% endif %}"><i class="fa fa-angle-left">
 				</i></a>
 			</div>
 
@@ -97,7 +97,7 @@
 			</div>
 			
 			<div>
-				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == numberOfPages %} {{pageNumber}} {% else %}  {{pageNumber + 1}} {% endif %}"><i class="fa fa-angle-right">
+				<a href="index.php?action=adminPaintings&amp;page={% if pageNumber == numberOfPages %}{{pageNumber}}{% else %}{{pageNumber + 1}}{% endif %}"><i class="fa fa-angle-right">
 				</i></a>
 			</div>
 

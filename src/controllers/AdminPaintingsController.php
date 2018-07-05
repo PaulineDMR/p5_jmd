@@ -24,8 +24,11 @@ class AdminPaintingsController {
 		$paintingManager = new \jmd\models\managers\PaintingManager();
 		$count = $paintingManager->countPaintings();
 
-		$pages = ceil($count->getCount() / $this->paintingsPerPage);
-
+		if(($count->getCount() % $this->paintingsPerPage) == 0) {
+			$pages = $count->getCount() / $this->paintingsPerPage;
+		} else {
+			$pages = ceil($count->getCount() / $this->paintingsPerPage);
+		}
 		return $pages;
 	}
 
@@ -213,7 +216,7 @@ class AdminPaintingsController {
 		}
 
 		if (empty($_POST["sold"])) {
-			$sold = null;
+			$sold = false;
 		} else {
 			$sold = $_POST["sold"];
 		}
@@ -339,18 +342,20 @@ class AdminPaintingsController {
 		header("location:index.php?action=adminPaintings");
 	}
 
-	public function deletePainting($p_id) {
+	public function deletePainting($paintingId) {
 		$paintingManager = new \jmd\models\managers\PaintingManager();
 		$imgManager = new \jmd\models\managers\ImgManager();
 
-		$painting = $paintingManager->getOnePainting($p_id);
+		$painting = $paintingManager->getOnePainting($paintingId);
 
 		$img_id = $painting->getImg_id();
 
-		$paintingManager->delete($p_id);
+		$paintingManager->delete($paintingId);
 		$imgManager->delete($img_id);
 
-		header("location:index.php?action=adminPaintings");
+		$page = $this->pageNumber;
+
+		header("location:index.php?action=adminPaintings&page=$page");
 	}
 
 }
