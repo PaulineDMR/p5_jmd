@@ -68,8 +68,13 @@ class Routeur {
 			}
 
 			elseif ($request == "login") {
-				$loginController = new LoginController();
-				$loginController->login();
+				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+					$adminController = new AdminController();
+					$adminController->renderMainAdmin();
+				} else {
+					$loginController = new LoginController();
+					$loginController->login();
+				}
 			}
 
 			elseif ($request == "auth") {
@@ -90,7 +95,13 @@ class Routeur {
 			elseif ($request == "adminPaintings") {
 				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
 					$paintingsAdminController = new AdminPaintingsController();
-					$paintingsAdminController->renderPaintingsAdmin();
+					if (isset($_GET["choice"]) && $_GET["choice"] == "deletePainting") {
+						if (isset($_GET["pId"]) && is_numeric($_GET["pId"])) {
+							$paintingsAdminController->deletePainting($_GET["pId"]);
+						}	
+					} else {
+						$paintingsAdminController->renderPaintingsAdmin();
+					}
 				} else {
 						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
@@ -152,19 +163,6 @@ class Routeur {
 				}
 			}
 
-			elseif ($request == "deletePainting") {
-				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
-					$paintingsAdminController = new AdminPaintingsController();
-					if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
-						$paintingsAdminController->deletePainting($_GET["id"]);
-					} else {
-						$paintingsAdminController->renderPaintingsAdmin();
-					}
-				} else {
-						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
-				}
-			}
-
 			elseif ($request == "adminPosts") {
 				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
 					$adminPostsController = new AdminPostsController();
@@ -179,6 +177,10 @@ class Routeur {
 						$adminPostsController->NonPublish($_GET["id"], $_GET["publish"]);
 					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "writePost") {
 						$adminPostsController->createNewPost();
+					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "deletePost") {
+						if (isset($_GET["postId"]) && is_numeric($_GET["postId"])) {
+							$adminPostsController->delete($_GET["postId"]);
+						}
 					} else {
 						$adminPostsController->renderPostsAdmin();
 					}
@@ -205,15 +207,12 @@ class Routeur {
 					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "deleteImg") {
 						$adminPostsController->deleteImg($_GET["file"], $_GET["id"]);
 
-					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "deletePost") {
-						$adminPostsController->delete($_GET["id"]);
-
 					} else {
 						$adminPostsController->modifyPost($_GET["id"], $_POST["title"], $_POST["content"]);
 					}
 
 				} else {
-						throw new Exception("Vous n'avez pas l'autorisation d'accès");
+						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
 				
 			}
@@ -236,7 +235,7 @@ class Routeur {
 
 
 				} else {
-						throw new Exception("Vous n'avez pas l'autorisation d'accès");
+						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
 
 			}

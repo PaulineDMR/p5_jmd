@@ -6,12 +6,11 @@ namespace jmd\controllers;
 /**
  * 
  */
-class LoginController extends Controller {
+class LoginController {
 	
 	private $errorLoginMsg = "";
 
 	public function __construct() {
-		parent::__construct();
 		if (array_key_exists("authentification", $_SESSION) && !$_SESSION["authentification"]) {
 			$this->errorLoginMsg = "Votre pseudo ou votre de mot de passe est incorrect. A nouveau saississez vos identifiants.";
 		} else {
@@ -31,7 +30,8 @@ class LoginController extends Controller {
 	public function authentification() {
 
 		if (!empty($_POST["pseudo"]) && !empty($_POST["mdp"])) {
-			$admins = $this->adminManager->getAdmins();
+			$adminManager = new \jmd\models\managers\AdminManager();
+			$admins = $adminManager->getAdmins();
 			
 			foreach ($admins as $value) {
 

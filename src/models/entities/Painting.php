@@ -285,4 +285,23 @@ class Painting extends Model {
     }
 
 
+    /**
+     * @return mixed
+     */
+    public function getCreation()
+    {
+        return $this->creation;
+    }
+
+    /**
+     * @param mixed $creation
+     *
+     * @return self
+     */
+    public function setCreation($creation)
+    {
+        $this->creation = $creation;
+
+        return $this;
+    }
 }
