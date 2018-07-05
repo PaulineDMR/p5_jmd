@@ -95,7 +95,7 @@ class AdminPaintingsController {
 		 				$fileDestination = 'assets/img/paintings/' .$fileNameNew;
 		 				move_uploaded_file($fileTmpName, $fileDestination);
 
-		 				$url = "http://localhost:8888/jmd/assets/img/paintings/" .$fileNameNew; // OU http://jmd.pdmrweb/assets/img/paintings/
+		 				$url = "assets/img/paintings/" .$fileNameNew; // OU http://jmd.pdmrweb.com/assets/img/paintings/ OU http://localhost:8888/jmd/assets/img/paintings/
 
 		 				$action = $_GET["action"];
 		 				
@@ -140,10 +140,10 @@ class AdminPaintingsController {
 		
 	public function addImg() {
 
-		$url = "http://localhost:8888/jmd/assets/img/paintings/" .$_GET["name"];
+		$url = "assets/img/paintings/" .$_GET["name"]; // OU http://jmd.pdmrweb/assets/img/paintings/ OU http://localhost:8888/jmd/assets/img/paintings/
 
 		$imgManager = new \jmd\models\managers\ImgManager();
-		$imgManager->newImg($url);
+		$imgManager->newImg($url, $_GET["name"]);
 
 		$img = $imgManager->getPaintingId($url);
 		$id = $img->getId();

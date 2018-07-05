@@ -173,7 +173,7 @@ class AdminPostsController {
 
 	public function addImg($post_id) {
 		$fileName = $this->uploadImg();
-		$url = "http://localhost:8888/jmd/assets/img/posts/" .$fileName; //http:localhost:8888/jmd/assets/img/posts/ ou http://jmd.pdmrweb.com/assets/img/posts/ 
+		$url = "assets/img/posts/" .$fileName; //http:localhost:8888/jmd/assets/img/posts/ ou http://jmd.pdmrweb.com/assets/img/posts/ 
 
 		$imgManager = new \jmd\models\managers\ImgManager();
 		$imgManager->newImg($url, $fileName);
