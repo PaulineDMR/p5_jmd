@@ -2,7 +2,7 @@
 
 namespace jmd\controllers;
 
-class HomeController{
+class HomeController {
 
 	public function displayHome() {
 		$paintingManager = new \jmd\models\managers\PaintingManager();

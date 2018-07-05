@@ -42,6 +42,13 @@ class AdminCommentsController {
 		$commentManager = new \jmd\models\managers\CommentManager();
 		$numberOfPages = $commentManager->countPages($this->commentsPerPage);
 
+		foreach ($comments as $value) {
+			$date = $value->getCreation();
+			$newDate = new \jmd\helpers\FrenchDate($date);
+			$frenchDate = $newDate->getFrenchDate();
+			$value->setCreation($frenchDate);
+		}
+
 		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
 
 		echo $twig->render('contentAdminComments.twig', [

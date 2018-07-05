@@ -22,12 +22,12 @@ class PaintingManager extends Manager {
 	 */
 	public function addPainting($title, $width, $height, $img_id, $creation, $technic, $price, $theme, $category, $sold, $published) 	 {
 	 	$db = $this->dbConnect();
-		$req = $db->prepare("INSERT INTO paintings (title, img_id, width, height, creation, technic, price, theme, category, sold, published) VALUES (:title, :img_id, :width, :height, :creation, :technic, :price, :theme, :category, :sold, :published)");
+		$req = $db->prepare("INSERT INTO paintings (title, width, height, img_id, creation, technic, price, theme, category, sold, published) VALUES (:title, :width, :height, :img_id, :creation, :technic, :price, :theme, :category, :sold, :published)");
 		$req->bindValue("title", $title, \PDO::PARAM_STR);
 		$req->bindValue("width", $width, \PDO::PARAM_INT);
 		$req->bindValue("height", $height, \PDO::PARAM_INT);
 		$req->bindValue("img_id", $img_id, \PDO::PARAM_INT);
-		$req->bindValue("creation", $creation, \PDO::PARAM_INT);
+		$req->bindValue("creation", $creation, \PDO::PARAM_STR);
 		$req->bindValue("technic", $technic, \PDO::PARAM_STR);
 		$req->bindValue("price", $price, \PDO::PARAM_INT);
 		$req->bindValue("theme", $theme, \PDO::PARAM_STR);
@@ -258,7 +258,7 @@ class PaintingManager extends Manager {
 		$req->bindValue("title", $title, \PDO::PARAM_STR);
 		$req->bindValue("width", $width, \PDO::PARAM_INT);
 		$req->bindValue("height", $height, \PDO::PARAM_INT);
-		$req->bindValue("creation", $creation, \PDO::PARAM_INT);
+		$req->bindValue("creation", $creation, \PDO::PARAM_STR);
 		$req->bindValue("technic", $technic, \PDO::PARAM_STR);
 		$req->bindValue("price", $price, \PDO::PARAM_INT);
 		$req->bindValue("theme", $theme, \PDO::PARAM_STR);

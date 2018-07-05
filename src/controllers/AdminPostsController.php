@@ -31,6 +31,13 @@ class AdminPostsController {
 
 		$resp = $postManager->getPosts($firstIndex, $this->postsPerPage);
 
+		foreach ($resp as $value) {
+			$date = $value->getCreation();
+			$newDate = new \jmd\helpers\FrenchDate($date);
+			$frenchDate = $newDate->getFrenchDate();
+			$value->setCreation($frenchDate);
+		}
+
 		return $resp;
 	}
 

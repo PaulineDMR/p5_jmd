@@ -43,10 +43,10 @@ class CommentManager extends Manager {
 	public function getComments($firstIndex, $commentsPerPage) {
 	 	$db = $this->dbConnect();
 	 	$req = $db->prepare("
-	 		SELECT c.id AS id, prenom, DATE_FORMAT(c.creation, '%d-%m-%Y') AS creation, c.content AS content, reported, validated, title AS post_title
+	 		SELECT c.id AS id, prenom, c.creation AS creation, c.content AS content, reported, validated, title AS post_title
 	 			FROM comments c
 	 			JOIN posts p ON c.post_id = p.id
-	 			ORDER BY reported DESC, validated ASC, creation ASC
+	 			ORDER BY reported DESC, validated ASC, creation DESC
 	 			LIMIT :firstIx, :commentsNumber");
 
 	 	$req->bindValue("firstIx", $firstIndex, \PDO::PARAM_INT);
@@ -107,7 +107,7 @@ class CommentManager extends Manager {
 	 	
 	 	$db = $this->dbConnect();
 	 	$req = $db->prepare("
-	 		SELECT c.id AS id, c.prenom AS prenom, DATE_FORMAT(c.creation, '%d-%m-%Y') AS creation, c.content AS content, p.title AS post_title, reported, validated
+	 		SELECT c.id AS id, c.prenom AS prenom, c.creation AS creation, c.content AS content, p.title AS post_title, reported, validated
 	 			FROM comments c
 	 			JOIN posts p ON p.id = c.post_id
 	 			WHERE c.post_id = :post_id

@@ -28,6 +28,16 @@ class PortfolioController {
             $paintings = $paintingManager->getAllPaintings();
         }
 
+        foreach ($paintings as $value) {
+            $date = $value->getCreation();
+            if ($date != null) {
+                $newDate = new \DateTime($date);
+                $frenchDate = $newDate->format("m-Y");
+                $value->setCreation($frenchDate);
+            }
+        }
+
+
         $group1 = $this->groupPaintings($paintings, $group = 1);
         $group2 = $this->groupPaintings($paintings, $group = 2);
         $group3 = $this->groupPaintings($paintings, $group = 3);

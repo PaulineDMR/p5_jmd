@@ -42,14 +42,20 @@ class BlogController {
 				
 				if ($_GET["category"] == strtolower($value->getName())) {
 					$resp = $postManager->getPostsPerCat($firstIndex, $this->postsPerPage, $_GET["category"]);
-
-					return $resp;
 				}
 			}
 		} else {
 			$resp = $postManager->getPublishedPosts($firstIndex, $this->postsPerPage);
-			return $resp;
-		}		
+		}	
+
+		foreach ($resp as $value) {
+			$date = $value->getPublication();
+			$newDate = new \jmd\helpers\FrenchDate($date);
+			$frenchDate = $newDate->getFrenchDate();
+			$value->setPublication($frenchDate);
+		}
+
+		return $resp;
 	}
 
 	public function postCommentsList($postId) {
@@ -64,6 +70,13 @@ class BlogController {
 
 		$comments = $commentManager->getPostComments($firstIndex, $this->commentsPerPage, $postId);
 
+		foreach ($comments as $value) {
+			$date = $value->getCreation();
+			$newDate = new \jmd\helpers\FrenchDate($date);
+			$frenchDate = $newDate->getFrenchDate();
+			$value->setCreation($frenchDate);
+		}
+
 		return $comments;		
 	}
 
@@ -76,6 +89,12 @@ class BlogController {
 
 		$postManager = new \jmd\models\managers\PostManager(); 
 		$recentPosts = $postManager->getRecentPosts(5);
+		foreach ($recentPosts as $value) {
+			$date = $value->getPublication();
+			$newDate = new \jmd\helpers\FrenchDate($date);
+			$frenchDate = $newDate->getFrenchDate();
+			$value->setPublication($frenchDate);
+		}
 
 		$paintingManager = new \jmd\models\managers\PaintingManager();
 		$paintings = $paintingManager->getRecentPaintings($max = 6);
@@ -101,7 +120,7 @@ class BlogController {
 
 		$twig = \jmd\views\Twig::initTwig("src/views/");
 
-		//var_dump($postImgs);
+		
 		echo $twig->render('blogContent.twig', [
 			"postsImgs" => $postsImgsUrl,
 			"posts" => $posts,

@@ -30,12 +30,12 @@ class PostManager extends Manager {
 	public function getPosts($firstIndex, $postsPerPage) {
 		$db = $this->dbConnect();
 		$resp = $db->prepare('
-			SELECT p.id AS id, title, p.content AS content, DATE_FORMAT(publication, "%d-%m-%Y") AS publication, published, DATE_FORMAT(p.creation, "%d-%m-%Y") AS creation, COUNT(ct.id) AS countComments
+			SELECT p.id AS id, title, p.content AS content, DATE_FORMAT(publication, "%d-%m-%Y") AS publication, published, p.creation AS creation, COUNT(ct.id) AS countComments
 				FROM posts p
 				LEFT JOIN comments ct ON p.id = ct.post_id
 				GROUP BY p.id
-				ORDER BY p.creation
-				DESC LIMIT :firstIndex, :postsPerPage');
+				ORDER BY p.creation DESC
+				LIMIT :firstIndex, :postsPerPage');
 		
 		$resp->bindValue('firstIndex', $firstIndex, \PDO::PARAM_INT);
 		$resp->bindValue('postsPerPage', $postsPerPage, \PDO::PARAM_INT);
@@ -60,11 +60,11 @@ class PostManager extends Manager {
 	public function getRecentPosts($max) {
 		$db = $this->dbConnect();
 		$req = $db->prepare('
-			SELECT p.id AS id, title, p.content AS content, DATE_FORMAT(publication, "%d-%m-%Y") AS publication, COUNT(ct.id) AS countComments
+			SELECT p.id AS id, title, p.content AS content, publication, COUNT(ct.id) AS countComments
 				FROM posts p
 				LEFT JOIN comments ct ON p.id = ct.post_id
 				WHERE published = TRUE
-				GROUP BY p.id ORDER BY publication LIMIT :max');
+				GROUP BY p.id ORDER BY publication DESC LIMIT :max');
 
 		$req->bindValue('max', $max, \PDO::PARAM_INT);
 		$req->execute();
@@ -146,8 +146,8 @@ class PostManager extends Manager {
 				LEFT JOIN comments ct ON p.id = ct.post_id
 				WHERE published = TRUE AND name = :catName
 				GROUP BY p.id
-				ORDER BY publication
-				DESC LIMIT :firstIndex, :postsPerPage');
+				ORDER BY publication DESC
+				LIMIT :firstIndex, :postsPerPage');
 		
 		$resp->bindValue('catName', $category, \PDO::PARAM_STR);
 		$resp->bindValue('firstIndex', $firstIndex, \PDO::PARAM_INT);
@@ -240,7 +240,7 @@ class PostManager extends Manager {
 	 */
 	public function updatePublished($id, $status) {
 		$db = $this->dbConnect();
-		$req = $db->prepare("UPDATE posts SET published = :status publication = NOW() WHERE id = :id");
+		$req = $db->prepare("UPDATE posts SET published = :status, publication = NOW() WHERE id = :id");
 
 		$req->bindValue("id", $id, \PDO::PARAM_INT);
 		$req->bindValue("status", $status, \PDO::PARAM_STR);

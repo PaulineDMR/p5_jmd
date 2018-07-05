@@ -35,6 +35,15 @@ class AdminPaintingsController {
 		$paintingManager = new \jmd\models\managers\PaintingManager();
 		$paintings = $paintingManager->getPaintings($firstIndex, $this->paintingsPerPage);
 
+		foreach ($paintings as $value) {
+			$date = $value->getCreation();
+			if ($date != null) {
+				$newDate = new \DateTime($date);
+				$frenchDate = $newDate->format("m-Y");
+				$value->setCreation($frenchDate);
+			}
+		}
+
 		$action = $_GET["action"];
 
 		$pageNumber = $this->pageNumber;
@@ -224,6 +233,10 @@ class AdminPaintingsController {
 	public function displayModify($id) {
 		$paintingManager = new \jmd\models\managers\PaintingManager();
 		$painting = $paintingManager->getOnePainting($id);
+		$date = $painting->getCreation();
+		$tmp = explode("-", $date);
+		$newDate = $tmp[1]. "/" .$tmp[0];
+		
 
 		$action = $_GET["action"];
 
@@ -231,7 +244,8 @@ class AdminPaintingsController {
 		
 		echo $twig->render('contentModifyPainting.twig', [
 			"painting" => $painting,
-			"action" => $action]);
+			"action" => $action,
+			"date" => $newDate]);
 	}
 
 	public function updatePainting() {
@@ -270,7 +284,10 @@ class AdminPaintingsController {
 		if (empty($_POST["creation"])) {
 			$creation = null;
 		} else {
-			$creation = $_POST["creation"];
+			$tmp = explode("/", $_POST["creation"]);
+			$year = $tmp[1];
+			$month = $tmp[0];
+			$creation = $year. "-" .$month;
 		}
 
 		if (empty($_POST["technic"])) {
