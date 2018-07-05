@@ -251,8 +251,10 @@ class Routeur {
 				$homeController->displayHome();
 			}
 		}
-		catch(Exception $e) {
-			echo 'Erreur: ' . $e->getMessage();
+		catch(\Exception $e) {
+
+			$errorMessage = $e->getMessage();
+    		$errorController = new \jmd\controllers\ErrorController($errorMessage);
 		}
 	}
 }

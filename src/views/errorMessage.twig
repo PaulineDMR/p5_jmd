@@ -1,0 +1,24 @@
+{% extends 'frontendLayout.twig' %}
+
+{% block title %}
+
+JMD - Erreur
+    
+{% endblock %}
+
+
+{% block head %}
+
+	<link rel="stylesheet" href="assets/css/error.css" />
+    
+{% endblock %}
+
+
+{% block main %}
+
+	<div id="error">
+		<p><i class="icon fa-exclamation-triangle"></i>OUPS !</p>
+		<p>{{ msg }}</p>
+	</div>
+   
+{% endblock %}

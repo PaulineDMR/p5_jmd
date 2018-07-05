@@ -5,10 +5,6 @@ use PHPMailer\PHPMailer\Exception;
 
 use jmd\controllers\Routeur;
 
-ini_set("display_errors", 1);
-
-error_reporting(E_ALL);
-
 session_start();
 
 require 'vendor/autoload.php';
