@@ -10,6 +10,11 @@
     <!-- Content -->
         <div class="post-main-content">    
             <div id="post">
+            {% if post.published == 0 %}
+            
+            Id invalide !
+            
+            {% else %}
                 <h3> {{ post.title }} </h3>
                 <p>Le {{ post.publication }}</p>
 
@@ -91,12 +96,13 @@
                     <textarea class="comment-form" name="comment" id="comment" required></textarea></label>
                     <input type="submit" value="Valider" class="button small alt">
                 </form>
-            
+
+            {% endif %}
+
             </div>
 
-            
-
         </div>
+                
    
     
 {% endblock articles %}
