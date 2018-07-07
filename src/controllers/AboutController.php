@@ -1,14 +1,11 @@
 <?php 
 
+namespace jmd\controllers;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 
-namespace jmd\controllers;
-
-/**
- * 
- */
 class AboutController {
 
 	private $msg;
@@ -86,9 +83,9 @@ class AboutController {
         }
         
         if (array_key_exists('name', $_POST)) {
-            $name = substr(strip_tags($_POST['name']), 0, 255);
+            $this->name = substr(strip_tags($_POST['name']), 0, 255);
         } else {
-            $name = '';
+            $this->name = '';
         }
         
         if (array_key_exists('email', $_POST) and \PHPMailer\PHPMailer\PHPMailer::validateAddress($_POST['email'])) {
@@ -99,13 +96,18 @@ class AboutController {
         }
     }
 	
-	public function contactMe($code) {
-
+	/**
+     * [gonfig phpMailer, check the reCaptcha reponse, send the email]
+     * @param  [string] $code [reCaptacha response code]
+     * @return [string]       [success or message to display to user]
+     */
+    public function contactMe($code)
+    {
         if (!$this->err) {
-            $mail = new \PHPMailer\PHPMailer\PHPMailer;
+            $mail = new PHPMailer;
             $mail->SMTPAuth = true;
-            $mail->Username = 'user@example.com';
-            $mail->Password = 'secret';
+            //$mail->Username = 'user@example.com';
+            //$mail->Password = 'secret';
             $mail->SMTPSecure = 'ssl';  
             $mail->Host = $this->host;
             $mail->Port = 587;
