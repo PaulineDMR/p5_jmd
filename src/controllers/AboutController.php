@@ -20,8 +20,15 @@ class AboutController {
 
     private $secretKey;
 
-
-    public function __construct($mailHost, $mailFrom, $mailTo, $secret) {
+    /**
+     * [Get config for php mailer]
+     * @param [string] $mailHost [mail host]
+     * @param [string] $mailFrom [sender mail address]
+     * @param [string] $mailTo   [receiver mail address]
+     * @param [int] $secret   [secret key for api ReCaptcha]
+     */
+    public function __construct($mailHost, $mailFrom, $mailTo, $secret)
+    {
         if (array_key_exists('email', $_POST)) {
         	$this->host = $mailHost;
 	    	$this->from = $mailFrom;
@@ -30,19 +37,30 @@ class AboutController {
         	$this->validation();
         }
     }
-	
-	public function render() {
+
+	/**
+     * [Display the About page]
+     * 
+     */
+	public function render()
+    {
 		if (isset($_SESSION["mail-msg"])) {
 			$this->msg = $_SESSION["mail-msg"];
 			unset($_SESSION["mail-msg"]);
 		}
 		
-		$twig = \jmd\views\Twig::initTwig("src/views/");
+		$twig = Twig::initTwig("src/views/");
 
 		echo $twig->render('aboutTemplate.twig', ["msg" => $this->msg]);
 	}
 
-	public function checkCode($code) {
+	/**
+     * [Check the reCaptacha user action]
+     * @param  [string] $code [Api analysis of the user action]
+     * @return [string]       [Response success or not]
+     */
+    public function checkCode($code)
+    {
 		if (empty($code)) {
 			return false;
 		}
@@ -66,8 +84,12 @@ class AboutController {
 		return $json->success;
 	}
 
-	public function validation() {
-        
+    /**
+     * [php validation of the user inputs in the contact form]
+     * 
+     */
+	public function validation()
+    { 
         if (array_key_exists('subject', $_POST)) {
             $this->subject = substr(strip_tags($_POST['subject']), 0, 255);
         } else {
