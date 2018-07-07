@@ -10,7 +10,11 @@ class Routeur {
 		$this->request = $request;
 	}
 
-	public function renderController() {
+	/**
+	 * [Test all the variable in the url to call the right controller]
+	 */
+	public function renderController()
+	{
 
 		$request = $this->request;
 		
@@ -82,17 +86,17 @@ class Routeur {
 			}
 
 			elseif ($request == "mainAdmin") {
-				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+				$check = new LoginController();
+				if($check->CheckAuthentification()) {
 					$adminController = new AdminController();
 					$adminController->renderMainAdmin();
-				} else {
-						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
-				}
+				} 
 			}
 
 
 			elseif ($request == "adminPaintings") {
-				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+				$check = new LoginController();
+				if($check->CheckAuthentification()) {
 					$paintingsAdminController = new AdminPaintingsController();
 					if (isset($_GET["choice"]) && $_GET["choice"] == "deletePainting") {
 						if (isset($_GET["pId"]) && is_numeric($_GET["pId"])) {
@@ -101,13 +105,12 @@ class Routeur {
 					} else {
 						$paintingsAdminController->renderPaintingsAdmin();
 					}
-				} else {
-						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
 			}
 
 			elseif ($request == "addPainting") { 
-				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+				$check = new LoginController();
+				if($check->CheckAuthentification()) {
 					$paintingsAdminController = new AdminPaintingsController();
 					if (isset($_GET["img"]) && $_GET["img"] == "check") {
 						$paintingsAdminController->upload();
@@ -118,58 +121,58 @@ class Routeur {
 					} else {
 						$paintingsAdminController->renderAddPainting();
 					}
-				} else {
-						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
 			}
 
 			elseif ($request == "modifyPainting") {
-				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+				$check = new LoginController();
+				if($check->CheckAuthentification()) {
 					$paintingsAdminController = new AdminPaintingsController();
 					if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
 						$paintingsAdminController->displayModify($_GET["id"]);
 					} else {
 						$paintingsAdminController->renderPaintingsAdmin();
 					}
-				} else {
-						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
 			}
 
 			elseif ($request == "updatePainting") {
-				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+				$check = new LoginController();
+				if($check->CheckAuthentification()) {
 					$paintingsAdminController = new AdminPaintingsController();
 					if (isset($_GET["id"]) && is_numeric($_GET["id"])) {	
 						$paintingsAdminController->updatePainting();
 					} else {
 						$paintingsAdminController->renderPaintingsAdmin();
 					}
-				} else {
-						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
 			}
 			
 			elseif ($request == "publishPainting") {
-				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+				$check = new LoginController();
+				if($check->CheckAuthentification()) {
 					$paintingsAdminController = new AdminPaintingsController();
 					if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
 						$paintingsAdminController->updatePublicationStatus($_GET["id"]);
 					} else {
 					$paintingsAdminController->renderPaintingsAdmin();
 					}
-				} else {
-						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
 			}
 
 			elseif ($request == "adminPosts") {
-				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+				$check = new LoginController();
+				if($check->CheckAuthentification()) {
 					$adminPostsController = new AdminPostsController();
 
 					if (isset($_GET["choice"]) && $_GET["choice"] == "write") {
 						//
 					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "modify") {
-						$adminPostsController->renderModifyPost($_GET["id"]);
+						if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+							$adminPostsController->renderModifyPost($_GET["id"]);
+						} else {
+							throw new \Exception("Données incorrectes : Id");
+						}
 					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "publish") {
 						$adminPostsController->publish($_GET["id"], $_GET["publish"]);
 					} elseif (isset($_GET["choice"]) && $_GET["choice"] == "noPublish") {
@@ -183,15 +186,12 @@ class Routeur {
 					} else {
 						$adminPostsController->renderPostsAdmin();
 					}
-
-				} else {
-						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
-				}
-				
+				}				
 			}
 
 			elseif ($request == "updatePost") {
-				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+				$check = new LoginController();
+				if($check->CheckAuthentification()) {
 					$adminPostsController = new AdminPostsController();
 
 					if (isset($_GET["choice"]) && $_GET["choice"] == "deleteCat") {
@@ -209,15 +209,12 @@ class Routeur {
 					} else {
 						$adminPostsController->modifyPost($_GET["id"], $_POST["title"], $_POST["content"]);
 					}
-
-				} else {
-						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
-				}
-				
+				}			
 			}
 
 			elseif ($request == "adminComments") {
-				if (array_key_exists("authentification" , $_SESSION) && $_SESSION["authentification"]) {
+				$check = new LoginController();
+				if($check->CheckAuthentification()) {
 					$adminCommentsController = new AdminCommentsController();
 
 					if (isset($_GET["choice"]) && $_GET["choice"] == "validate") {
@@ -231,18 +228,19 @@ class Routeur {
 					} else {
 						$adminCommentsController->renderAdminComments();
 					}
-
-
-				} else {
-						throw new \Exception("Vous n'avez pas l'autorisation d'accès");
 				}
-
 			}
 
 			elseif ($request == "logout") {
 					session_unset();
 					session_destroy();
 					header('location: index.php');
+
+			}
+
+			elseif ($request == "mentions") {
+				$mentionsControllers = new MentionsLegalesController();
+				$mentionsControllers->renderMentions();
 
 			} else { // si aucune "action" dans l'url -> que dois afficher la page d'accueil?
 				$homeController = new HomeController();
