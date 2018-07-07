@@ -2,14 +2,22 @@
 
 namespace jmd\controllers;
 
-/**
- * 
- */
-class AdminPostsController {
+use jmd\models\managers\PostManager;
+use jmd\models\managers\ImgManager;
+use jmd\models\managers\CommentManager;
+use jmd\models\managers\CategoryManager;
+use jmd\helpers\FrenchDate;
+
+
+class AdminPostsController
+{
 
 	private $pageNumber;
 	private $postsPerPage = 8;
 
+	/**
+	 * [Set the number of the current page]
+	 */
 	public function __construct() {
 		if (!empty($_GET["page"]) && is_numeric($_GET["page"])) {
 			$this->pageNumber = $_GET["page"];
@@ -18,22 +26,26 @@ class AdminPostsController {
 		}
 	}
 
-	public function postList() {
-		$firstIndex = ($this->pageNumber - 1) * $this->postsPerPage;
-
-		$postManager = new \jmd\models\managers\PostManager();
+	/**
+	 * [Get the list of x post for this page (pagination)]
+	 * @return [array] [list of object Post]
+	 */
+	public function postList()
+	{
+		$postManager = new PostManager();
 
 		$pagesCount = $postManager->countPages($this->postsPerPage);
 
 		if ($this->pageNumber > $pagesCount) {
 			$this->pageNumber = $pagesCount;
 		}
+		$firstIndex = ($this->pageNumber - 1) * $this->postsPerPage;
 
 		$resp = $postManager->getPosts($firstIndex, $this->postsPerPage);
 
 		foreach ($resp as $value) {
 			$date = $value->getCreation();
-			$newDate = new \jmd\helpers\FrenchDate($date);
+			$newDate = new FrenchDate($date);
 			$frenchDate = $newDate->getFrenchDate();
 			$value->setCreation($frenchDate);
 		}
@@ -41,20 +53,22 @@ class AdminPostsController {
 		return $resp;
 	}
 
-	
+	/**
+	 * [Display the admin for post administration]
+	 */
 	public function renderPostsAdmin() {
 
 		$posts = $this->postList();
 
-		$postManager = new \jmd\models\managers\PostManager();
+		$postManager = new PostManager();
 
 		$numberOfPages = $postManager->countPages($this->postsPerPage);
 
-		$categoryManager = new \jmd\models\managers\CategoryManager();
+		$categoryManager = new CategoryManager();
 
 		$categories = $categoryManager->getCatPost();
 	
-		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
+		$twig = Twig::initTwig("src/views/backoffice/");
 
 		$action = $_GET["action"];
 		$choice = null;
@@ -71,8 +85,13 @@ class AdminPostsController {
 			"choice" => $choice]);
 	}
 
+	/**
+	 * [get list of category not atributed to a post]
+	 * @param  [int] $id [id of the post]
+	 * @return [array]     [list of category not use for this post]
+	 */
 	public function nonPostCatList($id) {
-		$categoryManager = new \jmd\models\managers\CategoryManager();
+		$categoryManager = new CategoryManager();
 		$postCat = $categoryManager->catPerPost($id);
 		$cat = $categoryManager->getCategoryList();
 
@@ -101,14 +120,18 @@ class AdminPostsController {
 
 	}
 
+	/**
+	 * [Display the view to modify a post data]
+	 * @param  [int] $id [Id of the post to modify]
+	 */
 	public function renderModifyPost($id) {
-		$postManager = new \jmd\models\managers\PostManager();
+		$postManager = new PostManager();
 		$post = $postManager->getOnePost($id);
 
-		$categoryManager = new \jmd\models\managers\CategoryManager();
+		$categoryManager = new CategoryManager();
 		$categories = $categoryManager->catPerPost($id);
 
-		$imgManager = new \jmd\models\managers\ImgManager();
+		$imgManager = new ImgManager();
 		$imgs = $imgManager->getPostImgs($id);
 
 		$action = $_GET["action"];
@@ -116,7 +139,7 @@ class AdminPostsController {
 
 		$list = $this->nonPostCatList($id);
 		
-		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
+		$twig = Twig::initTwig("src/views/backoffice/");
 
 		echo $twig->render('contentModifyPost.twig', [
 			"post" => $post,
@@ -127,13 +150,23 @@ class AdminPostsController {
 			"choice" => $choice]);
 	}
 
+	/**
+	 * [Unlink a category to a post]
+	 * @param  [int] $id  [id of the post]
+	 * @param  [string] $cat [name of the category to remove]
+	 * @return [bool]      [db response : succes]
+	 */
 	public function deleteCat($id, $cat) {
-		$categoryManager = new \jmd\models\managers\CategoryManager();
+		$categoryManager = new CategoryManager();
 		$categories = $categoryManager->deleteCatPost($cat);
 
 		header("location:index.php?action=adminPosts&choice=modify&id=$id");
 	}
 
+	/**
+	 * [Set input file data to upload a img]
+	 * @return [string] [name of the img uploaded]
+	 */
 	public function uploadImg() {
 		if (isset($_POST["submit"])) {
 		 	$file = $_FILES["file"];
@@ -171,11 +204,15 @@ class AdminPostsController {
 		} 
 	}
 
+	/**
+	 * [add a entry in DB to link an img to a post]
+	 * @param [int] $post_id [id of the post]
+	 */
 	public function addImg($post_id) {
 		$fileName = $this->uploadImg();
-		$url = "assets/img/posts/" .$fileName; //http:localhost:8888/jmd/assets/img/posts/ ou http://jmd.pdmrweb.com/assets/img/posts/ 
+		$url = "assets/img/posts/" .$fileName; 
 
-		$imgManager = new \jmd\models\managers\ImgManager();
+		$imgManager = new ImgManager();
 		$imgManager->newImg($url, $fileName);
 		$img = $imgManager->getImg($url);
 		$img_id = $img->getId();
@@ -184,11 +221,17 @@ class AdminPostsController {
 		header("location:index.php?action=adminPosts&choice=modify&id=$post_id");
 	}
 
+	/**
+	 * [Update modified post datas in DB]
+	 * @param  [int] $post_id [id of the post]
+	 * @param  [string] $title   [title of the post]
+	 * @param  [string] $content [text content of the post]
+	 */
 	public function modifyPost($post_id, $title, $content) {
-		$postManager = new \jmd\models\managers\PostManager();
+		$postManager = new PostManager();
 		$postManager->updatePost($post_id, $title, $content);
 
-		$categoryManager = new \jmd\models\managers\CategoryManager();
+		$categoryManager = new CategoryManager();
 		
 		foreach ($_POST["category"] as $value) {
 			
@@ -202,22 +245,36 @@ class AdminPostsController {
 
 	}
 
+	/**
+	 * [Set the post status of publication to true in DB]
+	 * @param  [int] $id     [id of the post]
+	 * @param  [bool] $status [true = published]
+	 */
 	public function publish($id, $status) {
-		$postManager = new \jmd\models\managers\PostManager();
+		$postManager = new PostManager();
 		$postManager->updatePublished($id, $status);
 
 		header("location:index.php?action=adminPosts");
 
 	}
 
+	/**
+	 * [Set the post status of publication to false in DB]
+	 * @param  [int] $id     [id of the post]
+	 * @param  [bool] $status [false = non published]
+	 */
 	public function nonPublish($id, $status) {
-		$postManager = new \jmd\models\managers\PostManager();
+		$postManager = new PostManager();
 		$postManager->publishedToNo($id, $status);
 
 		header("location:index.php?action=adminPosts");
 
 	}
 
+	/**
+	 * [Remove img file from the directory]
+	 * @param  [string] $file [file name]
+	 */
 	public function unlinkImg($file) {
 
 		$path = "assets/img/posts/" .$file;
@@ -226,23 +283,32 @@ class AdminPostsController {
 		closedir($open);
 	}
 
+	/**
+	 * [Remove img from directory and from DB]
+	 * @param  [string] $file [file name]
+	 * @param  [id] $id   [id of the file in IMG table]
+	 */
 	public function deleteImg($file, $id) {
 		$this->unlinkImg($file);
 
-		$imgManager = new \jmd\models\managers\ImgManager();
+		$imgManager = new ImgManager();
 		$imgManager->deleteFile($file);
 
 		header("location:index.php?action=adminPosts&choice=modify&id=$id");
 	}
 
+	/**
+	 * [Delete a post from DB and the comments linked to it]
+	 * @param  [int] $post_id [id of the post to delete]
+	 */
 	public function delete($post_id) {
-		$postManager = new \jmd\models\managers\PostManager();
+		$postManager = new PostManager();
 		$postManager->deletePost($post_id);
 
-		$commentManager = new \jmd\models\managers\CommentManager();
+		$commentManager = new CommentManager();
 		$commentManager->deletePostComments($post_id);
 
-		$imgManager = new \jmd\models\managers\ImgManager();
+		$imgManager = new ImgManager();
 
 		$imgs = $imgManager->getPostImgs($post_id);
 		foreach ($imgs as $value) {
@@ -252,7 +318,7 @@ class AdminPostsController {
 
 		$imgManager->deletePostImgs($post_id);
 
-		$categoryManager = new \jmd\models\managers\CategoryManager();
+		$categoryManager = new CategoryManager();
 		$categoryManager->deletePostCats($post_id);
 
 		$page = $this->pageNumber;
@@ -260,22 +326,24 @@ class AdminPostsController {
 		header("location:index.php?action=adminPosts&page=$page");
 	}
 
+	/**
+	 * [Add a new entry post in posts table in DB]
+	 */
 	public function createNewPost() {
-		$postManager = new \jmd\models\managers\PostManager();
+		$postManager = new PostManager();
 		$postManager->newPost();
 
 		$post = $postManager->getLastPost();
 		$id = $post->getId();
 		
-		$categoryManager = new \jmd\models\managers\CategoryManager();
+		$categoryManager = new CategoryManager();
 		$categories = $categoryManager->getCategoryList();
 
-		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
+		$twig = Twig::initTwig("src/views/backoffice/");
 
 		echo $twig->render('contentWritePost.twig', [
 			"postId" => $id,
 			"categories" => $categories]);
-
 	}
 
 }

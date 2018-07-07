@@ -2,13 +2,19 @@
 
 namespace jmd\controllers;
 
-class HomeController {
+use jmd\models\managers\PaintingManager;
 
+class HomeController
+{
+
+	/**
+	 * [Display the home page of the web site]
+	 */
 	public function displayHome() {
-		$paintingManager = new \jmd\models\managers\PaintingManager();
+		$paintingManager = new PaintingManager();
 		$resp = $paintingManager->getRecentPaintings($max = 10);
 
-		$twig = \jmd\views\Twig::initTwig("src/views/");
+		$twig = Twig::initTwig("src/views/");
 
 		echo $twig->render('homeContent.twig', ['paintings' => $resp]);		
 	}

@@ -9,7 +9,11 @@ class FrenchDate {
 
 	private $frenchDate;
 	
-	function __construct($date) {
+	/**
+     * [Set the date in french format]
+     * @param [type] $date [description]
+     */
+    public function __construct($date) {
 		$newDate = new \DateTime($date);
 
 		$finalDate = $newDate->format('d-m-Y');
@@ -18,7 +22,7 @@ class FrenchDate {
 	}
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getFrenchDate()
     {
@@ -26,7 +30,7 @@ class FrenchDate {
     }
 
     /**
-     * @param mixed $frenchDate
+     * @param string $frenchDate
      *
      * @return self
      */

@@ -2,6 +2,9 @@
 
 namespace jmd\controllers;
 
+use jmd\models\managers\PostManager;
+use jmd\models\managers\ImgManager;
+use jmd\models\managers\CommentManager;
 
 /**
  * 
@@ -12,8 +15,11 @@ class AdminController {
 	private $postsPerPage = 20;
 	private $paintingsPerPage = 8;
 
-
-	public function __construct() {
+	/**
+	 * [Set the number of the current page]
+	 */
+	public function __construct()
+	{
 		if (!empty($_GET["page"]) && is_numeric($_GET["page"])) {
 			$this->pageNumber = $_GET["page"];
 		} else {
@@ -21,8 +27,12 @@ class AdminController {
 		}
 	}
 	
-	public function renderMainAdmin() {
-		$postManager = new \jmd\models\managers\PostManager();
+	/**
+	 * [Display the main view of the administrator space]
+	 */
+	public function renderMainAdmin()
+	{
+		$postManager = new PostManager();
 		$posts = $postManager->getRecentPosts($max = 1);
 		
 		$postId;
@@ -30,21 +40,18 @@ class AdminController {
 			$postId = $value->getId();
 		}
 
-		$postImgManager = new \jmd\models\managers\ImgManager();
+		$postImgManager = new ImgManager();
 		$postImg = $postImgManager->getPostImg($postId);
 
-		$commentManager = new \jmd\models\managers\CommentManager();
+		$commentManager = new CommentManager();
 		$comments = $commentManager->getRecentComments($max = 1);
 
-		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
+		$twig = Twig::initTwig("src/views/backoffice/");
 
 		echo $twig->render('contentBackHome.twig', [
 			"posts" => $posts,
 			"comments" => $comments,
 			"img" => $postImg]);
 	}
-
-	
-
 
 }

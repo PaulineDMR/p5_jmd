@@ -3,9 +3,6 @@
 namespace jmd\controllers;
 
 
-/**
- * 
- */
 class ErrorController {
 
 	private $errMsg;
@@ -15,10 +12,13 @@ class ErrorController {
 		$this->renderErr();
 	}
 
+	/**
+	 * [Display the page with error message cautgh by exceptions]
+	 */
 	public function renderErr() {
 		$msg = $this->errMsg;
 
-		$twig = \jmd\views\Twig::initTwig("src/views/");
+		$twig = Twig::initTwig("src/views/");
 
 		echo $twig->render('errorMessage.twig', [
 			"msg" => $msg]);

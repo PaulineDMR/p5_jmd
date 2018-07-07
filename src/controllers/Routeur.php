@@ -2,7 +2,6 @@
 
 namespace jmd\controllers;
 
-
 class Routeur {
 
 	private $request;

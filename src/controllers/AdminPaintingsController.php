@@ -1,7 +1,9 @@
 <?php 
 
-
 namespace jmd\controllers;
+
+use jmd\models\managers\PaintingManager;
+use jmd\models\managers\ImgManager;
 
 /**
  * 
@@ -11,8 +13,11 @@ class AdminPaintingsController {
 	private $pageNumber;
 	private $paintingsPerPage = 8;
 
-
-	public function __construct() {
+	/**
+	 * [Set the number of the current page]
+	 */
+	public function __construct()
+	{
 		if (!empty($_GET["page"]) && is_numeric($_GET["page"])) {
 			$this->pageNumber = $_GET["page"];
 		} else {
@@ -20,8 +25,13 @@ class AdminPaintingsController {
 		}
 	}
 
-	public function getPageCount() {
-		$paintingManager = new \jmd\models\managers\PaintingManager();
+	/**
+	 * [get how many pages of paintings por pagination]
+	 * @return [int] [how many pages]
+	 */
+	public function getPageCount()
+	{
+		$paintingManager = new PaintingManager();
 		$count = $paintingManager->countPaintings();
 
 		if(($count->getCount() % $this->paintingsPerPage) == 0) {
@@ -32,10 +42,19 @@ class AdminPaintingsController {
 		return $pages;
 	}
 
-	public function renderPaintingsAdmin() {
+	/**
+	 * [Get data for displaying the view og paintings admin]
+	 */
+	public function renderPaintingsAdmin()
+	{
+		$numberOfPages = $this->getPageCount();
+		if ($this->pageNumber > $numberOfPages) {
+			$this->pageNumber = $numberOfPages;
+		}
+
 		$firstIndex = ($this->pageNumber - 1) * $this->paintingsPerPage;
 
-		$paintingManager = new \jmd\models\managers\PaintingManager();
+		$paintingManager = new PaintingManager();
 		$paintings = $paintingManager->getPaintings($firstIndex, $this->paintingsPerPage);
 
 		foreach ($paintings as $value) {
@@ -51,9 +70,7 @@ class AdminPaintingsController {
 
 		$pageNumber = $this->pageNumber;
 
-		$numberOfPages = $this->getPageCount();
-
-		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
+		$twig = Twig::initTwig("src/views/backoffice/");
 
 		echo $twig->render('contentAdminPaintings.twig', [
 			"paintings" => $paintings,
@@ -62,17 +79,23 @@ class AdminPaintingsController {
 			"numberOfPages" => $numberOfPages]);
 	}
 
-	public function renderAddPainting() {
-
+	/**
+	 * [Display the page to add a new painting]
+	 */
+	public function renderAddPainting()
+	{
 		$action = $_GET["action"];
 
-		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
+		$twig = Twig::initTwig("src/views/backoffice/");
 
 		echo $twig->render('contentAddPainting.twig', ["action" => $action]);
 	}
 
-
-	public function upload() {
+	/**
+	 * [get datas from the input type file, to upload a img file]
+	 */
+	public function upload()
+	{
 		if (isset($_POST["submit"])) {
 		 	$file = $_FILES["file"];
 
@@ -95,7 +118,7 @@ class AdminPaintingsController {
 		 				$fileDestination = 'assets/img/paintings/' .$fileNameNew;
 		 				move_uploaded_file($fileTmpName, $fileDestination);
 
-		 				$url = "assets/img/paintings/" .$fileNameNew; // OU http://jmd.pdmrweb.com/assets/img/paintings/ OU http://localhost:8888/jmd/assets/img/paintings/
+		 				$url = "assets/img/paintings/" .$fileNameNew;
 
 		 				$action = $_GET["action"];
 		 				
@@ -112,8 +135,6 @@ class AdminPaintingsController {
 						 	"url" => $url,
 						 	"img" => $img,
 						 	"name" => $fileNameNew]);
-
-
 		 			} else {
 		 				throw new \Exception("Le fichier est trop lourd pour être téléchargé.", 1);
 		 			}
@@ -126,7 +147,11 @@ class AdminPaintingsController {
 		} 
 	}
 
-	public function delete() {
+	/**
+	 * [delete an img file from the directory]
+	 */
+	public function delete()
+	{
 		$path = "assets/img/paintings/" .$_GET["name"];
 
 		$open = opendir("assets/img/paintings/");
@@ -137,12 +162,16 @@ class AdminPaintingsController {
 
 		header("location:index.php?action=addPainting");	
 	}
-		
-	public function addImg() {
+	
+	/**
+	 * [set URL and img name to add a new entry in the img table]
+	 * @return [int] [id of the img added in DB]
+	 */
+	public function addImg()
+	{
+		$url = "assets/img/paintings/" .$_GET["name"];
 
-		$url = "assets/img/paintings/" .$_GET["name"]; // OU http://jmd.pdmrweb/assets/img/paintings/ OU http://localhost:8888/jmd/assets/img/paintings/
-
-		$imgManager = new \jmd\models\managers\ImgManager();
+		$imgManager = new ImgManager();
 		$imgManager->newImg($url, $_GET["name"]);
 
 		$img = $imgManager->getPaintingId($url);
@@ -151,90 +180,59 @@ class AdminPaintingsController {
 		return $id;		
 	}
 
+	/**
+	 * [function to check the inputs from the painting Form]
+	 * @param  [string] $input  [trigger which input]
+	 * @param  [mixed] $return [value returned if input is empty]
+	 * @return [mixed]         [value of the input]
+	 */
+	public function checkInput($input, $return)
+	{
+		if (empty($_POST[$input])) {
+			return $return;
+		} else {
+			return $_POST[$input];
+		}
+	}
 
-	public function newPainting() {
-
+	/**
+	 * [Get tested inputs from the form and add the new painting datas in DB]
+	 */
+	public function newPainting()
+	{
 		$img_id = $this->addImg();
 
-		$title;
-		$width;
-		$height;
+		$title = $this->checkInput("title", null);
+		$width = $this->checkInput("width", 0);
+		$height = $this->checkInput("height", 0);
 		$creation;
-		$technic;
-		$price;
-		$theme;
-		$category;
-		$sold;
-		$published;
-
-		if (empty($_POST["title"])) {
-			$title = null;
-		} else {
-			$title = $_POST["title"];
-		}
-
-		if (empty($_POST["width"])) {
-			$width = 0;
-		} else {
-			$width = $_POST["width"];
-		}
-
-		if (empty($_POST["height"])) {
-			$height = 0;
-		} else {
-			$height = $_POST["height"];
-		}
+		$technic = $this->checkInput("technic", null);
+		$price = $this->checkInput("price", null);
+		$theme = $this->checkInput("theme", null);
+		$category = $this->checkInput("category", null);
+		$sold = $this->checkInput("sold", false);
+		$published = $this->checkInput("published", true);
 
 		if (empty($_POST["creation"])) {
 			$creation = null;
 		} else {
-			$creation = $_POST["creation"];
-		}
-
-		if (empty($_POST["technic"])) {
-			$technic = null;
-		} else {
-			$technic = $_POST["technic"];
-		}
-
-		if (empty($_POST["price"])) {
-			$price = null;
-		} else {
-			$price = $_POST["price"];
-		}
-
-		if (empty($_POST["theme"])) {
-			$theme = null;
-		} else {
-			$theme = $_POST["theme"];
-		}
-
-		if (empty($_POST["category"])) {
-			$category = null;
-		} else {
-			$category = $_POST["category"];
-		}
-
-		if (empty($_POST["sold"])) {
-			$sold = false;
-		} else {
-			$sold = $_POST["sold"];
-		}
-
-		if (empty($_POST["published"])) {
-			$published = null;
-		} else {
-			$published = $_POST["published"];
+			$tmp = explode("/", $_POST["creation"]);
+			$creation = $tmp[1]. "-" .$tmp[0];
 		}
 		
-		$paintingManager = new \jmd\models\managers\PaintingManager();
-		$resp = $paintingManager->addPainting($title, $width, $height, $img_id, $creation, $technic, $price, $theme, $category, $sold, $published);
+		$paintingManager = new PaintingManager();
+		$paintingManager->addPainting($title, $width, $height, $img_id, $creation, $technic, $price, $theme, $category, $sold, $published);
 
 		header("location:index.php?action=adminPaintings");
 	}
 
-	public function displayModify($id) {
-		$paintingManager = new \jmd\models\managers\PaintingManager();
+	/**
+	 * [Display the view to modify a painting]
+	 * @param  [in] $id [id of the painting to modify]
+	 */
+	public function displayModify($id)
+	{
+		$paintingManager = new PaintingManager();
 		$painting = $paintingManager->getOnePainting($id);
 		$date = $painting->getCreation();
 		$tmp = explode("-", $date);
@@ -243,7 +241,7 @@ class AdminPaintingsController {
 
 		$action = $_GET["action"];
 
-		$twig = \jmd\views\Twig::initTwig("src/views/backoffice/");
+		$twig = Twig::initTwig("src/views/backoffice/");
 		
 		echo $twig->render('contentModifyPainting.twig', [
 			"painting" => $painting,
@@ -251,100 +249,58 @@ class AdminPaintingsController {
 			"date" => $newDate]);
 	}
 
-	public function updatePainting() {
-
+	/**
+	 * [Send modified painting datas to DB]
+	 */
+	public function updatePainting()
+	{
 		$id = $_GET["id"];
 
-		$title;
-		$width;
-		$height;
+		$title = $this->checkInput("title", null);
+		$width = $this->checkInput("width", 0);
+		$height = $this->checkInput("height", 0);
 		$creation;
-		$technic;
-		$price;
-		$theme;
-		$category;
-		$sold;
-		$published;
-
-		if (empty($_POST["title"])) {
-			$title = null;
-		} else {
-			$title = $_POST["title"];
-		}
-
-		if (empty($_POST["width"])) {
-			$width = 0;
-		} else {
-			$width = $_POST["width"];
-		}
-
-		if (empty($_POST["height"])) {
-			$height = 0;
-		} else {
-			$height = $_POST["height"];
-		}
+		$technic = $this->checkInput("technic", null);
+		$price = $this->checkInput("price", null);
+		$theme = $this->checkInput("theme", null);
+		$category = $this->checkInput("category", null);
+		$sold = $this->checkInput("sold", false);
+		$published = $this->checkInput("published", true);
 
 		if (empty($_POST["creation"])) {
 			$creation = null;
 		} else {
 			$tmp = explode("/", $_POST["creation"]);
-			$year = $tmp[1];
-			$month = $tmp[0];
-			$creation = $year. "-" .$month;
+			$creation = $tmp[1]. "-" .$tmp[0];
 		}
 
-		if (empty($_POST["technic"])) {
-			$technic = null;
-		} else {
-			$technic = $_POST["technic"];
-		}
-
-		if (empty($_POST["price"])) {
-			$price = null;
-		} else {
-			$price = $_POST["price"];
-		}
-
-		if (empty($_POST["theme"])) {
-			$theme = null;
-		} else {
-			$theme = $_POST["theme"];
-		}
-
-		if (empty($_POST["category"])) {
-			$category = null;
-		} else {
-			$category = $_POST["category"];
-		}
-
-		if (empty($_POST["sold"])) {
-			$sold = 0;
-		} else {
-			$sold = $_POST["sold"];
-		}
-
-		if (empty($_POST["published"])) {
-			$published = 0;
-		} else {
-			$published = $_POST["published"];
-		}
-
-		$paintingManager = new \jmd\models\managers\PaintingManager();
+		$paintingManager = new PaintingManager();
 		$painting = $paintingManager->updateOnePainting($id, $title, $width, $height, $creation, $technic, $price, $theme, $category, $sold, $published);
 
 		header("location:index.php?action=adminPaintings");
 	}
 
-	public function updatePublicationStatus($id) {
-		$paintingManager = new \jmd\models\managers\PaintingManager();
+	/**
+	 * [Change the publication status of the paiting to true in DB]
+	 * @param  [int] $id [id of the painting to update]
+	 * @return [bool]     [DB response : succes or fail]
+	 */
+	public function updatePublicationStatus($id)
+	{
+		$paintingManager = new PaintingManager();
 		$resp = $paintingManager->publish($id);
 
 		header("location:index.php?action=adminPaintings");
 	}
 
-	public function deletePainting($paintingId) {
-		$paintingManager = new \jmd\models\managers\PaintingManager();
-		$imgManager = new \jmd\models\managers\ImgManager();
+	/**
+	 * [Delete painting in DB]
+	 * @param  [int] $paintingId [id of the painting to delete from DB]
+	 */
+	public function deletePainting($paintingId)
+	{
+		$paintingManager = new PaintingManager();
+		$imgManager = new ImgManager();
 
 		$painting = $paintingManager->getOnePainting($paintingId);
 
