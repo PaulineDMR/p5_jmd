@@ -3,9 +3,6 @@
 namespace jmd\models\entities;
 
 
-/**
- * 
- */
 class Img extends Model {
 	
 	private $id;
@@ -57,7 +54,7 @@ class Img extends Model {
 
 
     /**
-     * @return str
+     * @return string
      */
     public function getFileName()
     {
@@ -65,7 +62,7 @@ class Img extends Model {
     }
 
     /**
-     * @param str $fileName
+     * @param string $fileName
      *
      * @return self
      */

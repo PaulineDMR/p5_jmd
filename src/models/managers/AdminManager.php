@@ -2,9 +2,9 @@
 
 namespace jmd\models\managers;
 
-/**
- * 
- */
+use jmd\models\entities\Admin;
+
+
 class AdminManager extends Manager {
 
 	// CREATE
@@ -12,20 +12,21 @@ class AdminManager extends Manager {
 	// READ
 	
 	/**
-	 * [getAdmins description]
-	 * @return [type] [description]
+	 * [get administrator infos from admins table]
+	 * @return [array] [array of object Admin]
 	 */
-	public function getAdmins() {
-	$db = $this->dbConnect();
-	$resp = $db->query("SELECT id, nom, prenom, login, pwd FROM admins");
+	public function getAdmins()
+	{
+		$db = $this->dbConnect();
+		$resp = $db->query("SELECT id, nom, prenom, login, pwd FROM admins");
 
-	$admins = array();
+		$admins = array();
 
-		while ($donnees = $resp->fetch()) {
-			$admin = new \jmd\models\entities\Admin();
-			$admin->hydrate($donnees);
-			$admins[] = $admin;
-		}
+			while ($donnees = $resp->fetch()) {
+				$admin = new Admin();
+				$admin->hydrate($donnees);
+				$admins[] = $admin;
+			}
 
 		$resp->closeCursor();
 		return $admins;

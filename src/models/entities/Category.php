@@ -3,9 +3,6 @@
 namespace jmd\models\entities;
 
 
-/**
- * 
- */
 class Category extends Model {
 	
 	private $id;
@@ -15,7 +12,7 @@ class Category extends Model {
 
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
@@ -23,7 +20,7 @@ class Category extends Model {
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
      *
      * @return self
      */
@@ -35,7 +32,7 @@ class Category extends Model {
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getPost_id()
     {
@@ -43,7 +40,7 @@ class Category extends Model {
     }
 
     /**
-     * @param mixed $post_id
+     * @param int $post_id
      *
      * @return self
      */
@@ -55,7 +52,7 @@ class Category extends Model {
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getCat_id()
     {
@@ -63,7 +60,7 @@ class Category extends Model {
     }
 
     /**
-     * @param mixed $cat_id
+     * @param int $cat_id
      *
      * @return self
      */
@@ -75,7 +72,7 @@ class Category extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -83,7 +80,7 @@ class Category extends Model {
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      *
      * @return self
      */

@@ -33,7 +33,8 @@ class Painting extends Model {
      *
      * @return self
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         if (!is_numeric($id) || $id < 0) {
             throw new \Exception("L'id n'est pas valide", 1);    
         }
@@ -44,7 +45,7 @@ class Painting extends Model {
     }
 
     /**
-     * @return str
+     * @return string
      */
     public function getUrl()
     {
@@ -52,11 +53,12 @@ class Painting extends Model {
     }
 
     /**
-     * @param str $url
+     * @param string $url
      *
      * @return self
      */
-    public function setUrl($url) {
+    public function setUrl($url)
+    {
         
         $this->url = $url;
 
@@ -84,7 +86,7 @@ class Painting extends Model {
     }
 
     /**
-     * @return str
+     * @return string
      */
     public function getTitle()
     {
@@ -92,7 +94,7 @@ class Painting extends Model {
     }
 
     /**
-     * @param str $title
+     * @param string $title
      *
      * @return self
      */
@@ -164,7 +166,7 @@ class Painting extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSold()
     {
@@ -172,7 +174,7 @@ class Painting extends Model {
     }
 
     /**
-     * @param mixed $sold
+     * @param string $sold
      *
      * @return self
      */
@@ -184,7 +186,7 @@ class Painting extends Model {
     }
 
     /**
-     * @return str
+     * @return string
      */
     public function getTheme()
     {
@@ -192,7 +194,7 @@ class Painting extends Model {
     }
 
     /**
-     * @param str $theme
+     * @param string $theme
      *
      * @return self
      */
@@ -204,7 +206,7 @@ class Painting extends Model {
     }
 
     /**
-     * @return str
+     * @return string
      */
     public function getTechnic()
     {
@@ -212,7 +214,7 @@ class Painting extends Model {
     }
 
     /**
-     * @param str $technic
+     * @param string $technic
      *
      * @return self
      */
@@ -224,7 +226,7 @@ class Painting extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDate()
     {
@@ -232,7 +234,7 @@ class Painting extends Model {
     }
 
     /**
-     * @param mixed $creation
+     * @param string $creation
      *
      * @return self
      */
@@ -244,7 +246,7 @@ class Painting extends Model {
     }
 
     /**
-     * @return bool
+     * @return string
      */
     public function getPublished()
     {
@@ -252,7 +254,7 @@ class Painting extends Model {
     }
 
     /**
-     * @param bool $published
+     * @param string $published
      *
      * @return self
      */
@@ -284,9 +286,8 @@ class Painting extends Model {
         return $this;
     }
 
-
     /**
-     * @return mixed
+     * @return string
      */
     public function getCreation()
     {
@@ -294,7 +295,7 @@ class Painting extends Model {
     }
 
     /**
-     * @param mixed $creation
+     * @param string $creation
      *
      * @return self
      */

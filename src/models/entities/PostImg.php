@@ -12,7 +12,7 @@ class PostImg extends Model {
 
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
@@ -20,7 +20,7 @@ class PostImg extends Model {
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
      *
      * @return self
      */
@@ -32,7 +32,7 @@ class PostImg extends Model {
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getPost_id()
     {
@@ -40,7 +40,7 @@ class PostImg extends Model {
     }
 
     /**
-     * @param mixed $post_id
+     * @param int $post_id
      *
      * @return self
      */
@@ -52,7 +52,7 @@ class PostImg extends Model {
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getImg_id()
     {
@@ -60,7 +60,7 @@ class PostImg extends Model {
     }
 
     /**
-     * @param mixed $img_id
+     * @param int $img_id
      *
      * @return self
      */
@@ -72,7 +72,7 @@ class PostImg extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getUrl()
     {
@@ -80,7 +80,7 @@ class PostImg extends Model {
     }
 
     /**
-     * @param mixed $url
+     * @param string $url
      *
      * @return self
      */
@@ -93,7 +93,7 @@ class PostImg extends Model {
 
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getFileName()
     {
@@ -101,7 +101,7 @@ class PostImg extends Model {
     }
 
     /**
-     * @param mixed $fileName
+     * @param string $fileName
      *
      * @return self
      */

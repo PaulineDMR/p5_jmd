@@ -2,16 +2,13 @@
 
 namespace jmd\models\managers;
 
-/**
- * 
- */
+use jmd\models\entities\PostImg;
+
 class PostImgManager extends Manager {
 	
-	/**
-	 * [getPostImg description]
-	 * @return [type] [description]
-	 */
-	public function getPostImg() {
+	
+	public function getPostImg()
+	{
 		$db = $this->dbConnect();
 		$req = $db->query('
 			SELECT img_id, post_id, url, fileName
@@ -21,15 +18,13 @@ class PostImgManager extends Manager {
 		$postImgs = array();
 
 		while ($data = $req->fetch()) {
-			$postImg = new \jmd\models\entities\PostImg();
+			$postImg = new PostImg();
 			$postImg->hydrate($data);
 			$postImgs[] = $postImg;
 		}
 
 		$req->closecursor();
-
 		return $postImgs;
 	}
-
 
 }

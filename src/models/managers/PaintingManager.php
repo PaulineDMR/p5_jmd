@@ -2,24 +2,12 @@
 
 namespace jmd\models\managers;
 
+use jmd\models\entities\Painting;
+
 class PaintingManager extends Manager {
 
 	// CREATE
 	
-	/**
-	 * [addPainting description]
-	 * @param [type] $title     [description]
-	 * @param [type] $width     [description]
-	 * @param [type] $height    [description]
-	 * @param [type] $img_id    [description]
-	 * @param [type] $creation  [description]
-	 * @param [type] $technic   [description]
-	 * @param [type] $price     [description]
-	 * @param [type] $theme     [description]
-	 * @param [type] $category  [description]
-	 * @param [type] $sold      [description]
-	 * @param [type] $published [description]
-	 */
 	public function addPainting($title, $width, $height, $img_id, $creation, $technic, $price, $theme, $category, $sold, $published) 	 {
 	 	$db = $this->dbConnect();
 		$req = $db->prepare("INSERT INTO paintings (title, width, height, img_id, creation, technic, price, theme, category, sold, published) VALUES (:title, :width, :height, :img_id, :creation, :technic, :price, :theme, :category, :sold, :published)");
@@ -29,7 +17,7 @@ class PaintingManager extends Manager {
 		$req->bindValue("img_id", $img_id, \PDO::PARAM_INT);
 		$req->bindValue("creation", $creation, \PDO::PARAM_STR);
 		$req->bindValue("technic", $technic, \PDO::PARAM_STR);
-		$req->bindValue("price", $price, \PDO::PARAM_INT);
+		$req->bindValue("price", $price, \PDO::PARAM_STR);
 		$req->bindValue("theme", $theme, \PDO::PARAM_STR);
 		$req->bindValue("category", $category, \PDO::PARAM_STR);
 		$req->bindValue("sold", $sold, \PDO::PARAM_STR);
@@ -48,21 +36,8 @@ class PaintingManager extends Manager {
 	
 	// READ
 	
-	/**
-	 * [addPainting description]
-	 * @param [type] $title     [description]
-	 * @param [type] $width     [description]
-	 * @param [type] $height    [description]
-	 * @param [type] $img_id    [description]
-	 * @param [type] $creation  [description]
-	 * @param [type] $technic   [description]
-	 * @param [type] $price     [description]
-	 * @param [type] $theme     [description]
-	 * @param [type] $category  [description]
-	 * @param [type] $sold      [description]
-	 * @param [type] $published [description]
-	 */
-	public function getRecentPaintings($max) {
+	public function getRecentPaintings($max)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("SELECT title, technic, url FROM paintings p JOIN img i ON i.id = p.img_id ORDER BY creation DESC LIMIT :max");
 
@@ -72,7 +47,7 @@ class PaintingManager extends Manager {
 		$paintings = array();
 
 		while ($data = $req->fetch()) {
-			$painting = new \jmd\models\entities\Painting();
+			$painting = new Painting();
 			$painting->hydrate($data);
 			$paintings[] = $painting;
 		}
@@ -81,21 +56,8 @@ class PaintingManager extends Manager {
 		return $paintings;
 	}
 
-	/**
-	 * [addPainting description]
-	 * @param [type] $title     [description]
-	 * @param [type] $width     [description]
-	 * @param [type] $height    [description]
-	 * @param [type] $img_id    [description]
-	 * @param [type] $creation  [description]
-	 * @param [type] $technic   [description]
-	 * @param [type] $price     [description]
-	 * @param [type] $theme     [description]
-	 * @param [type] $category  [description]
-	 * @param [type] $sold      [description]
-	 * @param [type] $published [description]
-	 */
-	public function getPaintings($firstIndex, $paintingsPerPage) {
+	public function getPaintings($firstIndex, $paintingsPerPage)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("SELECT p.id AS id, title, width, height, price, sold, theme, technic, creation, url, published FROM paintings p JOIN img i ON i.id = p.img_id ORDER BY creation DESC LIMIT :firstIndex, :paintingsPerPage");
 
@@ -106,7 +68,7 @@ class PaintingManager extends Manager {
 		$paintings = array();
 
 		while ($data = $req->fetch()) {
-			$painting = new \jmd\models\entities\Painting();
+			$painting = new Painting();
 			$painting->hydrate($data);
 			$paintings[] = $painting;
 		}
@@ -114,28 +76,15 @@ class PaintingManager extends Manager {
 		return $paintings;
 	}
 
-	/**
-	 * [addPainting description]
-	 * @param [type] $title     [description]
-	 * @param [type] $width     [description]
-	 * @param [type] $height    [description]
-	 * @param [type] $img_id    [description]
-	 * @param [type] $creation  [description]
-	 * @param [type] $technic   [description]
-	 * @param [type] $price     [description]
-	 * @param [type] $theme     [description]
-	 * @param [type] $category  [description]
-	 * @param [type] $sold      [description]
-	 * @param [type] $published [description]
-	 */
-	public function getAllPaintings() {
+	public function getAllPaintings()
+	{
 		$db = $this->dbConnect();
-		$req = $db->query("SELECT p.id as id, title, width, height, price, sold, theme, technic, creation, url, published FROM paintings p JOIN img i ON i.id = p.img_id ORDER BY creation DESC");
+		$req = $db->query("SELECT p.id as id, title, width, height, price, sold, theme, technic, creation, url, published FROM paintings p JOIN img i ON i.id = p.img_id WHERE published = true ORDER BY creation DESC");
 
 		$paintings = array();
 
 		while ($data = $req->fetch()) {
-			$painting = new \jmd\models\entities\Painting();
+			$painting = new Painting();
 			$painting->hydrate($data);
 			$paintings[] = $painting;
 		}
@@ -143,49 +92,22 @@ class PaintingManager extends Manager {
 		$req->closeCursor();
 		return $paintings;
 	}
-
-	/**
-	 * [addPainting description]
-	 * @param [type] $title     [description]
-	 * @param [type] $width     [description]
-	 * @param [type] $height    [description]
-	 * @param [type] $img_id    [description]
-	 * @param [type] $creation  [description]
-	 * @param [type] $technic   [description]
-	 * @param [type] $price     [description]
-	 * @param [type] $theme     [description]
-	 * @param [type] $category  [description]
-	 * @param [type] $sold      [description]
-	 * @param [type] $published [description]
-	 */
-	public function countPaintings() {
+	
+	public function countPaintings()
+	{
 		$db = $this->dbConnect();
 		$req = $db->query("SELECT COUNT(id) AS count FROM paintings");
 
 		$data = $req->fetch();
-		$painting = new \jmd\models\entities\Painting();
+		$painting = new Painting();
 		$painting->hydrate($data);
 
 		$req->closeCursor();
 		return $painting;
-
 	}
-
-	/**
-	 * [addPainting description]
-	 * @param [type] $title     [description]
-	 * @param [type] $width     [description]
-	 * @param [type] $height    [description]
-	 * @param [type] $img_id    [description]
-	 * @param [type] $creation  [description]
-	 * @param [type] $technic   [description]
-	 * @param [type] $price     [description]
-	 * @param [type] $theme     [description]
-	 * @param [type] $category  [description]
-	 * @param [type] $sold      [description]
-	 * @param [type] $published [description]
-	 */
-	public function getOnePainting($id) {
+	
+	public function getOnePainting($id)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("SELECT p.id as id, title, width, height, technic, creation, price, theme, category, sold, published, url, img_id FROM paintings p JOIN img i ON p.img_id = i.id WHERE p.id = :id");
 
@@ -193,30 +115,23 @@ class PaintingManager extends Manager {
 		$req->execute();
 
 		$data = $req->fetch();
-		$painting = new \jmd\models\entities\Painting();
-		$painting->hydrate($data);
-
+		if (!$data) {
+			throw new \Exception("Donnée(s) invalide(s)", 1);
+		} else {
+			$painting = new Painting();
+			$painting->hydrate($data);
+			$req->closeCursor();
+			return $painting;
+		}
+		
 		$req->closeCursor();
 		return $painting;
 	}
-
-	/**
-	 * [addPainting description]
-	 * @param [type] $title     [description]
-	 * @param [type] $width     [description]
-	 * @param [type] $height    [description]
-	 * @param [type] $img_id    [description]
-	 * @param [type] $creation  [description]
-	 * @param [type] $technic   [description]
-	 * @param [type] $price     [description]
-	 * @param [type] $theme     [description]
-	 * @param [type] $category  [description]
-	 * @param [type] $sold      [description]
-	 * @param [type] $published [description]
-	 */
-	public function getPaintingsBycategory($category) {
+	
+	public function getPaintingsBycategory($category)
+	{
 		$db = $this->dbConnect();
-		$req = $db->prepare("SELECT p.id as id, title, width, height, price, sold, theme, technic, creation, url, published FROM paintings p JOIN img i ON i.id = p.img_id WHERE category = :cat ORDER BY creation DESC");
+		$req = $db->prepare("SELECT p.id as id, title, width, height, price, sold, theme, technic, creation, url, published FROM paintings p JOIN img i ON i.id = p.img_id WHERE category = :cat AND published = true ORDER BY creation DESC");
 
 		$req->bindValue("cat", $category, \PDO::PARAM_STR);
 		$req->execute();
@@ -224,7 +139,7 @@ class PaintingManager extends Manager {
 		$paintings = array();
 
 		while ($data = $req->fetch()) {
-			$painting = new \jmd\models\entities\Painting();
+			$painting = new Painting();
 			$painting->hydrate($data);
 			$paintings[] = $painting;
 		}
@@ -236,21 +151,8 @@ class PaintingManager extends Manager {
 	
 	// UPDATE
 	
-	/**
-	 * [addPainting description]
-	 * @param [type] $title     [description]
-	 * @param [type] $width     [description]
-	 * @param [type] $height    [description]
-	 * @param [type] $img_id    [description]
-	 * @param [type] $creation  [description]
-	 * @param [type] $technic   [description]
-	 * @param [type] $price     [description]
-	 * @param [type] $theme     [description]
-	 * @param [type] $category  [description]
-	 * @param [type] $sold      [description]
-	 * @param [type] $published [description]
-	 */
-	public function updateOnePainting($id, $title, $width, $height, $creation, $technic, $price, $theme, $category, $sold, $published) {
+	public function updateOnePainting($id, $title, $width, $height, $creation, $technic, $price, $theme, $category, $sold, $published)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("UPDATE paintings SET title = :title, width = :width, height = :height, technic = :technic, creation = :creation, price = :price, theme = :theme, category = :category, sold = :sold, published = :published WHERE id = :id");
 
@@ -276,22 +178,8 @@ class PaintingManager extends Manager {
 		}
 	}
 
-
-	/**
-	 * [addPainting description]
-	 * @param [type] $title     [description]
-	 * @param [type] $width     [description]
-	 * @param [type] $height    [description]
-	 * @param [type] $img_id    [description]
-	 * @param [type] $creation  [description]
-	 * @param [type] $technic   [description]
-	 * @param [type] $price     [description]
-	 * @param [type] $theme     [description]
-	 * @param [type] $category  [description]
-	 * @param [type] $sold      [description]
-	 * @param [type] $published [description]
-	 */
-	public function publish($id) {
+	public function publish($id)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("UPDATE paintings SET published = TRUE WHERE id = :id");
 
@@ -309,21 +197,8 @@ class PaintingManager extends Manager {
 		
 	// DELETE
 	
-	/**
-	 * [addPainting description]
-	 * @param [type] $title     [description]
-	 * @param [type] $width     [description]
-	 * @param [type] $height    [description]
-	 * @param [type] $img_id    [description]
-	 * @param [type] $creation  [description]
-	 * @param [type] $technic   [description]
-	 * @param [type] $price     [description]
-	 * @param [type] $theme     [description]
-	 * @param [type] $category  [description]
-	 * @param [type] $sold      [description]
-	 * @param [type] $published [description]
-	 */
-	public function delete($id) {
+	public function delete($id)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("DELETE FROM paintings  WHERE id = :id");
 

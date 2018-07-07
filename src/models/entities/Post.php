@@ -19,7 +19,8 @@ class Post extends Model {
     /**
      * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -28,7 +29,8 @@ class Post extends Model {
      *
      * @return self
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
 
         return $this;
@@ -37,7 +39,8 @@ class Post extends Model {
     /**
      * @return int
      */
-    public function getUserId() {
+    public function getUserId()
+    {
         return $this->user_id;
     }
 
@@ -46,14 +49,15 @@ class Post extends Model {
      *
      * @return self
      */
-    public function setUser_id($user_id) {
+    public function setUser_id($user_id)
+    {
         $this->user_id = $user_id;
 
         return $this;
     }
 
     /**
-     * @return str
+     * @return string
      */
     public function getTitle()
     {
@@ -61,7 +65,7 @@ class Post extends Model {
     }
 
     /**
-     * @param str $title
+     * @param string $title
      *
      * @return self
      */
@@ -73,7 +77,7 @@ class Post extends Model {
     }
 
     /**
-     * @return str
+     * @return string
      */
     public function getContent()
     {
@@ -81,7 +85,7 @@ class Post extends Model {
     }
 
     /**
-     * @param str $content
+     * @param string $content
      *
      * @return self
      */
@@ -93,7 +97,7 @@ class Post extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCreation()
     {
@@ -101,7 +105,7 @@ class Post extends Model {
     }
 
     /**
-     * @param mixed $creation
+     * @param string $creation
      *
      * @return self
      */
@@ -113,7 +117,7 @@ class Post extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPublication()
     {
@@ -121,7 +125,7 @@ class Post extends Model {
     }
 
     /**
-     * @param mixed $publication
+     * @param string $publication
      *
      * @return self
      */
@@ -133,7 +137,7 @@ class Post extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPublished()
     {
@@ -141,7 +145,7 @@ class Post extends Model {
     }
 
     /**
-     * @param mixed $published
+     * @param string $published
      *
      * @return self
      */
@@ -173,7 +177,7 @@ class Post extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getUrl()
     {
@@ -181,7 +185,7 @@ class Post extends Model {
     }
 
     /**
-     * @param mixed $url
+     * @param string $url
      *
      * @return self
      */

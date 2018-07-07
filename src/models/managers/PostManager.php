@@ -2,15 +2,14 @@
 
 namespace jmd\models\managers;
 
+use jmd\models\entities\Post;
+
 class PostManager extends Manager {
 
 	// CREATE
 	
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
-	public function newPost() {
+	public function newPost()
+	{
 	 	$db = $this->dbConnect();
 		$req = $db->exec("INSERT INTO posts (creation) VALUES (NOW())");
 
@@ -23,10 +22,6 @@ class PostManager extends Manager {
 	
 	// READ
 	
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
 	public function getPosts($firstIndex, $postsPerPage) {
 		$db = $this->dbConnect();
 		$resp = $db->prepare('
@@ -44,7 +39,7 @@ class PostManager extends Manager {
 		$posts = array();
 
 		while ($data = $resp->fetch()) {
-			$post = new \jmd\models\entities\Post;
+			$post = new Post;
 			$post->hydrate($data);
 			$posts[] = $post;
 		}
@@ -53,11 +48,8 @@ class PostManager extends Manager {
 		return $posts;
 	}
 	
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
-	public function getRecentPosts($max) {
+	public function getRecentPosts($max)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare('
 			SELECT p.id AS id, title, p.content AS content, publication, COUNT(ct.id) AS countComments
@@ -72,7 +64,7 @@ class PostManager extends Manager {
 		$posts = array();
 
 		while ($data = $req->fetch()) {
-			$post = new \jmd\models\entities\Post();
+			$post = new Post();
 			$post->hydrate($data);
 			$posts[] = $post;
 		}
@@ -82,11 +74,8 @@ class PostManager extends Manager {
 		return $posts;
 	}
 
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
-	public function countPages($postsPerPage) {
+	public function countPages($postsPerPage)
+	{
 		$db = $this->dbConnect();
 		$resp = $db->query('SELECT id FROM posts WHERE published = TRUE');
 		$numberOfPosts = $resp->rowCount();
@@ -100,11 +89,8 @@ class PostManager extends Manager {
 		return $numberOfPages;
 	}
 
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
-	public function getPublishedPosts($firstIndex, $postsPerPage) {
+	public function getPublishedPosts($firstIndex, $postsPerPage)
+	{
 		$db = $this->dbConnect();
 		$resp = $db->prepare('
 			SELECT p.id AS id, title, p.content AS content, DATE_FORMAT(publication, "%d-%m-%Y") AS publication, COUNT(ct.id) AS countComments
@@ -122,7 +108,7 @@ class PostManager extends Manager {
 		$posts = array();
 
 		while ($data = $resp->fetch()) {
-			$post = new \jmd\models\entities\Post;
+			$post = new Post;
 			$post->hydrate($data);
 			$posts[] = $post;
 		}
@@ -131,11 +117,8 @@ class PostManager extends Manager {
 		return $posts;
 	}
 
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
-	public function getPostsPerCat($firstIndex, $postsPerPage, $category) {
+	public function getPostsPerCat($firstIndex, $postsPerPage, $category)
+	{
 
 		$db = $this->dbConnect();
 		$resp = $db->prepare('
@@ -157,7 +140,7 @@ class PostManager extends Manager {
 		$posts = array();
 
 		while ($data = $resp->fetch()) {
-			$post = new \jmd\models\entities\Post;
+			$post = new Post;
 			$post->hydrate($data);
 			$posts[] = $post;
 		}
@@ -166,11 +149,6 @@ class PostManager extends Manager {
 		return $posts;
 	}
 
-
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
 	public function getOnePost($post_id) {
 		$db = $this->dbConnect();
 		$req = $db->prepare("
@@ -182,17 +160,17 @@ class PostManager extends Manager {
 		$req->execute();
 
 		$data = $req->fetch();
-		$post = new \jmd\models\entities\Post;
-		$post->hydrate($data);
+		if (!$data) {
+			throw new \Exception("Donnée(s) invalide(s)", 1);	
+		} else {
+			$post = new Post;
+			$post->hydrate($data);
 
-		$req->closeCursor();
-		return $post;
+			$req->closeCursor();
+			return $post;
+		}	
 	}
 
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
 	public function getLastPost() {
 		$db = $this->dbConnect();
 		$req = $db->query("
@@ -202,20 +180,15 @@ class PostManager extends Manager {
 				LIMIT 1");
 
 		$data = $req->fetch();
-		$post = new \jmd\models\entities\Post;
+		$post = new Post;
 		$post->hydrate($data);
 
 		$req->closeCursor();
 		return $post;
 	}
 	
-	// UPDATE
-	
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
-	public function updatePost($id, $title, $content) {
+	public function updatePost($id, $title, $content)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("UPDATE posts SET title = :title, content = :content WHERE id = :id");
 
@@ -234,11 +207,8 @@ class PostManager extends Manager {
 		}
 	}
 
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
-	public function updatePublished($id, $status) {
+	public function updatePublished($id, $status)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("UPDATE posts SET published = :status, publication = NOW() WHERE id = :id");
 
@@ -255,11 +225,8 @@ class PostManager extends Manager {
 		}
 	}
 
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
-	public function publishedToNo($id, $status) {
+	public function publishedToNo($id, $status)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("UPDATE posts SET published = :status WHERE id = :id");
 
@@ -278,11 +245,8 @@ class PostManager extends Manager {
 	
 	// DELETE
 	
-	/**
-	 * [newPost description]
-	 * @return [type] [description]
-	 */
-	public function deletePost($id) {
+	public function deletePost($id)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("DELETE FROM posts  WHERE id = :id");
 

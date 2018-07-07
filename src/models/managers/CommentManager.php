@@ -2,21 +2,22 @@
 
 namespace jmd\models\managers;
 
+use jmd\models\entities\Comment;
 
-/**
- * 
- */
 class CommentManager extends Manager {
 	
 	
 	// CREATE
 
+	
 	/**
-	 * @param [string]
-	 * @param [string]
-	 * @param [int]
+	 * [Insert a new comment line in comments table]
+	 * @param [string] $author  [First name of the author]
+	 * @param [string] $comment [text content of the comment]
+	 * @param [int] $post_id [id of the post concerned]
 	 */
-	public function addComment($author, $comment, $post_id) {
+	public function addComment($author, $comment, $post_id)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("INSERT INTO comments(prenom, content, post_id, creation) VALUES (:author, :content, :id, NOW())");
 		$req->bindValue("author", $author, \PDO::PARAM_STR);
@@ -31,16 +32,18 @@ class CommentManager extends Manager {
 			return $resp;
 		}	    
 	}
+	
 
 	// READ
 	 
 	/**
-	 * [getComments description]
-	 * @param  [type] $firstIndex      [description]
-	 * @param  [type] $commentsPerPage [description]
-	 * @return [type]                  [description]
+	 * [Get a list of comments for one page]
+	 * @param  [int] $firstIndex      [index where to start the list]
+	 * @param  [int] $commentsPerPage [number of line to pick from the table]
+	 * @return [array]                [object Comment list]
 	 */
-	public function getComments($firstIndex, $commentsPerPage) {
+	public function getComments($firstIndex, $commentsPerPage)
+	{
 	 	$db = $this->dbConnect();
 	 	$req = $db->prepare("
 	 		SELECT c.id AS id, prenom, c.creation AS creation, c.content AS content, reported, validated, title AS post_title
@@ -56,7 +59,7 @@ class CommentManager extends Manager {
 	 	$comments = array();
 
 	 	while ($data = $req->fetch()) {
-	 		$comment = new \jmd\models\entities\Comment;
+	 		$comment = new Comment;
 	 		$comment->hydrate($data);
 	 		$comments[] = $comment;
 	 	}
@@ -66,12 +69,12 @@ class CommentManager extends Manager {
 	} 
 	
 	/**
-	 * [getComments description]
-	 * @param  [type] $firstIndex      [description]
-	 * @param  [type] $commentsPerPage [description]
-	 * @return [type]                  [description]
+	 * [Get a list of comments from the later]
+	 * @param  [int] $max [number of line to pick from the table]
+	 * @return [array]      [object Comment list]
 	 */
-	public function getRecentComments($max) {
+	public function getRecentComments($max)
+	{
 	 	
 	 	$db = $this->dbConnect();
 	 	$req = $db->prepare("
@@ -87,7 +90,7 @@ class CommentManager extends Manager {
 	 	$comments = array();
 
 	 	while ($data = $req->fetch()) {
-	 		$comment = new \jmd\models\entities\Comment;
+	 		$comment = new Comment;
 	 		$comment->hydrate($data);
 	 		$comments[] = $comment;
 	 	}
@@ -98,12 +101,16 @@ class CommentManager extends Manager {
 	} 
 
 	/**
-	 * [getComments description]
-	 * @param  [type] $firstIndex      [description]
-	 * @param  [type] $commentsPerPage [description]
-	 * @return [type]                  [description]
+	 * [Get list of comments linked to one same post]
+	 * [with an index where to start to pick]
+	 * [and a number of lines to pick]
+	 * @param  [int] $firstIndex      [which line to start]
+	 * @param  [int] $commentsPerPage [number of lineto pick]
+	 * @param  [int] $postId          [id of the concerned post]
+	 * @return [array]                [object Comment array]
 	 */
-	public function getPostComments($firstIndex, $commentsPerPage, $postId) {
+	public function getPostComments($firstIndex, $commentsPerPage, $postId)
+	{
 	 	
 	 	$db = $this->dbConnect();
 	 	$req = $db->prepare("
@@ -122,7 +129,7 @@ class CommentManager extends Manager {
 	 	$comments = array();
 
 	 	while ($data = $req->fetch()) {
-	 		$comment = new \jmd\models\entities\Comment;
+	 		$comment = new Comment;
 	 		$comment->hydrate($data);
 	 		$comments[] = $comment;
 	 	}
@@ -133,12 +140,12 @@ class CommentManager extends Manager {
 	} 
 
 	/**
-	 * [getComments description]
-	 * @param  [type] $firstIndex      [description]
-	 * @param  [type] $commentsPerPage [description]
-	 * @return [type]                  [description]
+	 * [count of many page of comments]
+	 * @param  [int] $commentsPerPage [number of comments for one page]
+	 * @return [int]                  [number of pages]
 	 */
-	public function countPages($commentsPerPage) {
+	public function countPages($commentsPerPage)
+	{
 		$db = $this->dbConnect();
 		$req = $db->query('SELECT id FROM comments WHERE reported = FALSE');
 		$numberOfComments = $req->rowCount();
@@ -157,12 +164,13 @@ class CommentManager extends Manager {
 	}
 
 	/**
-	 * [getComments description]
-	 * @param  [type] $firstIndex      [description]
-	 * @param  [type] $commentsPerPage [description]
-	 * @return [type]                  [description]
+	 * [Get a count of pages for all the comment linked to one post]
+	 * @param  [int] $commentsPerPage [how many comments in one page]
+	 * @param  [int] $postId          [id of the post]
+	 * @return [int]                  [count of pages]
 	 */
-	public function countPostCommentsPages($commentsPerPage, $postId) {
+	public function countPostCommentsPages($commentsPerPage, $postId)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare('SELECT id FROM comments WHERE reported = FALSE AND post_id = :id');
 
@@ -188,12 +196,12 @@ class CommentManager extends Manager {
 	// UPDATE
 	
 	/**
-	 * [getComments description]
-	 * @param  [type] $firstIndex      [description]
-	 * @param  [type] $commentsPerPage [description]
-	 * @return [type]                  [description]
+	 * [Changes the reported status of a comment to true in the comments table]
+	 * @param  [int] $id [comment id]
+	 * @return [bool]    [in case of succes]
 	 */
-	public function updateReported($id) {
+	public function updateReported($id)
+	{
 	 	$db = $this->dbConnect();
 		$req = $db->prepare("UPDATE comments SET reported = true WHERE id = :commentId");
 
@@ -209,12 +217,12 @@ class CommentManager extends Manager {
 	} 
 
 	/**
-	 * [getComments description]
-	 * @param  [type] $firstIndex      [description]
-	 * @param  [type] $commentsPerPage [description]
-	 * @return [type]                  [description]
+	 * [Changes the validated status of a comment to true in the comments table]
+	 * @param  [int] $commentId [description]
+	 * @return [bool]           [true in case of success]
 	 */
-	public function updateValidated($commentId) {
+	public function updateValidated($commentId)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("UPDATE comments SET reported = false, validated = true WHERE id = :id");
 
@@ -230,15 +238,15 @@ class CommentManager extends Manager {
 	}
 	
 	 
-	// DELETE
-	
+	// DELETE	
+
 	/**
-	 * [getComments description]
-	 * @param  [type] $firstIndex      [description]
-	 * @param  [type] $commentsPerPage [description]
-	 * @return [type]                  [description]
+	 * [Delete a comment line in the comments table]
+	 * @param  [int] $commentId [comment id]
+	 * @return [bool]           [true in case of success]
 	 */
-	public function deleteComment($commentId) {
+	public function deleteComment($commentId)
+	{
 	 	$db = $this->dbConnect();
 		$req = $db->prepare("DELETE FROM comments  WHERE id = :id");
 
@@ -252,15 +260,14 @@ class CommentManager extends Manager {
 			return $resp;
 		}
 	}
-	
-	
+
 	/**
-	 * [getComments description]
-	 * @param  [type] $firstIndex      [description]
-	 * @param  [type] $commentsPerPage [description]
-	 * @return [type]                  [description]
+	 * [Delete a comment linked to a post]
+	 * @param  [int] $id [post id]
+	 * @return [bool]    [in case of success]
 	 */
-	public function deletePostComments($id) {
+	public function deletePostComments($id)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("DELETE FROM comments  WHERE post_id = :id");
 

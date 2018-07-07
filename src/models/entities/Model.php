@@ -2,11 +2,11 @@
 
 namespace jmd\models\entities;
 
-class Model {
+abstract class Model {
 
 	/**
 	 * [hydate method]
-	 * @param  array  $datas [datas from DB request]
+	 * @param  array $datas [datas from DB request]
 	 */
 	public function hydrate(array $datas) {
 

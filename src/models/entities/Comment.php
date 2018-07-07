@@ -3,9 +3,6 @@
 namespace jmd\models\entities;
 
 
-/**
- * 
- */
 class Comment extends Model {
 	
 	private $id;
@@ -83,7 +80,7 @@ class Comment extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMail()
     {
@@ -91,7 +88,7 @@ class Comment extends Model {
     }
 
     /**
-     * @param mixed $mail
+     * @param string $mail
      *
      * @return self
      */
@@ -103,7 +100,7 @@ class Comment extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getContent()
     {
@@ -111,7 +108,7 @@ class Comment extends Model {
     }
 
     /**
-     * @param mixed $content
+     * @param string $content
      *
      * @return self
      */
@@ -123,7 +120,7 @@ class Comment extends Model {
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getPostId()
     {
@@ -131,7 +128,7 @@ class Comment extends Model {
     }
 
     /**
-     * @param mixed $post_id
+     * @param int $post_id
      *
      * @return self
      */
@@ -143,7 +140,7 @@ class Comment extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPost_title()
     {
@@ -151,7 +148,7 @@ class Comment extends Model {
     }
 
     /**
-     * @param mixed $post_title
+     * @param string $post_title
      *
      * @return self
      */
@@ -163,7 +160,7 @@ class Comment extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getReported()
     {
@@ -171,7 +168,7 @@ class Comment extends Model {
     }
 
     /**
-     * @param mixed $reported
+     * @param string $reported
      *
      * @return self
      */
@@ -183,7 +180,7 @@ class Comment extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getValidated()
     {
@@ -191,7 +188,7 @@ class Comment extends Model {
     }
 
     /**
-     * @param mixed $validated
+     * @param string $validated
      *
      * @return self
      */
@@ -203,7 +200,7 @@ class Comment extends Model {
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getAnsweredId()
     {
@@ -211,7 +208,7 @@ class Comment extends Model {
     }
 
     /**
-     * @param mixed $answered_id
+     * @param int $answered_id
      *
      * @return self
      */
@@ -223,7 +220,7 @@ class Comment extends Model {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAnswer()
     {
@@ -231,7 +228,7 @@ class Comment extends Model {
     }
 
     /**
-     * @param mixed $answer
+     * @param string $answer
      *
      * @return self
      */

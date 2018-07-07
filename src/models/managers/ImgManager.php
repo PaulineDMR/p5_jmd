@@ -2,20 +2,16 @@
 
 namespace jmd\models\managers;
 
-/**
- * 
- */
+use jmd\models\entities\Img;
+use jmd\models\entities\PostImg;
+
+
 class ImgManager extends Manager {
 	
 	//CREATE
 	
-	/**
-	 * [newImg description]
-	 * @param  [type] $url      [description]
-	 * @param  [type] $fileName [description]
-	 * @return [type]           [description]
-	 */
-	public function newImg($url, $fileName)	{
+	public function newImg($url, $fileName)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("INSERT INTO img (url, fileName) VALUES (:url, :fileName)");
 
@@ -32,13 +28,8 @@ class ImgManager extends Manager {
 	 	} 
 	}
 
-	/**
-	 * [newImg description]
-	 * @param  [type] $url      [description]
-	 * @param  [type] $fileName [description]
-	 * @return [type]           [description]
-	 */
-	public function newPostImg($post_id, $img_id) {
+	public function newPostImg($post_id, $img_id)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare(" INSERT INTO posts_img (img_id, post_id) VALUES (:imgId, :postId)");
 		
@@ -57,33 +48,23 @@ class ImgManager extends Manager {
 
 	//READ
 	
-	/**
-	 * [newImg description]
-	 * @param  [type] $url      [description]
-	 * @param  [type] $fileName [description]
-	 * @return [type]           [description]
-	 */
-	public function getPaintingId($url) {
+	public function getPaintingId($url)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("SELECT id FROM img WHERE url = :url");
 		$req->bindValue("url", $url, \PDO::PARAM_STR);
 		$req->execute();
 
 		$data = $req->fetch();
-		$img = new \jmd\models\entities\Img();
+		$img = new Img();
 		$img->hydrate($data);
 
 		$req->closeCursor();
 		return $img;
 	}
 
-	/**
-	 * [newImg description]
-	 * @param  [type] $url      [description]
-	 * @param  [type] $fileName [description]
-	 * @return [type]           [description]
-	 */
-	public function getPostImgs($post_id) {
+	public function getPostImgs($post_id)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("
 			SELECT pi.img_id AS img_id, url, fileName, post_id
@@ -97,7 +78,7 @@ class ImgManager extends Manager {
 		$imgs = array();
 
 		while ($data = $req->fetch()) {
-			$img = new \jmd\models\entities\PostImg();
+			$img = new PostImg();
 			$img->hydrate($data);
 			$imgs[] = $img;
 		}
@@ -106,13 +87,8 @@ class ImgManager extends Manager {
 		return $imgs;
 	}
 
-	/**
-	 * [newImg description]
-	 * @param  [type] $url      [description]
-	 * @param  [type] $fileName [description]
-	 * @return [type]           [description]
-	 */
-	public function getImg($url) {
+	public function getImg($url)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("
 			SELECT id, url FROM img i WHERE url = :url");
@@ -121,20 +97,15 @@ class ImgManager extends Manager {
 		$req->execute();
 
 		$data = $req->fetch();
-			$img = new \jmd\models\entities\Img();
+			$img = new Img();
 			$img->hydrate($data);
 
 		$req->closeCursor();
 		return $img;
 	}
 
-	/**
-	 * [newImg description]
-	 * @param  [type] $url      [description]
-	 * @param  [type] $fileName [description]
-	 * @return [type]           [description]
-	 */
-	public function getPostImg($postId) {
+	public function getPostImg($postId)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare('
 			SELECT img_id, post_id, url
@@ -147,27 +118,19 @@ class ImgManager extends Manager {
 		$req->execute();
 
 		$data = $req->fetch();
-		$postImg = new \jmd\models\entities\PostImg();
+		$postImg = new PostImg();
 		$postImg->hydrate($data);
 
 		$req->closecursor();
-		return $postImg;
-		
+		return $postImg;	
 	}
-	
 
 	//UPDATE
 	
-	
 	//DELETE
 	
-	/**
-	 * [newImg description]
-	 * @param  [type] $url      [description]
-	 * @param  [type] $fileName [description]
-	 * @return [type]           [description]
-	 */
-	public function delete($id) {
+	public function delete($id)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("DELETE FROM img  WHERE id = :id");
 
@@ -182,13 +145,8 @@ class ImgManager extends Manager {
 		}
 	}
 
-	/**
-	 * [newImg description]
-	 * @param  [type] $url      [description]
-	 * @param  [type] $fileName [description]
-	 * @return [type]           [description]
-	 */
-	public function deletePostImgs($id) {
+	public function deletePostImgs($id)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("DELETE FROM posts_img  WHERE post_id = :id");
 
@@ -203,13 +161,8 @@ class ImgManager extends Manager {
 		}
 	}
 
-	/**
-	 * [newImg description]
-	 * @param  [type] $url      [description]
-	 * @param  [type] $fileName [description]
-	 * @return [type]           [description]
-	 */
-	public function deleteFile($file) {
+	public function deleteFile($file)
+	{
 		$db = $this->dbConnect();
 		$req = $db->prepare("DELETE FROM img  WHERE fileName = :file");
 
